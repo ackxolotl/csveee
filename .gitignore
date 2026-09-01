@@ -1,2 +1,12 @@
 /target
-Cargo.lock
+*.pftrace
+*.html
+
+# CSV files
+/data
+/data.local.toml
+
+__pycache__/
+
+# IDE
+/.idea

@@ -1,0 +1,3 @@
+# Dependencies for the scripts in this directory.
+duckdb==1.5.5
+toml==0.10.2

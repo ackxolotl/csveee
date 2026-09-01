@@ -1,0 +1,24 @@
+# Hand-maintained unlike the scraped suites
+
+[files."standard.csv"]
+columns = 3
+
+[files."semicolon.csv"]
+delimiter = ";"
+terminator = "LF"
+columns = 3
+
+[files."quoted.csv"]
+columns = 3
+
+[files."no-headers.csv"]
+quote = ""
+escape = ""
+terminator = "LF"
+has_headers = false
+columns = 4
+
+[files."non-utf8.csv"]
+terminator = "LF"
+encoding = "non-utf-8"
+columns = 3

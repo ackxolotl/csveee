@@ -1,0 +1,5016 @@
+# Kaggle CSV corpus: 1000 files sampled log-uniformly by size.
+#
+# Produced once from the evaluation repo's sampled_files.json
+# (csveee-evaluation/scripts/kaggle_uniform_sample.py); the generator was a
+# one-off and is not kept, so this file is now maintained by hand. It is the
+# download list, not the dialect record — dialects live in manifest.toml
+# (sniffed) and overrides.toml (hand-written).
+#
+# `size` is the size Kaggle reported at sampling time. It picks the tier
+# (provision_data.py --tier), guards free space before a download, and catches a
+# truncated one afterwards.
+#
+# Keys are the dataset and the path within it, flattened on "_" exactly as the
+# scraped suites flatten upstream paths. They are the filename under the data
+# root and the manifest key the test harness uses.
+
+[files."PromptCloudHQ_us-jobs-on-monstercom_monster_com-job_sample.csv"]
+dataset = "PromptCloudHQ/us-jobs-on-monstercom"
+path = "monster_com-job_sample.csv"
+size = 68388810
+
+[files."aadiltajani_fia-f1-19502019-data_70_Anniversary Q3_LapbyLap.csv"]
+dataset = "aadiltajani/fia-f1-19502019-data"
+path = "70_Anniversary Q3_LapbyLap.csv"
+size = 134543
+
+[files."aatifahmad123_indian-vehicle-registration-data-202025_vehicle_registrations_500k.csv"]
+dataset = "aatifahmad123/indian-vehicle-registration-data-202025"
+path = "vehicle_registrations_500k.csv"
+size = 81834036
+
+[files."abdelrhmann_ndvi-and-climate_data_subject_21.csv"]
+dataset = "abdelrhmann/ndvi-and-climate"
+path = "data/subject_21.csv"
+size = 83997
+
+[files."abdulhaseeb0330_students-data-1crore-dataset_students_worldwide_100k.csv"]
+dataset = "abdulhaseeb0330/students-data-1crore-dataset"
+path = "students_worldwide_100k.csv"
+size = 2034304516
+
+[files."abdullahkhan70_fortune-90-us-stock-market-data_ABNB_stock_market_data.csv"]
+dataset = "abdullahkhan70/fortune-90-us-stock-market-data"
+path = "ABNB_stock_market_data.csv"
+size = 120359
+
+[files."abdullahkhan70_fortune-90-us-stock-market-data_AMD_stock_market_data.csv"]
+dataset = "abdullahkhan70/fortune-90-us-stock-market-data"
+path = "AMD_stock_market_data.csv"
+size = 884518
+
+[files."abdullahkhan70_fortune-90-us-stock-market-data_BA_stock_market_data.csv"]
+dataset = "abdullahkhan70/fortune-90-us-stock-market-data"
+path = "BA_stock_market_data.csv"
+size = 1582921
+
+[files."abdullahkhan70_fortune-90-us-stock-market-data_CRM_stock_market_data.csv"]
+dataset = "abdullahkhan70/fortune-90-us-stock-market-data"
+path = "CRM_stock_market_data.csv"
+size = 530031
+
+[files."abhayayare_multi-turn-chatbot-conversation-dataset_chatbot_conversations.csv"]
+dataset = "abhayayare/multi-turn-chatbot-conversation-dataset"
+path = "chatbot_conversations.csv"
+size = 1045604145
+
+[files."abhinavmangalore_iomt-traffic-data_output.csv"]
+dataset = "abhinavmangalore/iomt-traffic-data"
+path = "output.csv"
+size = 1477859292
+
+[files."abhinavtyagi2708_zara-dataset-men-and-women-clothing_Men_Men_HOODIES_SWEATSHIRTS.csv"]
+dataset = "abhinavtyagi2708/zara-dataset-men-and-women-clothing"
+path = "Men/Men/HOODIES_SWEATSHIRTS.csv"
+size = 17582
+
+[files."abhishekgodara_ipl-data-set_matches.csv"]
+dataset = "abhishekgodara/ipl-data-set"
+path = "matches.csv"
+size = 144135
+
+[files."abhisheksjha_time-series-air-quality-data-of-india-2010-2023_AS001.csv"]
+dataset = "abhisheksjha/time-series-air-quality-data-of-india-2010-2023"
+path = "AS001.csv"
+size = 4923147
+
+[files."abrambeyer_us-hospital-customer-satisfaction-20162020_cms_hospital_patient_satisfaction_2016.csv"]
+dataset = "abrambeyer/us-hospital-customer-satisfaction-20162020"
+path = "cms_hospital_patient_satisfaction_2016.csv"
+size = 209765543
+
+[files."abubakaryagob_covid-19_time_series_covid19_confirmed_global.csv"]
+dataset = "abubakaryagob/covid-19"
+path = "time_series_covid19_confirmed_global.csv"
+size = 385449
+
+[files."abubakaryagob_covid-19_time_series_covid19_deaths_global.csv"]
+dataset = "abubakaryagob/covid-19"
+path = "time_series_covid19_deaths_global.csv"
+size = 268919
+
+[files."abutalhadmaniyar_bank-statements-dataset_bankstatements.csv"]
+dataset = "abutalhadmaniyar/bank-statements-dataset"
+path = "bankstatements.csv"
+size = 28959
+
+[files."acsariyildiz_the-enron-email-dataset-parsed_enron_mails.csv"]
+dataset = "acsariyildiz/the-enron-email-dataset-parsed"
+path = "enron_mails.csv"
+size = 1342526805
+
+[files."adammohammedi_arabicpeoms2_Arabic Poems_train.csv"]
+dataset = "adammohammedi/arabicpeoms2"
+path = "Arabic Poems/train.csv"
+size = 93992028
+
+[files."adamschroeder_crimes-new-york-city_NYPD_Complaint_Data_Historic.csv"]
+dataset = "adamschroeder/crimes-new-york-city"
+path = "NYPD_Complaint_Data_Historic.csv"
+size = 265727269
+
+[files."adhamelkomy_bank-customer-complaint-analysis_complaints.csv"]
+dataset = "adhamelkomy/bank-customer-complaint-analysis"
+path = "complaints.csv"
+size = 99463046
+
+[files."adilshamim8_predict-students-dropout-and-academic-success_students_dropout_academic_success.csv"]
+dataset = "adilshamim8/predict-students-dropout-and-academic-success"
+path = "students_dropout_academic_success.csv"
+size = 507976
+
+[files."adityamhaske_maang-stock-prices-july-2018-to-july-2023_AMZN.csv"]
+dataset = "adityamhaske/maang-stock-prices-july-2018-to-july-2023"
+path = "AMZN.csv"
+size = 92627
+
+[files."adityaprashantshirke_prakriti-updated_Updated_Prakriti_With_Features.csv"]
+dataset = "adityaprashantshirke/prakriti-updated"
+path = "Updated_Prakriti_With_Features.csv"
+size = 698653
+
+[files."adityathakekar_iot-dataset_smart_home_energy_data.csv"]
+dataset = "adityathakekar/iot-dataset"
+path = "smart_home_energy_data.csv"
+size = 3890859
+
+[files."adityathakekar_iot-dataset_synthetic_motor_failure_data.csv"]
+dataset = "adityathakekar/iot-dataset"
+path = "synthetic_motor_failure_data.csv"
+size = 142011
+
+[files."adityathakekar_nova-50m-transactions-super-app_nova_interactions_massive.csv"]
+dataset = "adityathakekar/nova-50m-transactions-super-app"
+path = "nova_interactions_massive.csv"
+size = 8284415154
+
+[files."advaithsrao_enron-fraud-email-dataset_enron_data_fraud_labeled.csv"]
+dataset = "advaithsrao/enron-fraud-email-dataset"
+path = "enron_data_fraud_labeled.csv"
+size = 751898843
+
+[files."afrniomelo_tep-csv_TEP_Faulty_Testing.csv"]
+dataset = "afrniomelo/tep-csv"
+path = "TEP_Faulty_Testing.csv"
+size = 3596674232
+
+[files."agungpambudi_network-malware-detection-connection-analysis_CTU-IoT-Malware-Capture-1-1conn.log.labeled.csv"]
+dataset = "agungpambudi/network-malware-detection-connection-analysis"
+path = "CTU-IoT-Malware-Capture-1-1conn.log.labeled.csv"
+size = 138472178
+
+[files."agungpambudi_network-malware-detection-connection-analysis_CTU-IoT-Malware-Capture-42-1conn.log.labeled.csv"]
+dataset = "agungpambudi/network-malware-detection-connection-analysis"
+path = "CTU-IoT-Malware-Capture-42-1conn.log.labeled.csv"
+size = 567839
+
+[files."agungpambudi_network-malware-detection-connection-analysis_CTU-IoT-Malware-Capture-48-1conn.log.labeled.csv"]
+dataset = "agungpambudi/network-malware-detection-connection-analysis"
+path = "CTU-IoT-Malware-Capture-48-1conn.log.labeled.csv"
+size = 523149869
+
+[files."ahmadulkc_influencer-analysis_Dataset (modified) - Sheet2.csv"]
+dataset = "ahmadulkc/influencer-analysis"
+path = "Dataset (modified) - Sheet2.csv"
+size = 11612
+
+[files."ahmedmohamed2003_quality-of-life-for-each-country_Quality_of_Life.csv"]
+dataset = "ahmedmohamed2003/quality-of-life-for-each-country"
+path = "Quality_of_Life.csv"
+size = 33238
+
+[files."ahmeduzaki_eeg-eye-state-detection-dataset_EEG-Eye-State.csv"]
+dataset = "ahmeduzaki/eeg-eye-state-detection-dataset"
+path = "EEG-Eye-State.csv"
+size = 1696100
+
+[files."ahmedwadood_blood-pressure-dataset_Blood_Pressure_data.csv"]
+dataset = "ahmedwadood/blood-pressure-dataset"
+path = "Blood_Pressure_data.csv"
+size = 19123819
+
+[files."ahmedyacinlacheheb_ocr-data-36gb_all_labels.csv"]
+dataset = "ahmedyacinlacheheb/ocr-data-36gb"
+path = "all_labels.csv"
+size = 740474397
+
+[files."ahsan81_job-placement-dataset_Job_Placement_Data.csv"]
+dataset = "ahsan81/job-placement-dataset"
+path = "Job_Placement_Data.csv"
+size = 16393
+
+[files."aiaiaidavid_the-big-dataset-of-ultra-marathon-running_TWO_CENTURIES_OF_UM_RACES.csv"]
+dataset = "aiaiaidavid/the-big-dataset-of-ultra-marathon-running"
+path = "TWO_CENTURIES_OF_UM_RACES.csv"
+size = 827825781
+
+[files."akemiii_akemiiiiii_balanced_transformed_dataset.csv"]
+dataset = "akemiii/akemiiiiii"
+path = "balanced_transformed_dataset.csv"
+size = 60307546
+
+[files."akshaypawar7_millions-of-movies_movies.csv"]
+dataset = "akshaypawar7/millions-of-movies"
+path = "movies.csv"
+size = 350651794
+
+[files."alanhabrony_ieee-phm-2012-data-challenge_ieee-phm-2012-data-challenge-dataset-master_Full_Test_Set_Bearing1_3_acc_00001.csv"]
+dataset = "alanhabrony/ieee-phm-2012-data-challenge"
+path = "ieee-phm-2012-data-challenge-dataset-master/Full_Test_Set/Bearing1_3/acc_00001.csv"
+size = 78407
+
+[files."alanvourch_tmdb-movies-daily-updates_TMDB_all_movies.csv"]
+dataset = "alanvourch/tmdb-movies-daily-updates"
+path = "TMDB_all_movies.csv"
+size = 709429454
+
+[files."albertnathaniel12_food-recipes-dataset_Indonesian_Food_Recipes.csv"]
+dataset = "albertnathaniel12/food-recipes-dataset"
+path = "Indonesian_Food_Recipes.csv"
+size = 15970095
+
+[files."alchimistvq_nasdaq-historical-data-1m_Nasdaq.csv"]
+dataset = "alchimistvq/nasdaq-historical-data-1m"
+path = "Nasdaq.csv"
+size = 46920851
+
+[files."aleespinosa_soccer-match-event-dataset_features.csv"]
+dataset = "aleespinosa/soccer-match-event-dataset"
+path = "features.csv"
+size = 2341053570
+
+[files."alessandrolobello_the-ultimate-earthquake-dataset-from-1990-2023_Eartquakes-1990-2023.csv"]
+dataset = "alessandrolobello/the-ultimate-earthquake-dataset-from-1990-2023"
+path = "Eartquakes-1990-2023.csv"
+size = 494792338
+
+[files."alexandervarlamov_public-telegram-channels_career_channels.csv"]
+dataset = "alexandervarlamov/public-telegram-channels"
+path = "career_channels.csv"
+size = 2498285
+
+[files."alexandervarlamov_public-telegram-channels_crypto_channels.csv"]
+dataset = "alexandervarlamov/public-telegram-channels"
+path = "crypto_channels.csv"
+size = 5977201
+
+[files."alexandervc_growth-in-finite-groups_Heis 3 gens data_distances_heisenberg_1_25_distances.csv"]
+dataset = "alexandervc/growth-in-finite-groups"
+path = "Heis 3 gens data/distances/heisenberg_1_25_distances.csv"
+size = 165728
+
+[files."alexandrepetit881234_fake-bills_fake_bills.csv"]
+dataset = "alexandrepetit881234/fake-bills"
+path = "fake_bills.csv"
+size = 65529
+
+[files."alexmerren1_speedrun-com-data_data_v1_runs-data.csv"]
+dataset = "alexmerren1/speedrun-com-data"
+path = "data/v1/runs-data.csv"
+size = 785296156
+
+[files."alexzyukov_openedu-ru-courses_openedu_groups_map.csv"]
+dataset = "alexzyukov/openedu-ru-courses"
+path = "openedu_groups_map.csv"
+size = 24841
+
+[files."algorismus_adventure-works-in-excel-tables_Targets.csv"]
+dataset = "algorismus/adventure-works-in-excel-tables"
+path = "Targets.csv"
+size = 36122
+
+[files."alifarajnia_eighteen-nineteen-university-datasets_eighteen_nineteen_university_datasets.csv"]
+dataset = "alifarajnia/eighteen-nineteen-university-datasets"
+path = "eighteen_nineteen_university_datasets.csv"
+size = 74161
+
+[files."alistairking_weather-long-term-time-series-forecasting_cleaned_weather.csv"]
+dataset = "alistairking/weather-long-term-time-series-forecasting"
+path = "cleaned_weather.csv"
+size = 6866297
+
+[files."alizahidraja_quran-nlp_data_hadith_Sanadset 650K Data on Hadith Narrators_books.csv"]
+dataset = "alizahidraja/quran-nlp"
+path = "data/hadith/Sanadset 650K Data on Hadith Narrators/books.csv"
+size = 48209
+
+[files."alizahidraja_quran-nlp_data_hadith_arabic_hadith_Sunan al Darami Without_Tashkel.csv"]
+dataset = "alizahidraja/quran-nlp"
+path = "data/hadith/arabic_hadith/Sunan al Darami Without_Tashkel.csv"
+size = 1435905
+
+[files."alshival_nhtsa-complaints_investigations.csv"]
+dataset = "alshival/nhtsa-complaints"
+path = "investigations.csv"
+size = 391016871
+
+[files."amanbhattarai695_data-analyst-job-roles-in-canada_Raw_Dataset.csv"]
+dataset = "amanbhattarai695/data-analyst-job-roles-in-canada"
+path = "Raw_Dataset.csv"
+size = 634172
+
+[files."amin233_forex-top-currency-pairs-20002020_AUDUSD-2000-2020-15m.csv"]
+dataset = "amin233/forex-top-currency-pairs-20002020"
+path = "AUDUSD-2000-2020-15m.csv"
+size = 28189402
+
+[files."amin233_forex-top-currency-pairs-20002020_USDJPY-2000-2020-15m.csv"]
+dataset = "amin233/forex-top-currency-pairs-20002020"
+path = "USDJPY-2000-2020-15m.csv"
+size = 28581161
+
+[files."aminealibi_ufc-fights-fighters-and-events-dataset_raw_data_raw_details.csv"]
+dataset = "aminealibi/ufc-fights-fighters-and-events-dataset"
+path = "raw_data/raw_details.csv"
+size = 2714956
+
+[files."amritbiswas007_player-injuries-and-team-performance-dataset_player_injuries_impact.csv"]
+dataset = "amritbiswas007/player-injuries-and-team-performance-dataset"
+path = "player_injuries_impact.csv"
+size = 177454
+
+[files."ananaymital_us-used-cars-dataset_used_cars_data.csv"]
+dataset = "ananaymital/us-used-cars-dataset"
+path = "used_cars_data.csv"
+size = 9980208148
+
+[files."andot03bsrc_dataset-predic-terkena-penyakit-paruparu_predic_tabel.csv"]
+dataset = "andot03bsrc/dataset-predic-terkena-penyakit-paruparu"
+path = "predic_tabel.csv"
+size = 1718803
+
+[files."andradaolteanu_bing-nrc-afinn-lexicons_Afinn.csv"]
+dataset = "andradaolteanu/bing-nrc-afinn-lexicons"
+path = "Afinn.csv"
+size = 30582
+
+[files."andreinovikov_olympic-games_olympic_games.csv"]
+dataset = "andreinovikov/olympic-games"
+path = "olympic_games.csv"
+size = 106332
+
+[files."andrewmvd_india-stock-market_stocks_df.csv"]
+dataset = "andrewmvd/india-stock-market"
+path = "stocks_df.csv"
+size = 228772099
+
+[files."andrewsundberg_college-basketball-dataset_cbb21.csv"]
+dataset = "andrewsundberg/college-basketball-dataset"
+path = "cbb21.csv"
+size = 39809
+
+[files."ang3loliveira_malware-analysis-datasets-top1000-pe-imports_top_1000_pe_imports.csv"]
+dataset = "ang3loliveira/malware-analysis-datasets-top1000-pe-imports"
+path = "top_1000_pe_imports.csv"
+size = 96840689
+
+[files."angelchaudhary_kaggle-dataset_sample_submission.csv"]
+dataset = "angelchaudhary/kaggle-dataset"
+path = "sample_submission.csv"
+size = 2430014
+
+[files."anggapurnama_twitter-dataset-ppkm_INA_TweetsPPKM_Raw.csv"]
+dataset = "anggapurnama/twitter-dataset-ppkm"
+path = "INA_TweetsPPKM_Raw.csv"
+size = 5203456
+
+[files."anhtran10_mean-im-data_mean_imputation_train.csv"]
+dataset = "anhtran10/mean-im-data"
+path = "mean_imputation/train.csv"
+size = 5576011428
+
+[files."aniket0712_bid-tabulations_Bid_Tabulations.csv"]
+dataset = "aniket0712/bid-tabulations"
+path = "Bid_Tabulations.csv"
+size = 419866366
+
+[files."anshtanwar_monthly-food-price-estimates_WLD_RTFP_country_2023-10-02.csv"]
+dataset = "anshtanwar/monthly-food-price-estimates"
+path = "WLD_RTFP_country_2023-10-02.csv"
+size = 272647
+
+[files."antonkozyriev_game-recommendations-on-steam_users.csv"]
+dataset = "antonkozyriev/game-recommendations-on-steam"
+path = "users.csv"
+size = 193068018
+
+[files."anujsaha0123456789_house-prices-cleaned-dataset-for-regression-ml_house_prices_cleaned.csv"]
+dataset = "anujsaha0123456789/house-prices-cleaned-dataset-for-regression-ml"
+path = "house_prices_cleaned.csv"
+size = 1947535
+
+[files."anvitkumar_shopping-dataset_briefs.csv"]
+dataset = "anvitkumar/shopping-dataset"
+path = "briefs.csv"
+size = 61972
+
+[files."aradhanahirapara_product-retail-price-survey-2017-2025_Retail_Prices_of _Products.csv"]
+dataset = "aradhanahirapara/product-retail-price-survey-2017-2025"
+path = "Retail_Prices_of _Products.csv"
+size = 12466686
+
+[files."arashnic_book-recommendation-dataset_Books.csv"]
+dataset = "arashnic/book-recommendation-dataset"
+path = "Books.csv"
+size = 73293635
+
+[files."arashnic_earthquake-magnitude-damage-and-impact_csv_building_structure.csv"]
+dataset = "arashnic/earthquake-magnitude-damage-and-impact"
+path = "csv_building_structure.csv"
+size = 159097445
+
+[files."arashnic_earthquake-magnitude-damage-and-impact_mapping.csv"]
+dataset = "arashnic/earthquake-magnitude-damage-and-impact"
+path = "mapping.csv"
+size = 172825291
+
+[files."arashnic_fitbit_mturkfitbit_export_4.12.16-5.12.16_Fitabase Data 4.12.16-5.12.16_dailySteps_merged.csv"]
+dataset = "arashnic/fitbit"
+path = "mturkfitbit_export_4.12.16-5.12.16/Fitabase Data 4.12.16-5.12.16/dailySteps_merged.csv"
+size = 25175
+
+[files."arashnic_fitbit_mturkfitbit_export_4.12.16-5.12.16_Fitabase Data 4.12.16-5.12.16_minuteCaloriesNarrow_merged.csv"]
+dataset = "arashnic/fitbit"
+path = "mturkfitbit_export_4.12.16-5.12.16/Fitabase Data 4.12.16-5.12.16/minuteCaloriesNarrow_merged.csv"
+size = 66443854
+
+[files."arashnic_hr-ana_test.csv"]
+dataset = "arashnic/hr-ana"
+path = "test.csv"
+size = 1538018
+
+[files."arashnic_the-depression-dataset_data_condition_condition_3.csv"]
+dataset = "arashnic/the-depression-dataset"
+path = "data/condition/condition_3.csv"
+size = 738788
+
+[files."aravinii_house-price-prediction-treated-dataset_df_train.csv"]
+dataset = "aravinii/house-price-prediction-treated-dataset"
+path = "df_train.csv"
+size = 1015988
+
+[files."arevel_chess-games_chess_games.csv"]
+dataset = "arevel/chess-games"
+path = "chess_games.csv"
+size = 4378895157
+
+[files."arhamrumi_amazon-product-reviews_Reviews.csv"]
+dataset = "arhamrumi/amazon-product-reviews"
+path = "Reviews.csv"
+size = 300904694
+
+[files."arnabbiswas1_microsoft-azure-predictive-maintenance_PdM_errors.csv"]
+dataset = "arnabbiswas1/microsoft-azure-predictive-maintenance"
+path = "PdM_errors.csv"
+size = 129077
+
+[files."arnavtripathi01_air-quality-and-metrological-data-in-india-2024_Dataset_Andhra Pradesh_Pollutants_Amravati.csv"]
+dataset = "arnavtripathi01/air-quality-and-metrological-data-in-india-2024"
+path = "Dataset/Andhra Pradesh/Pollutants/Amravati.csv"
+size = 1119347
+
+[files."arnavtripathi01_air-quality-and-metrological-data-in-india-2024_Dataset_Andhra Pradesh_Pollutants_Tirupati.csv"]
+dataset = "arnavtripathi01/air-quality-and-metrological-data-in-india-2024"
+path = "Dataset/Andhra Pradesh/Pollutants/Tirupati.csv"
+size = 988607
+
+[files."arshkon_linkedin-job-postings_postings.csv"]
+dataset = "arshkon/linkedin-job-postings"
+path = "postings.csv"
+size = 516843769
+
+[files."artermiloff_steam-games-dataset_games_march2025_cleaned.csv"]
+dataset = "artermiloff/steam-games-dataset"
+path = "games_march2025_cleaned.csv"
+size = 468641107
+
+[files."artermiloff_steam-games-dataset_games_may2024_full.csv"]
+dataset = "artermiloff/steam-games-dataset"
+path = "games_may2024_full.csv"
+size = 424919226
+
+[files."artyomkruglov_gaming-profiles-2025-steam-playstation-xbox_xbox_achievements.csv"]
+dataset = "artyomkruglov/gaming-profiles-2025-steam-playstation-xbox"
+path = "xbox/achievements.csv"
+size = 28980544
+
+[files."arvanshul_gurgaon-real-estate-99acres-com_gurgaon_10k.csv"]
+dataset = "arvanshul/gurgaon-real-estate-99acres-com"
+path = "gurgaon_10k.csv"
+size = 59516486
+
+[files."arvindkumarsp_nykaa-personal-care-data-for-eda_Nykaa_personal_care_data.csv"]
+dataset = "arvindkumarsp/nykaa-personal-care-data-for-eda"
+path = "Nykaa_personal_care_data.csv"
+size = 909265
+
+[files."aryan208_cybersecurity-threat-detection-logs_cybersecurity_threat_detection_logs.csv"]
+dataset = "aryan208/cybersecurity-threat-detection-logs"
+path = "cybersecurity_threat_detection_logs.csv"
+size = 874358689
+
+[files."aryansingh0909_nyt-articles-21m-2000-present_nyt-metadata.csv"]
+dataset = "aryansingh0909/nyt-articles-21m-2000-present"
+path = "nyt-metadata.csv"
+size = 4642293955
+
+[files."aryashah2k_nfuqnidsv2-network-intrusion-detection-dataset_NF-UQ-NIDS-v2.csv"]
+dataset = "aryashah2k/nfuqnidsv2-network-intrusion-detection-dataset"
+path = "NF-UQ-NIDS-v2.csv"
+size = 13729330230
+
+[files."asaniczka_1-3m-linkedin-jobs-and-skills-2024_job_summary.csv"]
+dataset = "asaniczka/1-3m-linkedin-jobs-and-skills-2024"
+path = "job_summary.csv"
+size = 5102016275
+
+[files."asaniczka_reddit-on-israel-palestine-daily-updated_reddit_opinion_PSE_ISR.csv"]
+dataset = "asaniczka/reddit-on-israel-palestine-daily-updated"
+path = "reddit_opinion_PSE_ISR.csv"
+size = 5766960991
+
+[files."asaniczka_trending-youtube-videos-113-countries_trending_yt_videos_113_countries.csv"]
+dataset = "asaniczka/trending-youtube-videos-113-countries"
+path = "trending_yt_videos_113_countries.csv"
+size = 6212747003
+
+[files."ashfakyeafi_pbd-load-history_PDB_Load_History.csv"]
+dataset = "ashfakyeafi/pbd-load-history"
+path = "PDB_Load_History.csv"
+size = 3579842
+
+[files."ashpalsingh1525_mcdonaldsdataset_mcd.csv"]
+dataset = "ashpalsingh1525/mcdonaldsdataset"
+path = "mcd.csv"
+size = 13707
+
+[files."ashutosh598_shoes-price-for-various-brands_data.csv"]
+dataset = "ashutosh598/shoes-price-for-various-brands"
+path = "data.csv"
+size = 156628
+
+[files."aslawant_alternative-metal-bands_alternative_metal_bands.csv"]
+dataset = "aslawant/alternative-metal-bands"
+path = "alternative_metal_bands.csv"
+size = 17094
+
+[files."astrasv247_ipl-dataset-2008-2025-ball-by-ball_ipl_dataset.csv"]
+dataset = "astrasv247/ipl-dataset-2008-2025-ball-by-ball"
+path = "ipl_dataset.csv"
+size = 80917284
+
+[files."astridvillalobos_daily-machine-learning-practice_data_X_train.csv"]
+dataset = "astridvillalobos/daily-machine-learning-practice"
+path = "data/X_train.csv"
+size = 728511
+
+[files."atechnohazard_battery-and-heating-data-in-real-driving-cycles_TripA15.csv"]
+dataset = "atechnohazard/battery-and-heating-data-in-real-driving-cycles"
+path = "TripA15.csv"
+size = 2115029
+
+[files."atharvasoundankar_mental-health-and-lifestyle-habits-2019-2024_Mental_Health_Lifestyle_Dataset.csv"]
+dataset = "atharvasoundankar/mental-health-and-lifestyle-habits-2019-2024"
+path = "Mental_Health_Lifestyle_Dataset.csv"
+size = 187583
+
+[files."atharvasoundankar_shifting-seas-ocean-climate-and-marine-life-dataset_realistic_ocean_climate_dataset.csv"]
+dataset = "atharvasoundankar/shifting-seas-ocean-climate-and-marine-life-dataset"
+path = "realistic_ocean_climate_dataset.csv"
+size = 34163
+
+[files."atulanandjha_national-stock-exchange-time-series_infy_stock.csv"]
+dataset = "atulanandjha/national-stock-exchange-time-series"
+path = "infy_stock.csv"
+size = 30177
+
+[files."atulmittal199174_adventure-works-dataset_AdventureWorks-Customers.csv"]
+dataset = "atulmittal199174/adventure-works-dataset"
+path = "AdventureWorks-Customers.csv"
+size = 1975231
+
+[files."audreyhengruizhang_china-city-attraction-details_citydata_三明.csv"]
+dataset = "audreyhengruizhang/china-city-attraction-details"
+path = "citydata/三明.csv"
+size = 46984
+
+[files."avc0706_luna16_evaluationScript_evaluationScript_annotations_seriesuids.csv"]
+dataset = "avc0706/luna16"
+path = "evaluationScript/evaluationScript/annotations/seriesuids.csv"
+size = 58608
+
+[files."aymenbelkadi_afcon-2025-predictor-elo-travel-and-squad-value_matches.csv"]
+dataset = "aymenbelkadi/afcon-2025-predictor-elo-travel-and-squad-value"
+path = "matches.csv"
+size = 3684249
+
+[files."ayushghawana_perfume-dataset_Perfumes_dataset.csv"]
+dataset = "ayushghawana/perfume-dataset"
+path = "Perfumes_dataset.csv"
+size = 62823
+
+[files."ayushparwal2026_cartoon-dataset_Cartoon_datasets.csv"]
+dataset = "ayushparwal2026/cartoon-dataset"
+path = "Cartoon_datasets.csv"
+size = 18063
+
+[files."azalhowaide_iot-dataset-for-intrusion-detection-systems-ids_BotNeTIoT-L01_label_NoDuplicates.csv"]
+dataset = "azalhowaide/iot-dataset-for-intrusion-detection-systems-ids"
+path = "BotNeTIoT-L01_label_NoDuplicates.csv"
+size = 635529374
+
+[files."babyoda_healthcare-investments-and-length-of-hospital-stay_Healthcare_Investments_and_Hospital_Stay (1).csv"]
+dataset = "babyoda/healthcare-investments-and-length-of-hospital-stay"
+path = "Healthcare_Investments_and_Hospital_Stay (1).csv"
+size = 15310
+
+[files."bachirbarika_power-system_binaryAllNaturalPlusNormalVsAttacks_data12.csv"]
+dataset = "bachirbarika/power-system"
+path = "binaryAllNaturalPlusNormalVsAttacks/data12.csv"
+size = 5426051
+
+[files."bachirbarika_power-system_binaryAllNaturalPlusNormalVsAttacks_data13.csv"]
+dataset = "bachirbarika/power-system"
+path = "binaryAllNaturalPlusNormalVsAttacks/data13.csv"
+size = 5501797
+
+[files."bahramjannesarr_goodreads-book-datasets-10m_book2000k-3000k.csv"]
+dataset = "bahramjannesarr/goodreads-book-datasets-10m"
+path = "book2000k-3000k.csv"
+size = 288534047
+
+[files."balbinotchoutzine_red-blod-cell-classification-monthly-event_input_holdout.csv"]
+dataset = "balbinotchoutzine/red-blod-cell-classification-monthly-event"
+path = "input/holdout.csv"
+size = 11284
+
+[files."bappekim_air-pollution-in-seoul_AirPollutionSeoul_Measurement_summary.csv"]
+dataset = "bappekim/air-pollution-in-seoul"
+path = "AirPollutionSeoul/Measurement_summary.csv"
+size = 92711120
+
+[files."barkataliarbab_china-real-state-data-claning_china-real-estate-demand-prediction_sample_submission.csv"]
+dataset = "barkataliarbab/china-real-state-data-claning"
+path = "china-real-estate-demand-prediction/sample_submission.csv"
+size = 31032
+
+[files."barkataliarbab_usda-fooddata-central-foundation-foods-2025_FoodData_Central_foundation_food_csv_2025-04-24_food_nutrient_conversion_factor.csv"]
+dataset = "barkataliarbab/usda-fooddata-central-foundation-foods-2025"
+path = "FoodData_Central_foundation_food_csv_2025-04-24/food_nutrient_conversion_factor.csv"
+size = 195584
+
+[files."bcgvaccine_hackathon_BCG_COVID-19_clinical_trials-2020_06_06.csv"]
+dataset = "bcgvaccine/hackathon"
+path = "BCG_COVID-19_clinical_trials-2020_06_06.csv"
+size = 50348
+
+[files."beatafaron_telco-customer-churn-realistic-customer-feedback_telco_prep.csv"]
+dataset = "beatafaron/telco-customer-churn-realistic-customer-feedback"
+path = "telco_prep.csv"
+size = 5816428
+
+[files."berkayalan_ecommerce-sales-dataset_customer_details.csv"]
+dataset = "berkayalan/ecommerce-sales-dataset"
+path = "customer_details.csv"
+size = 454959
+
+[files."berkayalan_retail-sales-data_sales.csv_sales.csv"]
+dataset = "berkayalan/retail-sales-data"
+path = "sales.csv/sales.csv"
+size = 1064515532
+
+[files."bertnardomariouskono_cardiovascular-disease-risk-prediction-dataset_healthcare_synthetic_data.csv"]
+dataset = "bertnardomariouskono/cardiovascular-disease-risk-prediction-dataset"
+path = "healthcare_synthetic_data.csv"
+size = 1002160
+
+[files."bertnardomariouskono_global-supply-chain-disruption-and-resilience_global_supply_chain_disruption_v1.csv"]
+dataset = "bertnardomariouskono/global-supply-chain-disruption-and-resilience"
+path = "global_supply_chain_disruption_v1.csv"
+size = 1517590
+
+[files."bertvankeulen_cicids-2017_wednesday.csv"]
+dataset = "bertvankeulen/cicids-2017"
+path = "wednesday.csv"
+size = 206984560
+
+[files."beyzacinar22_diadata_datasets for T1D_maindatabase.csv"]
+dataset = "beyzacinar22/diadata"
+path = "datasets for T1D/maindatabase.csv"
+size = 6485396250
+
+[files."beyzacinar22_diadata_datasets for T1D_subdatabaseI.csv"]
+dataset = "beyzacinar22/diadata"
+path = "datasets for T1D/subdatabaseI.csv"
+size = 6523538599
+
+[files."bhadramohit_climate-change-dataset_climate_change_dataset.csv"]
+dataset = "bhadramohit/climate-change-dataset"
+path = "climate_change_dataset.csv"
+size = 53208
+
+[files."bhanupratapbiswas_website-traffic-analysis_traffic.csv"]
+dataset = "bhanupratapbiswas/website-traffic-analysis"
+path = "traffic.csv"
+size = 30630222
+
+[files."bhanuthakurr_cleaned-contoso-dataset_DimSalesTerritory.csv"]
+dataset = "bhanuthakurr/cleaned-contoso-dataset"
+path = "DimSalesTerritory.csv"
+size = 18577
+
+[files."bhanuthakurr_cleaned-contoso-dataset_FactITMachine.csv"]
+dataset = "bhanuthakurr/cleaned-contoso-dataset"
+path = "FactITMachine.csv"
+size = 1250222
+
+[files."bhautikvekariya21_air-quality-dataset-indian-cities-2022-2025_aqi_india_38cols_knn_final.csv"]
+dataset = "bhautikvekariya21/air-quality-dataset-indian-cities-2022-2025"
+path = "aqi_india_38cols_knn_final.csv"
+size = 177671379
+
+[files."bhavatharininatesan_california-housing-dataset_test.csv"]
+dataset = "bhavatharininatesan/california-housing-dataset"
+path = "test.csv"
+size = 2270092
+
+[files."bhavikjikadara_emotions-dataset_emotions.csv"]
+dataset = "bhavikjikadara/emotions-dataset"
+path = "emotions.csv"
+size = 42109557
+
+[files."bhavikjikadara_handwritten-digit-recognition_test.csv"]
+dataset = "bhavikjikadara/handwritten-digit-recognition"
+path = "test.csv"
+size = 51118296
+
+[files."bhavyadhingra00020_india-rental-house-price_Indian_housing_Mumbai_data.csv"]
+dataset = "bhavyadhingra00020/india-rental-house-price"
+path = "Indian_housing_Mumbai_data.csv"
+size = 2909432
+
+[files."bilal1907_mimic-iii-10k_MIMIC -III (10000 patients)_DRGCODES_DRGCODES_sorted.csv"]
+dataset = "bilal1907/mimic-iii-10k"
+path = "MIMIC -III (10000 patients)/DRGCODES/DRGCODES_sorted.csv"
+size = 1603215
+
+[files."biswaranjanrao_anemia-dataset_anemia.csv"]
+dataset = "biswaranjanrao/anemia-dataset"
+path = "anemia.csv"
+size = 34627
+
+[files."blueloki_synthetic-agricultural-yield-prediction-dataset_agricultural_yield_test.csv"]
+dataset = "blueloki/synthetic-agricultural-yield-prediction-dataset"
+path = "agricultural_yield_test.csv"
+size = 379899
+
+[files."bobirino_flight-delay_final_data.csv"]
+dataset = "bobirino/flight-delay"
+path = "final_data.csv"
+size = 1842182130
+
+[files."bordanova_2023-us-civil-flights-delay-meteo-and-aircraft_US_flights_2023.csv"]
+dataset = "bordanova/2023-us-civil-flights-delay-meteo-and-aircraft"
+path = "US_flights_2023.csv"
+size = 1151921585
+
+[files."bradystephenson_bibledata_BibleData-PlaceLabel.csv"]
+dataset = "bradystephenson/bibledata"
+path = "BibleData-PlaceLabel.csv"
+size = 26999
+
+[files."brendanartley_simplifiedinstacartdata_orders.csv"]
+dataset = "brendanartley/simplifiedinstacartdata"
+path = "orders.csv"
+size = 114217523
+
+[files."brjapon_gearbox-fault-diagnosis_BrokenTooth_b30hz0.csv"]
+dataset = "brjapon/gearbox-fault-diagnosis"
+path = "BrokenTooth/b30hz0.csv"
+size = 3075743
+
+[files."brjapon_gearbox-fault-diagnosis_BrokenTooth_b30hz90.csv"]
+dataset = "brjapon/gearbox-fault-diagnosis"
+path = "BrokenTooth/b30hz90.csv"
+size = 3633214
+
+[files."brsdincer_mars-surface-and-curiosity-image-set-nasa_Mars Surface and Curiosity Image_Test_CSV.csv"]
+dataset = "brsdincer/mars-surface-and-curiosity-image-set-nasa"
+path = "Mars Surface and Curiosity Image/Test_CSV.csv"
+size = 64551
+
+[files."brunoalarcon123_top-200-spotify-songs-dataset_Spotify_Dataset_V3.csv"]
+dataset = "brunoalarcon123/top-200-spotify-songs-dataset"
+path = "Spotify_Dataset_V3.csv"
+size = 157085296
+
+[files."bryanpark_sudoku_sudoku.csv"]
+dataset = "bryanpark/sudoku"
+path = "sudoku.csv"
+size = 164000018
+
+[files."brynja_wineuci_Wine.csv"]
+dataset = "brynja/wineuci"
+path = "Wine.csv"
+size = 10958
+
+[files."bwandowando_clash-royale-season-18-dec-0320-dataset_BattlesStaging_01022021_WL_tagged_BattlesStaging_01022021_WL_tagged.csv"]
+dataset = "bwandowando/clash-royale-season-18-dec-0320-dataset"
+path = "BattlesStaging_01022021_WL_tagged/BattlesStaging_01022021_WL_tagged.csv"
+size = 1732259332
+
+[files."bwandowando_clash-royale-season-18-dec-0320-dataset_BattlesStaging_01032021_WL_tagged_BattlesStaging_01032021_WL_tagged.csv"]
+dataset = "bwandowando/clash-royale-season-18-dec-0320-dataset"
+path = "BattlesStaging_01032021_WL_tagged/BattlesStaging_01032021_WL_tagged.csv"
+size = 1828896746
+
+[files."bwandowando_clash-royale-season-18-dec-0320-dataset_BattlesStaging_12072020_to_12262020_WL_tagged_battlesStaging_12072020_to_12262020_WL_tagged.csv"]
+dataset = "bwandowando/clash-royale-season-18-dec-0320-dataset"
+path = "BattlesStaging_12072020_to_12262020_WL_tagged/battlesStaging_12072020_to_12262020_WL_tagged.csv"
+size = 9874480805
+
+[files."bwandowando_clash-royale-season-18-dec-0320-dataset_BattlesStaging_12272020_WL_tagged_battlesStaging_12272020_WL_tagged.csv"]
+dataset = "bwandowando/clash-royale-season-18-dec-0320-dataset"
+path = "BattlesStaging_12272020_WL_tagged/battlesStaging_12272020_WL_tagged.csv"
+size = 1121694514
+
+[files."bwandowando_clash-royale-season-18-dec-0320-dataset_BattlesStaging_12292020_WL_tagged_BattlesStaging_12292020_WL_tagged.csv"]
+dataset = "bwandowando/clash-royale-season-18-dec-0320-dataset"
+path = "BattlesStaging_12292020_WL_tagged/BattlesStaging_12292020_WL_tagged.csv"
+size = 1379335864
+
+[files."bwandowando_dota-2-pro-league-matches-2023_2016_all_word_counts.csv"]
+dataset = "bwandowando/dota-2-pro-league-matches-2023"
+path = "2016/all_word_counts.csv"
+size = 4658575
+
+[files."bwandowando_ice-2012-2023-historical-data_arrests_csv_arrests_2011_2023.csv"]
+dataset = "bwandowando/ice-2012-2023-historical-data"
+path = "arrests/csv/arrests_2011_2023.csv"
+size = 273128753
+
+[files."bwandowando_ice-arrests-detention-and-deportation-data_detainers_csv_detainers-latest.csv"]
+dataset = "bwandowando/ice-arrests-detention-and-deportation-data"
+path = "detainers/csv/detainers-latest.csv"
+size = 262437789
+
+[files."bwandowando_ice-arrests-detention-and-deportation-data_detention_stints_csv_detention-stints-latest.csv"]
+dataset = "bwandowando/ice-arrests-detention-and-deportation-data"
+path = "detention_stints/csv/detention-stints-latest.csv"
+size = 1210370970
+
+[files."bwandowando_laos-food-panda-restaurant-reviews_la_reviews_2025.csv"]
+dataset = "bwandowando/laos-food-panda-restaurant-reviews"
+path = "la_reviews_2025.csv"
+size = 6497009
+
+[files."bwandowando_philippine-cities-air-quality-index-data-2025_202508_202508_CombinedData.csv_202508_CombinedData.csv"]
+dataset = "bwandowando/philippine-cities-air-quality-index-data-2025"
+path = "202508/202508_CombinedData.csv/202508_CombinedData.csv"
+size = 8808999
+
+[files."bwandowando_ukraine-russian-crisis-twitter-dataset-1-2-m-rows_0820_UkraineCombinedTweetsDeduped.csv"]
+dataset = "bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows"
+path = "0820_UkraineCombinedTweetsDeduped.csv"
+size = 31061403
+
+[files."bytadit_ecommerce-order-dataset_Ecommerce Order Dataset_train_df_Customers.csv"]
+dataset = "bytadit/ecommerce-order-dataset"
+path = "Ecommerce Order Dataset/train/df_Customers.csv"
+size = 2953236
+
+[files."caesarmario_indofood-sukses-makmur-stock-historical-price_INDF.JK_weekly.csv"]
+dataset = "caesarmario/indofood-sukses-makmur-stock-historical-price"
+path = "INDF.JK_weekly.csv"
+size = 35609
+
+[files."calebmwelsh_anilist-anime-dataset_anilist_anime_data_complete.csv"]
+dataset = "calebmwelsh/anilist-anime-dataset"
+path = "anilist_anime_data_complete.csv"
+size = 430272961
+
+[files."canerkonuk_youtube-trending-videos-global_youtube_trending_videos_global.csv"]
+dataset = "canerkonuk/youtube-trending-videos-global"
+path = "youtube_trending_videos_global.csv"
+size = 15617797538
+
+[files."carlosgdcj_genius-song-lyrics-with-language-information_song_lyrics.csv"]
+dataset = "carlosgdcj/genius-song-lyrics-with-language-information"
+path = "song_lyrics.csv"
+size = 9070394868
+
+[files."cesaranasco_jira-dataset_GFG_FINAL.csv"]
+dataset = "cesaranasco/jira-dataset"
+path = "GFG_FINAL.csv"
+size = 119122853
+
+[files."chaitanyachandra_data-csv_Data2.csv"]
+dataset = "chaitanyachandra/data-csv"
+path = "Data2.csv"
+size = 19635
+
+[files."chancecayaban_code-the-dream-lesson-5_fake_data.csv"]
+dataset = "chancecayaban/code-the-dream-lesson-5"
+path = "fake_data.csv"
+size = 35131
+
+[files."chandiragunatilleke_wiki-neutrality-corpus_WNC_WNC_revision_topics.csv"]
+dataset = "chandiragunatilleke/wiki-neutrality-corpus"
+path = "WNC/WNC/revision_topics.csv"
+size = 52567981
+
+[files."chandiragunatilleke_wiki-neutrality-corpus_WNC_real_world_samples_news_left.csv"]
+dataset = "chandiragunatilleke/wiki-neutrality-corpus"
+path = "WNC/real_world_samples/news_left.csv"
+size = 118782
+
+[files."chethanp11_orion-star-sports-and-outdoors-rdbms-dataset_EMPLOYEE_ADDRESSES.csv"]
+dataset = "chethanp11/orion-star-sports-and-outdoors-rdbms-dataset"
+path = "EMPLOYEE_ADDRESSES.csv"
+size = 31880
+
+[files."chethuhn_network-intrusion-dataset_Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"]
+dataset = "chethuhn/network-intrusion-dataset"
+path = "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
+size = 83102436
+
+[files."chik0di_health-and-lifestyle-dataset_health_lifestyle_dataset.csv"]
+dataset = "chik0di/health-and-lifestyle-dataset"
+path = "health_lifestyle_dataset.csv"
+size = 6064344
+
+[files."christianpaul13_ncaa-division-i-wrestling-matches-2013-2025_d1_results_unique.csv"]
+dataset = "christianpaul13/ncaa-division-i-wrestling-matches-2013-2025"
+path = "d1_results_unique.csv"
+size = 33724327
+
+[files."christophmaa_cross-national-covid-19-risk-and-policy-dataset-v1_df_compressed.csv"]
+dataset = "christophmaa/cross-national-covid-19-risk-and-policy-dataset-v1"
+path = "df_compressed.csv"
+size = 7356208
+
+[files."chumajin_heterogeneity-human-activity-recognition-dataset_Phones_accelerometer.csv"]
+dataset = "chumajin/heterogeneity-human-activity-recognition-dataset"
+path = "Phones_accelerometer.csv"
+size = 1291856600
+
+[files."chumajin_heterogeneity-human-activity-recognition-dataset_edit_Phones_accelerometer.csv"]
+dataset = "chumajin/heterogeneity-human-activity-recognition-dataset"
+path = "edit_Phones_accelerometer.csv"
+size = 6081012196
+
+[files."cinhvn_vispamdataset-v2_old_data_test.csv"]
+dataset = "cinhvn/vispamdataset-v2"
+path = "old_data/test.csv"
+size = 670227
+
+[files."cisautomotiveapi_large-car-dataset_CIS_Automotive_Kaggle_Sample.csv"]
+dataset = "cisautomotiveapi/large-car-dataset"
+path = "CIS_Automotive_Kaggle_Sample.csv"
+size = 5359382055
+
+[files."claytonmiller_construction-and-project-management-example-data_Construction_Data_PM_Forms_All_Projects.csv"]
+dataset = "claytonmiller/construction-and-project-management-example-data"
+path = "Construction_Data_PM_Forms_All_Projects.csv"
+size = 2204969
+
+[files."claytonmiller_cubems-smart-building-energy-and-iaq-data_2019Floor4.csv"]
+dataset = "claytonmiller/cubems-smart-building-energy-and-iaq-data"
+path = "2019Floor4.csv"
+size = 76454851
+
+[files."cnic92_200-financial-indicators-of-us-stocks-20142018_2018_Financial_Data.csv"]
+dataset = "cnic92/200-financial-indicators-of-us-stocks-20142018"
+path = "2018_Financial_Data.csv"
+size = 8570851
+
+[files."cnrieiit_mqttset_Data_FINAL_CSV_train70.csv"]
+dataset = "cnrieiit/mqttset"
+path = "Data/FINAL_CSV/train70.csv"
+size = 1269541672
+
+[files."colabsss_personalized-english-learning-dataset_personalized_english_learning_dataset.csv"]
+dataset = "colabsss/personalized-english-learning-dataset"
+path = "personalized_english_learning_dataset.csv"
+size = 321966
+
+[files."colormap_spambase_spambase.csv"]
+dataset = "colormap/spambase"
+path = "spambase.csv"
+size = 1150664
+
+[files."comhek_500-snickers-dataset_sneakers.csv"]
+dataset = "comhek/500-snickers-dataset"
+path = "sneakers.csv"
+size = 82867
+
+[files."crawford_20-newsgroups_list.csv"]
+dataset = "crawford/20-newsgroups"
+path = "list.csv"
+size = 15722
+
+[files."crustacean_electricity-forecast-generation-load-price_Actual_generation_202001010000_202601010000_Quarterhour.csv"]
+dataset = "crustacean/electricity-forecast-generation-load-price"
+path = "Actual_generation_202001010000_202601010000_Quarterhour.csv"
+size = 27779027
+
+[files."cryptexcode_banfakenews_Authentic-48K.csv"]
+dataset = "cryptexcode/banfakenews"
+path = "Authentic-48K.csv"
+size = 244386690
+
+[files."cvronao_covid19-philippine-dataset_DOH Data Collect - Daily Reports_DOH COVID Data Drop_ 20200429 - 06 DOH Data Collect - Daily Report.csv"]
+dataset = "cvronao/covid19-philippine-dataset"
+path = "DOH Data Collect - Daily Reports/DOH COVID Data Drop_ 20200429 - 06 DOH Data Collect - Daily Report.csv"
+size = 2145649
+
+[files."d4rklucif3r_full-scale-waste-water-treatment-plant-data_Data-Melbourne_F.csv"]
+dataset = "d4rklucif3r/full-scale-waste-water-treatment-plant-data"
+path = "Data-Melbourne_F.csv"
+size = 113941
+
+[files."daittan_gold-commodity-news-and-dimensions_finalDataset_0208.csv"]
+dataset = "daittan/gold-commodity-news-and-dimensions"
+path = "finalDataset_0208.csv"
+size = 2087744
+
+[files."dalyas_lahman-baseball-database_lahman_1871-2024_csv_Batting.csv"]
+dataset = "dalyas/lahman-baseball-database"
+path = "lahman_1871-2024_csv/Batting.csv"
+size = 7461820
+
+[files."daniaherzalla_tii-ssrc-23_csv_data.csv"]
+dataset = "daniaherzalla/tii-ssrc-23"
+path = "csv/data.csv"
+size = 5021652038
+
+[files."danielarivasu_online-retail-sales_retail_cleans.csv"]
+dataset = "danielarivasu/online-retail-sales"
+path = "retail_cleans.csv"
+size = 49727616
+
+[files."daniilmiroshnichenko_customers-csv_customers.csv"]
+dataset = "daniilmiroshnichenko/customers-csv"
+path = "customers.csv"
+size = 42654
+
+[files."darshshah1010_ipl-ball-by-ball-dataset-2020-2025_all_matches_ball_by_ball1.csv"]
+dataset = "darshshah1010/ipl-ball-by-ball-dataset-2020-2025"
+path = "all_matches_ball_by_ball1.csv"
+size = 10687185
+
+[files."dasgroup_rba-dataset_rba-dataset.csv"]
+dataset = "dasgroup/rba-dataset"
+path = "rba-dataset.csv"
+size = 9052907531
+
+[files."datasetengineer_zero-day-attack-detection-in-logistics-networks_zero_day_attack_detection_dataset_V2_97k.csv"]
+dataset = "datasetengineer/zero-day-attack-detection-in-logistics-networks"
+path = "zero_day_attack_detection_dataset_V2_97k.csv"
+size = 23220445
+
+[files."datazng_shopping-mall-customer-data-segmentation-analysis_Shopping Mall Customer Segmentation Data .csv"]
+dataset = "datazng/shopping-mall-customer-data-segmentation-analysis"
+path = "Shopping Mall Customer Segmentation Data .csv"
+size = 836395
+
+[files."davidduffield_dataset_results.csv"]
+dataset = "davidduffield/dataset"
+path = "results.csv"
+size = 240639
+
+[files."davidshinn_github-issues_github_issues.csv"]
+dataset = "davidshinn/github-issues"
+path = "github_issues.csv"
+size = 2852401417
+
+[files."davutb_metacritic-games_games_reviews.csv"]
+dataset = "davutb/metacritic-games"
+path = "games_reviews.csv"
+size = 923098710
+
+[files."debashis74017_stock-market-data-nifty-100-stocks-5-min-data_BAJFINANCE_5minute.csv"]
+dataset = "debashis74017/stock-market-data-nifty-100-stocks-5-min-data"
+path = "BAJFINANCE_5minute.csv"
+size = 9709192
+
+[files."debashis74017_stock-market-data-nifty-100-stocks-5-min-data_BHARTIARTL_5minute.csv"]
+dataset = "debashis74017/stock-market-data-nifty-100-stocks-5-min-data"
+path = "BHARTIARTL_5minute.csv"
+size = 10259301
+
+[files."debashis74017_stock-market-data-nifty-50-stocks-1-min-data_BAJAJHLDNG_minute.csv"]
+dataset = "debashis74017/stock-market-data-nifty-50-stocks-1-min-data"
+path = "BAJAJHLDNG_minute.csv"
+size = 53299404
+
+[files."debashis74017_stock-market-data-nifty-50-stocks-1-min-data_BOSCHLTD_minute.csv"]
+dataset = "debashis74017/stock-market-data-nifty-50-stocks-1-min-data"
+path = "BOSCHLTD_minute.csv"
+size = 57106192
+
+[files."deepaksacso_car-price-prediction-challenge-fully-cleaned2026_Car_Price_Challenge_Cleaned_2026 (3).csv"]
+dataset = "deepaksacso/car-price-prediction-challenge-fully-cleaned2026"
+path = "Car_Price_Challenge_Cleaned_2026 (3).csv"
+size = 1285118
+
+[files."deltaromeo_horse-racing-results-ukireland-2015-2025_raceform.csv"]
+dataset = "deltaromeo/horse-racing-results-ukireland-2015-2025"
+path = "raceform.csv"
+size = 680579806
+
+[files."denkuznetz_housing-prices-regression_real_estate_dataset.csv"]
+dataset = "denkuznetz/housing-prices-regression"
+path = "real_estate_dataset.csv"
+size = 47648
+
+[files."derrickmwiti_cluster-trace-gpu-v2020_pai_instance_table.csv"]
+dataset = "derrickmwiti/cluster-trace-gpu-v2020"
+path = "pai_instance_table.csv"
+size = 1975177618
+
+[files."devaangbarthwal_s-and-p-500-holdings-and-weights-spy-2000-2024_Investments_2013-09-30.csv"]
+dataset = "devaangbarthwal/s-and-p-500-holdings-and-weights-spy-2000-2024"
+path = "Investments_2013-09-30.csv"
+size = 15087
+
+[files."devbatrax_linear-regression-dataset_linear regression dataset.csv"]
+dataset = "devbatrax/linear-regression-dataset"
+path = "linear regression dataset.csv"
+size = 10384
+
+[files."devendra416_ddos-datasets_ddos_balanced_final_dataset.csv"]
+dataset = "devendra416/ddos-datasets"
+path = "ddos_balanced/final_dataset.csv"
+size = 6794744782
+
+[files."devendra416_ddos-datasets_ddos_imbalanced_unbalaced_20_80_dataset.csv"]
+dataset = "devendra416/ddos-datasets"
+path = "ddos_imbalanced/unbalaced_20_80_dataset.csv"
+size = 4121715182
+
+[files."devinanzelmo_dota-2-matches_purchase_log.csv"]
+dataset = "devinanzelmo/dota-2-matches"
+path = "purchase_log.csv"
+size = 296767160
+
+[files."dhavalrupapara_cricket-players-worldwide-dataset_players_data_with_all_info.csv"]
+dataset = "dhavalrupapara/cricket-players-worldwide-dataset"
+path = "players_data_with_all_info.csv"
+size = 4288804
+
+[files."dhrubangtalukdar_fortune-500-companies-stock-data_fortune_500_stock_data_A-Mark_Precious_Metals.csv"]
+dataset = "dhrubangtalukdar/fortune-500-companies-stock-data"
+path = "fortune_500_stock_data/A-Mark_Precious_Metals.csv"
+size = 68285
+
+[files."dhrubangtalukdar_fortune-500-companies-stock-data_fortune_500_stock_data_ABM_Industries.csv"]
+dataset = "dhrubangtalukdar/fortune-500-companies-stock-data"
+path = "fortune_500_stock_data/ABM_Industries.csv"
+size = 296161
+
+[files."dhrubangtalukdar_top-50-cryptocurrency-dataset_cosmos.csv"]
+dataset = "dhrubangtalukdar/top-50-cryptocurrency-dataset"
+path = "cosmos.csv"
+size = 234112
+
+[files."dhruvildave_en-fr-translation-dataset_en-fr.csv"]
+dataset = "dhruvildave/en-fr-translation-dataset"
+path = "en-fr.csv"
+size = 8410507707
+
+[files."dhruvildave_spotify-charts_charts.csv"]
+dataset = "dhruvildave/spotify-charts"
+path = "charts.csv"
+size = 3483476388
+
+[files."dilwong_flightprices_itineraries.csv"]
+dataset = "dilwong/flightprices"
+path = "itineraries.csv"
+size = 31091834438
+
+[files."divyeshardeshana_supply-chain-shipment-pricing-data_SCMS_Delivery_History_Dataset.csv"]
+dataset = "divyeshardeshana/supply-chain-shipment-pricing-data"
+path = "SCMS_Delivery_History_Dataset.csv"
+size = 3785904
+
+[files."dnkumars_asana-enterprise-workspace-simulation-dataset_tocsv_csv_task_tags.csv"]
+dataset = "dnkumars/asana-enterprise-workspace-simulation-dataset"
+path = "tocsv/csv/task_tags.csv"
+size = 2793616
+
+[files."dongzheli200301_us-daily-stock-market-data-2015-2025_US daily stock market data-2015-2017.csv"]
+dataset = "dongzheli200301/us-daily-stock-market-data-2015-2025"
+path = "US daily stock market data-2015-2017.csv"
+size = 455265467
+
+[files."dongzheli200301_us-daily-stock-market-data-2015-2025_US daily stock market data-2022-2025.csv"]
+dataset = "dongzheli200301/us-daily-stock-market-data-2015-2025"
+path = "US daily stock market data-2022-2025.csv"
+size = 897128158
+
+[files."dorianvoydie_2019-database-of-road-traffic-injuries_usagers-2019.csv"]
+dataset = "dorianvoydie/2019-database-of-road-traffic-injuries"
+path = "usagers-2019.csv"
+size = 8227764
+
+[files."durvadongre_water-quality-india_BR_11803.csv"]
+dataset = "durvadongre/water-quality-india"
+path = "BR/11803.csv"
+size = 170262
+
+[files."ealtman2019_ibm-transactions-for-anti-money-laundering-aml_HI-Large_Trans.csv"]
+dataset = "ealtman2019/ibm-transactions-for-anti-money-laundering-aml"
+path = "HI-Large_Trans.csv"
+size = 17052760651
+
+[files."ealtman2019_ibm-transactions-for-anti-money-laundering-aml_HI-Medium_Trans.csv"]
+dataset = "ealtman2019/ibm-transactions-for-anti-money-laundering-aml"
+path = "HI-Medium_Trans.csv"
+size = 3031783420
+
+[files."ealtman2019_ibm-transactions-for-anti-money-laundering-aml_LI-Large_Trans.csv"]
+dataset = "ealtman2019/ibm-transactions-for-anti-money-laundering-aml"
+path = "LI-Large_Trans.csv"
+size = 16742513790
+
+[files."ealtman2019_ibm-transactions-for-anti-money-laundering-aml_LI-Medium_Trans.csv"]
+dataset = "ealtman2019/ibm-transactions-for-anti-money-laundering-aml"
+path = "LI-Medium_Trans.csv"
+size = 2976436978
+
+[files."ecoco2_household-appliances-power-consumption_dehumidifier_322.csv"]
+dataset = "ecoco2/household-appliances-power-consumption"
+path = "dehumidifier_322.csv"
+size = 79581017
+
+[files."ecoco2_household-appliances-power-consumption_fan_215.csv"]
+dataset = "ecoco2/household-appliances-power-consumption"
+path = "fan_215.csv"
+size = 78457416
+
+[files."edoardogalli_stack-overflow-annual-developer-survey-2025_survey_results_public.csv"]
+dataset = "edoardogalli/stack-overflow-annual-developer-survey-2025"
+path = "survey_results_public.csv"
+size = 140484689
+
+[files."edwardtoledolpez_amazon-mexico-top-50-best-sellers_brazil_csv_br-dvd.csv"]
+dataset = "edwardtoledolpez/amazon-mexico-top-50-best-sellers"
+path = "brazil/csv/br-dvd.csv"
+size = 3341814
+
+[files."ekibee_car-sales-information_all_regions.csv"]
+dataset = "ekibee/car-sales-information"
+path = "all_regions.csv"
+size = 2142565080
+
+[files."ekrembayar_fifa-21-complete-player-dataset_fifa21_male2.csv"]
+dataset = "ekrembayar/fifa-21-complete-player-dataset"
+path = "fifa21_male2.csv"
+size = 10992397
+
+[files."ellipticco_elliptic-data-set_elliptic_bitcoin_dataset_elliptic_txs_features.csv"]
+dataset = "ellipticco/elliptic-data-set"
+path = "elliptic_bitcoin_dataset/elliptic_txs_features.csv"
+size = 689683771
+
+[files."elmoallistair_commodity-prices-19602021_commodity_prices.csv"]
+dataset = "elmoallistair/commodity-prices-19602021"
+path = "commodity_prices.csv"
+size = 11450
+
+[files."emilynack_aci-iot-network-traffic-dataset-2023_ACI-IoT-2023-Payload.csv"]
+dataset = "emilynack/aci-iot-network-traffic-dataset-2023"
+path = "ACI-IoT-2023-Payload.csv"
+size = 5532418561
+
+[files."emirhanakku_ai-workforce-and-automation-dataset-20152025_global_ai_workforce_automation_2015_2025.csv"]
+dataset = "emirhanakku/ai-workforce-and-automation-dataset-20152025"
+path = "global_ai_workforce_automation_2015_2025.csv"
+size = 16632
+
+[files."emirhanakku_synthetic-credit-risk-dataset-extreme-imbalance_synthetic_credit_risk.csv"]
+dataset = "emirhanakku/synthetic-credit-risk-dataset-extreme-imbalance"
+path = "synthetic_credit_risk.csv"
+size = 1232965
+
+[files."emmanuelfwerr_thyroid-disease-data_thyroidDF.csv"]
+dataset = "emmanuelfwerr/thyroid-disease-data"
+path = "thyroidDF.csv"
+size = 749092
+
+[files."entenam_reddit-mental-health-dataset_Original Reddit Data_raw data_2019_Aug_mhaug19.csv"]
+dataset = "entenam/reddit-mental-health-dataset"
+path = "Original Reddit Data/raw data/2019/Aug/mhaug19.csv"
+size = 4860387
+
+[files."ergkerg_russian-scientific-articles_Info_10 Геодезия. Картография.csv"]
+dataset = "ergkerg/russian-scientific-articles"
+path = "Info/10 Геодезия. Картография.csv"
+size = 25527
+
+[files."ergkerg_russian-scientific-articles_Info_20 Кибернетика.csv"]
+dataset = "ergkerg/russian-scientific-articles"
+path = "Info/20 Кибернетика.csv"
+size = 12781
+
+[files."ericnarro_all-olympic-medals-until-2024-before-paris-games_olympic_medals.csv"]
+dataset = "ericnarro/all-olympic-medals-until-2024-before-paris-games"
+path = "olympic_medals.csv"
+size = 2533173
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Friday-02-03-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Friday-02-03-2018.csv"
+size = 3689837784
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Friday-16-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Friday-16-02-2018.csv"
+size = 4211741805
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Friday-23-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Friday-23-02-2018.csv"
+size = 3409376619
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Thursday-01-03-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Thursday-01-03-2018.csv"
+size = 3808397458
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Thursday-15-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Thursday-15-02-2018.csv"
+size = 2992535617
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Tuesday-20-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Tuesday-20-02-2018.csv"
+size = 3431246090
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Wednesday-14-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Wednesday-14-02-2018.csv"
+size = 3262583806
+
+[files."ernie55ernie_improved-cicids2017-and-csecicids2018_CSECICIDS2018_improved_Wednesday-21-02-2018.csv"]
+dataset = "ernie55ernie/improved-cicids2017-and-csecicids2018"
+path = "CSECICIDS2018_improved/Wednesday-21-02-2018.csv"
+size = 3952691068
+
+[files."erniromauli_global-happiness-indicators-owid_life-expectancy.csv"]
+dataset = "erniromauli/global-happiness-indicators-owid"
+path = "life-expectancy.csv"
+size = 600402
+
+[files."erogluegemen_turkey-postal-codes-dataset-2025_turkiye_posta_kodlari.csv"]
+dataset = "erogluegemen/turkey-postal-codes-dataset-2025"
+path = "turkiye_posta_kodlari.csv"
+size = 4170915
+
+[files."etsc9287_2020-general-election-polls_trump_clinton_polls.csv"]
+dataset = "etsc9287/2020-general-election-polls"
+path = "trump_clinton_polls.csv"
+size = 1074148
+
+[files."evangower_cyclistic-bike-share_202106-divvy-tripdata.csv"]
+dataset = "evangower/cyclistic-bike-share"
+path = "202106-divvy-tripdata.csv"
+size = 136439093
+
+[files."evelynartoria_bitcoin-quant-core-stationary-ml-features_Bitcoin Quant Core Stationary and Bounded ML Features_scaled_inputs.csv"]
+dataset = "evelynartoria/bitcoin-quant-core-stationary-ml-features"
+path = "Bitcoin Quant Core Stationary and Bounded ML Features/scaled/inputs.csv"
+size = 241735988
+
+[files."everydaycodings_global-news-dataset_raw-data.csv"]
+dataset = "everydaycodings/global-news-dataset"
+path = "raw-data.csv"
+size = 615098347
+
+[files."excel4soccer_espn-soccer-data_commentary_data_commentary_2024_AFC.CHAMPIONS.csv"]
+dataset = "excel4soccer/espn-soccer-data"
+path = "commentary_data/commentary_2024_AFC.CHAMPIONS.csv"
+size = 1649452
+
+[files."excel4soccer_espn-soccer-data_commentary_data_commentary_2024_AUT.1.csv"]
+dataset = "excel4soccer/espn-soccer-data"
+path = "commentary_data/commentary_2024_AUT.1.csv"
+size = 218305
+
+[files."ezogngrd_synthetic-b2b-crm-and-marketing-data_employees_with_company_sample.csv"]
+dataset = "ezogngrd/synthetic-b2b-crm-and-marketing-data"
+path = "employees_with_company_sample.csv"
+size = 206668
+
+[files."fahadrehman07_retail-transaction-dataset_Retail_Transaction_Dataset.csv"]
+dataset = "fahadrehman07/retail-transaction-dataset"
+path = "Retail_Transaction_Dataset.csv"
+size = 12799101
+
+[files."fahdseddik_arabic-company-reviews_CompanyReviews.csv"]
+dataset = "fahdseddik/arabic-company-reviews"
+path = "CompanyReviews.csv"
+size = 4406789
+
+[files."faisalmalik_iot-healthcare-security-dataset_ICUDatasetProcessed_patientMonitoring.csv"]
+dataset = "faisalmalik/iot-healthcare-security-dataset"
+path = "ICUDatasetProcessed/patientMonitoring.csv"
+size = 21657579
+
+[files."faizadani_european-tour-destinations-dataset_destinations.csv"]
+dataset = "faizadani/european-tour-destinations-dataset"
+path = "destinations.csv"
+size = 73164
+
+[files."faresazzam_well-logs-dataset-for-machine-learning_15_9-23.csv"]
+dataset = "faresazzam/well-logs-dataset-for-machine-learning"
+path = "15_9-23.csv"
+size = 2990968
+
+[files."faresazzam_well-logs-dataset-for-machine-learning_17_4-1.csv"]
+dataset = "faresazzam/well-logs-dataset-for-machine-learning"
+path = "17_4-1.csv"
+size = 3734562
+
+[files."fedesoriano_california-housing-prices-data-extra-features_California_Houses.csv"]
+dataset = "fedesoriano/california-housing-prices-data-extra-features"
+path = "California_Houses.csv"
+size = 2752104
+
+[files."fedesoriano_company-bankruptcy-prediction_data.csv"]
+dataset = "fedesoriano/company-bankruptcy-prediction"
+path = "data.csv"
+size = 11456101
+
+[files."fedesoriano_traffic-prediction-dataset_traffic.csv"]
+dataset = "fedesoriano/traffic-prediction-dataset"
+path = "traffic.csv"
+size = 1767271
+
+[files."felsal_ibovespa-stocks_b3_stocks_1994_2020.csv"]
+dataset = "felsal/ibovespa-stocks"
+path = "b3_stocks_1994_2020.csv"
+size = 88947596
+
+[files."fifthtribe_how-isis-uses-twitter_tweets.csv"]
+dataset = "fifthtribe/how-isis-uses-twitter"
+path = "tweets.csv"
+size = 4726647
+
+[files."financekim_curated-cxr-report-generation-dataset_Cleanses csv tfrecords_df_train_partial_30000.csv"]
+dataset = "financekim/curated-cxr-report-generation-dataset"
+path = "Cleanses csv tfrecords/df_train_partial_30000.csv"
+size = 13899516
+
+[files."firozemaliha_healthcare-service-semantics_synthetic_healthcare_semantics.csv"]
+dataset = "firozemaliha/healthcare-service-semantics"
+path = "synthetic_healthcare_semantics.csv"
+size = 3750276496
+
+[files."flynn28_eafc26-player-database_EAFC26-Men.csv"]
+dataset = "flynn28/eafc26-player-database"
+path = "EAFC26-Men.csv"
+size = 6586753
+
+[files."franciscoeuqueio_idiomas-africanos-12_extraidas_idiomas.csv"]
+dataset = "franciscoeuqueio/idiomas-africanos-12"
+path = "extraidas_idiomas.csv"
+size = 18595275
+
+[files."fredericods_ptbr-sentiment-analysis-datasets_utlc_movies.csv"]
+dataset = "fredericods/ptbr-sentiment-analysis-datasets"
+path = "utlc_movies.csv"
+size = 1105113742
+
+[files."gabriellecharlton_bookstore-financial-dataset-2019-2024-calgary_bookstore_chain_AB_calgary_2019_2024_dataset_bookstore_payroll.csv"]
+dataset = "gabriellecharlton/bookstore-financial-dataset-2019-2024-calgary"
+path = "bookstore_chain_AB_calgary_2019_2024_dataset/bookstore_payroll.csv"
+size = 848657
+
+[files."gallo33henrique_dengue-no-brasil-sinan-20002025_DENGBR05.csv"]
+dataset = "gallo33henrique/dengue-no-brasil-sinan-20002025"
+path = "DENGBR05.csv"
+size = 72291605
+
+[files."gallo33henrique_dengue-no-brasil-sinan-20002025_DENGBR11.csv"]
+dataset = "gallo33henrique/dengue-no-brasil-sinan-20002025"
+path = "DENGBR11.csv"
+size = 224798942
+
+[files."gatandubuc_public-transport-traffic-data-in-france_Travel_titles_validations_in_Paris_and_suburbs.csv"]
+dataset = "gatandubuc/public-transport-traffic-data-in-france"
+path = "Travel_titles_validations_in_Paris_and_suburbs.csv"
+size = 40397850
+
+[files."gauravdhamane_gwa-bitbrains_fastStorage_2013-8_1005.csv"]
+dataset = "gauravdhamane/gwa-bitbrains"
+path = "fastStorage/2013-8/1005.csv"
+size = 1182899
+
+[files."gauravdhamane_gwa-bitbrains_fastStorage_2013-8_1009.csv"]
+dataset = "gauravdhamane/gwa-bitbrains"
+path = "fastStorage/2013-8/1009.csv"
+size = 708801
+
+[files."gauthamvijayaraj_customer-purchase-behavior-dataset-e-commerce_customerData_500k.csv"]
+dataset = "gauthamvijayaraj/customer-purchase-behavior-dataset-e-commerce"
+path = "customerData_500k.csv"
+size = 58722449
+
+[files."giovamata_airlinedelaycauses_DelayedFlights.csv"]
+dataset = "giovamata/airlinedelaycauses"
+path = "DelayedFlights.csv"
+size = 247963212
+
+[files."girish17019_cvefixes-vulnerable-and-fixed-code_CVEFixes.csv"]
+dataset = "girish17019/cvefixes-vulnerable-and-fixed-code"
+path = "CVEFixes.csv"
+size = 1542095326
+
+[files."gpreda_wallstreetbets-2022_wallstreetbets_2022.csv"]
+dataset = "gpreda/wallstreetbets-2022"
+path = "wallstreetbets_2022.csv"
+size = 221472548
+
+[files."grikomsn_amazon-cell-phones-reviews_20191226-items.csv"]
+dataset = "grikomsn/amazon-cell-phones-reviews"
+path = "20191226-items.csv"
+size = 230925
+
+[files."gsagar12_dspp1_customer_cases.csv"]
+dataset = "gsagar12/dspp1"
+path = "customer_cases.csv"
+size = 21977839
+
+[files."gsutters_the-human-freedom-index_hfi_cc_2021.csv"]
+dataset = "gsutters/the-human-freedom-index"
+path = "hfi_cc_2021.csv"
+size = 1166815
+
+[files."guillemservera_forbes-billionaires-1997-2023_billionaires_2006.csv"]
+dataset = "guillemservera/forbes-billionaires-1997-2023"
+path = "billionaires_2006.csv"
+size = 59469
+
+[files."guriya79_pakistans-largest-e-commerce-dataset-20162018_Pakistan Largest Ecommerce Dataset.csv"]
+dataset = "guriya79/pakistans-largest-e-commerce-dataset-20162018"
+path = "Pakistan Largest Ecommerce Dataset.csv"
+size = 106513675
+
+[files."gyaswanth297_air-quality-indexaqi-data-of-mumbai_ColabaMumbaiMPCB.csv"]
+dataset = "gyaswanth297/air-quality-indexaqi-data-of-mumbai"
+path = "ColabaMumbaiMPCB.csv"
+size = 8450108
+
+[files."hachemsfar_machine-learn-course-datasets_Logistic-Regression_diabetes_clean.csv"]
+dataset = "hachemsfar/machine-learn-course-datasets"
+path = "Logistic-Regression/diabetes_clean.csv"
+size = 23843
+
+[files."hachemsfar_machine-learn-course-datasets_Logistic-Regression_titanic_train.csv"]
+dataset = "hachemsfar/machine-learn-course-datasets"
+path = "Logistic-Regression/titanic_train.csv"
+size = 60302
+
+[files."haider094_veremi-dataset_Veremi_final_dataset.csv"]
+dataset = "haider094/veremi-dataset"
+path = "Veremi_final_dataset.csv"
+size = 7466163022
+
+[files."hammadfarooq470_geospatial-and-demographic-data-of-pakistani-cities_wikipedia_cities_full_clean.csv"]
+dataset = "hammadfarooq470/geospatial-and-demographic-data-of-pakistani-cities"
+path = "wikipedia_cities_full_clean.csv"
+size = 14478
+
+[files."hammadus_yugioh-full-card-database-index-august-1st-2025_yugioh-ccd-2025SEP12-163128.csv"]
+dataset = "hammadus/yugioh-full-card-database-index-august-1st-2025"
+path = "yugioh-ccd-2025SEP12-163128.csv"
+size = 18348223
+
+[files."hassanamin_customer-churn_customer_churn.csv"]
+dataset = "hassanamin/customer-churn"
+path = "customer_churn.csv"
+size = 115479
+
+[files."hassnainzaidi_hourly-energy-consumption_houly energy consumption_COMED_hourly.csv"]
+dataset = "hassnainzaidi/hourly-energy-consumption"
+path = "houly energy consumption/COMED_hourly.csv"
+size = 1842915
+
+[files."hbaflast_french-twitter-sentiment-analysis_french_tweets.csv"]
+dataset = "hbaflast/french-twitter-sentiment-analysis"
+path = "french_tweets.csv"
+size = 129180897
+
+[files."heemalichaudhari_consumer-complaints_Consumer_Complaints.csv"]
+dataset = "heemalichaudhari/consumer-complaints"
+path = "Consumer_Complaints.csv"
+size = 331128737
+
+[files."heeraldedhia_groceries-dataset_Groceries_dataset.csv"]
+dataset = "heeraldedhia/groceries-dataset"
+path = "Groceries_dataset.csv"
+size = 1103280
+
+[files."heidarpour_persian-personality-prediction-v1800_train.csv"]
+dataset = "heidarpour/persian-personality-prediction-v1800"
+path = "train.csv"
+size = 136430
+
+[files."hemil26_mass-shootings-in-united-states-20182022_shootings_2018.csv"]
+dataset = "hemil26/mass-shootings-in-united-states-20182022"
+path = "shootings_2018.csv"
+size = 45033
+
+[files."hetulparmar_inventory-management-dataset_ML-Dataset.csv"]
+dataset = "hetulparmar/inventory-management-dataset"
+path = "ML-Dataset.csv"
+size = 152327
+
+[files."hiranomanabu_ransmap-2024-ransomware-behavioral-features_RanSMAP_dataset_extra_i3-gen12_ddr5-4800-16g_AESCrypt_AESCrypt-20240228_11-20-25_mem_read.csv"]
+dataset = "hiranomanabu/ransmap-2024-ransomware-behavioral-features"
+path = "RanSMAP/dataset/extra/i3-gen12/ddr5-4800-16g/AESCrypt/AESCrypt-20240228_11-20-25/mem_read.csv"
+size = 13721067
+
+[files."hiranomanabu_ransmap-2024-ransomware-behavioral-features_RanSMAP_dataset_extra_i3-gen12_ddr5-4800-16g_AESCrypt_AESCrypt-20240228_11-27-13_ata_read.csv"]
+dataset = "hiranomanabu/ransmap-2024-ransomware-behavioral-features"
+path = "RanSMAP/dataset/extra/i3-gen12/ddr5-4800-16g/AESCrypt/AESCrypt-20240228_11-27-13/ata_read.csv"
+size = 35664600
+
+[files."hosseinbadrnezhad_dirty-iranian-transactions-dataset_trx-extra-10k.csv"]
+dataset = "hosseinbadrnezhad/dirty-iranian-transactions-dataset"
+path = "trx-extra-10k.csv"
+size = 759381
+
+[files."hrushisanap_top-100-cryptocurrency-historical-data_crypto_top100_bitget-token_BGB.csv"]
+dataset = "hrushisanap/top-100-cryptocurrency-historical-data"
+path = "crypto_top100/bitget-token_BGB.csv"
+size = 308736
+
+[files."hrushisanap_top-100-cryptocurrency-historical-data_crypto_top100_cardano_ADA.csv"]
+dataset = "hrushisanap/top-100-cryptocurrency-historical-data"
+path = "crypto_top100/cardano_ADA.csv"
+size = 575811
+
+[files."huynhdotanthanh_division-b-tpu-csv_cleaned_df_2.csv"]
+dataset = "huynhdotanthanh/division-b-tpu-csv"
+path = "cleaned_df_2.csv"
+size = 50419886
+
+[files."huzpsb_cybersecurity-incidents-dataset_LossFromNetCrime.csv"]
+dataset = "huzpsb/cybersecurity-incidents-dataset"
+path = "LossFromNetCrime.csv"
+size = 11128
+
+[files."hvanphucs112_aimo3-public-leaderboard_ai-mathematical-olympiad-progress-prize-3-publicleaderboard-2025-12-06T23_35_47.csv"]
+dataset = "hvanphucs112/aimo3-public-leaderboard"
+path = "ai-mathematical-olympiad-progress-prize-3-publicleaderboard-2025-12-06T23_35_47.csv"
+size = 38689
+
+[files."hwaitt_horse-racing_horses_1993.csv"]
+dataset = "hwaitt/horse-racing"
+path = "horses_1993.csv"
+size = 14690544
+
+[files."hwaitt_horse-racing_horses_1995.csv"]
+dataset = "hwaitt/horse-racing"
+path = "horses_1995.csv"
+size = 14298703
+
+[files."iabhishekofficial_creditcard-fraud-detection_transactions.csv"]
+dataset = "iabhishekofficial/creditcard-fraud-detection"
+path = "transactions.csv"
+size = 22933440
+
+[files."iamaniket_suv-data_suv_data.csv"]
+dataset = "iamaniket/suv-data"
+path = "suv_data.csv"
+size = 10527
+
+[files."iamrakibx5_covid-19-analysis-and-visualization-dataset_covid.csv"]
+dataset = "iamrakibx5/covid-19-analysis-and-visualization-dataset"
+path = "covid.csv"
+size = 20484
+
+[files."iamsouravbanerjee_data-science-salaries-2023_v7_Latest_Data_Science_Salaries.csv"]
+dataset = "iamsouravbanerjee/data-science-salaries-2023"
+path = "v7_Latest_Data_Science_Salaries.csv"
+size = 661410
+
+[files."iamsouravbanerjee_heart-attack-prediction-dataset_heart_attack_prediction_dataset.csv"]
+dataset = "iamsouravbanerjee/heart-attack-prediction-dataset"
+path = "heart_attack_prediction_dataset.csv"
+size = 1456385
+
+[files."iamsouravbanerjee_ipl-player-performance-dataset_IPL - Player Performance Dataset_All Seasons Combined_Most Runs Per Over All Seasons Combine.csv"]
+dataset = "iamsouravbanerjee/ipl-player-performance-dataset"
+path = "IPL - Player Performance Dataset/All Seasons Combined/Most Runs Per Over All Seasons Combine.csv"
+size = 154707
+
+[files."ijajdatanerd_intl-cricketer-stats-odi-t20-tests_t20_batting.csv"]
+dataset = "ijajdatanerd/intl-cricketer-stats-odi-t20-tests"
+path = "t20_batting.csv"
+size = 18837
+
+[files."ikramshah512_amazon-products-sales-dataset-42k-items-2025_amazon_products_sales_data_cleaned.csv"]
+dataset = "ikramshah512/amazon-products-sales-dataset-42k-items-2025"
+path = "amazon_products_sales_data_cleaned.csv"
+size = 36693911
+
+[files."imdevskp_world-population-19602018_pop_worldometer_data.csv"]
+dataset = "imdevskp/world-population-19602018"
+path = "pop_worldometer_data.csv"
+size = 15975
+
+[files."imetomi_eur-usd-forex-pair-historical-data-2002-2019_eurusd_hour.csv"]
+dataset = "imetomi/eur-usd-forex-pair-historical-data-2002-2019"
+path = "eurusd_hour.csv"
+size = 12115086
+
+[files."imranbukhari_comprehensive-btcusd-1m-data_BTCUSD_1m_Bitfinex.csv"]
+dataset = "imranbukhari/comprehensive-btcusd-1m-data"
+path = "BTCUSD_1m_Bitfinex.csv"
+size = 345495655
+
+[files."imranbukhari_comprehensive-xrpusd-1m-data_XRPUSD_1m_KuCoin.csv"]
+dataset = "imranbukhari/comprehensive-xrpusd-1m-data"
+path = "XRPUSD_1m_KuCoin.csv"
+size = 269037715
+
+[files."imsparsh_deam-mediaeval-dataset-emotional-analysis-in-music_DEAM_Annotations_annotations_annotations averaged per song_dynamic (per second annotations)_arousal.csv"]
+dataset = "imsparsh/deam-mediaeval-dataset-emotional-analysis-in-music"
+path = "DEAM_Annotations/annotations/annotations averaged per song/dynamic (per second annotations)/arousal.csv"
+size = 1029849
+
+[files."imsparsh_musicnet-dataset_musicnet_musicnet_test_labels_2416.csv"]
+dataset = "imsparsh/musicnet-dataset"
+path = "musicnet/musicnet/test_labels/2416.csv"
+size = 57813
+
+[files."indraputra21_pcpartpicker-ram-dataset_RamData.csv"]
+dataset = "indraputra21/pcpartpicker-ram-dataset"
+path = "RamData.csv"
+size = 1058418
+
+[files."innocentmfa_google-goog-stocks-datasets_GOOG.csv"]
+dataset = "innocentmfa/google-goog-stocks-datasets"
+path = "GOOG.csv"
+size = 167924
+
+[files."intissarziani_ubi-fightsall_UBI_FIGHTS_annotation_F_0_1_0_0_0.csv"]
+dataset = "intissarziani/ubi-fightsall"
+path = "UBI_FIGHTS/annotation/F_0_1_0_0_0.csv"
+size = 12960
+
+[files."irfanasrullah_groceries_groceries - groceries.csv"]
+dataset = "irfanasrullah/groceries"
+path = "groceries - groceries.csv"
+size = 802870
+
+[files."isandeep06_customer-churn-prediction-dataset-1m_customer_churn_1M.csv"]
+dataset = "isandeep06/customer-churn-prediction-dataset-1m"
+path = "customer_churn_1M.csv"
+size = 170546057
+
+[files."ishank2005_custom-datasetnyc-housing-price_pluto_clean.csv"]
+dataset = "ishank2005/custom-datasetnyc-housing-price"
+path = "pluto_clean.csv"
+size = 70295558
+
+[files."ismetsemedov_polymarket-prediction-markets_polymarket_events.csv"]
+dataset = "ismetsemedov/polymarket-prediction-markets"
+path = "polymarket_events.csv"
+size = 105037888
+
+[files."ismetsemedov_transactions_synthetic_fraud_data.csv"]
+dataset = "ismetsemedov/transactions"
+path = "synthetic_fraud_data.csv"
+size = 2934232016
+
+[files."ivanyakovlevg_physical-and-chemical-properties-of-substances_physical_chemical_properties_of_organic_substances.csv"]
+dataset = "ivanyakovlevg/physical-and-chemical-properties-of-substances"
+path = "physical_chemical_properties_of_organic_substances.csv"
+size = 4058033
+
+[files."iveeaten3223times_massive-yahoo-finance-dataset_stock_details_5_years.csv"]
+dataset = "iveeaten3223times/massive-yahoo-finance-dataset"
+path = "stock_details_5_years.csv"
+size = 65583809
+
+[files."iyumrahul_flipkartsalesdataset_Sales.csv"]
+dataset = "iyumrahul/flipkartsalesdataset"
+path = "Sales.csv"
+size = 4566602837
+
+[files."jacksoncrow_stock-market-dataset_etfs_AAAU.csv"]
+dataset = "jacksoncrow/stock-market-dataset"
+path = "etfs/AAAU.csv"
+size = 44459
+
+[files."jacksoncrow_stock-market-dataset_etfs_ACIO.csv"]
+dataset = "jacksoncrow/stock-market-dataset"
+path = "etfs/ACIO.csv"
+size = 20187
+
+[files."jadsonchagas_federal-budget-and-public-expenditure-2325_raw_raw_gastos2024.csv"]
+dataset = "jadsonchagas/federal-budget-and-public-expenditure-2325"
+path = "raw/raw/gastos2024.csv"
+size = 74274981
+
+[files."jadsonchagas_projetos-de-pesquisa-acadmica-e-extenso-ifrn_dados_extraidos_recursos_projetos-de-pesquisa.csv"]
+dataset = "jadsonchagas/projetos-de-pesquisa-acadmica-e-extenso-ifrn"
+path = "dados_extraidos_recursos_projetos-de-pesquisa.csv"
+size = 11614954
+
+[files."jahaidulislam_fifa-world-cup-1930-2022-all-match-dataset_FIFA World Cup 1930-2022 All Match Dataset.csv"]
+dataset = "jahaidulislam/fifa-world-cup-1930-2022-all-match-dataset"
+path = "FIFA World Cup 1930-2022 All Match Dataset.csv"
+size = 221511
+
+[files."jaidityachopra_esg-sustainability-reports-of-s-and-p-500-companies_preprocessed_content.csv"]
+dataset = "jaidityachopra/esg-sustainability-reports-of-s-and-p-500-companies"
+path = "preprocessed_content.csv"
+size = 91243380
+
+[files."jaimetrickz_galaxy-zoo-2-images_gz2_filename_mapping.csv"]
+dataset = "jaimetrickz/galaxy-zoo-2-images"
+path = "gz2_filename_mapping.csv"
+size = 13166201
+
+[files."jamescoats_long-island-church-census-data_li-church-community_output_church_census_bg_data_final.csv"]
+dataset = "jamescoats/long-island-church-census-data"
+path = "li-church-community/output/church_census_bg_data_final.csv"
+size = 591990
+
+[files."jasonli88_spyoptionstradetickerdata_UnderlyingOptionsTradesCalcs_2022-06.csv"]
+dataset = "jasonli88/spyoptionstradetickerdata"
+path = "UnderlyingOptionsTradesCalcs_2022-06.csv"
+size = 2262280600
+
+[files."jayavarman_bike-sales-data-of-100k_bike_sales_100k.csv"]
+dataset = "jayavarman/bike-sales-data-of-100k"
+path = "bike_sales_100k.csv"
+size = 7563902
+
+[files."jeegarmaru_us-campaign-finance-20192020-fec_Contributions by individuals.csv"]
+dataset = "jeegarmaru/us-campaign-finance-20192020-fec"
+path = "Contributions by individuals.csv"
+size = 5266988653
+
+[files."jeegarmaru_us-campaign-finance-20192020-fec_Contributions from committees to candidates  independent expenditures.csv"]
+dataset = "jeegarmaru/us-campaign-finance-20192020-fec"
+path = "Contributions from committees to candidates  independent expenditures.csv"
+size = 32780993
+
+[files."jeleeladekunlefijabi_uk-maib-maritime-accidents-20202024_maib_uk_maritime_accidents_2010_2024.csv"]
+dataset = "jeleeladekunlefijabi/uk-maib-maritime-accidents-20202024"
+path = "maib_uk_maritime_accidents_2010_2024.csv"
+size = 461461
+
+[files."jerzyszocik_ufc-fight-forecast-complete-gold-modeling-dataset_UFC_full_data_golden.csv"]
+dataset = "jerzyszocik/ufc-fight-forecast-complete-gold-modeling-dataset"
+path = "UFC_full_data_golden.csv"
+size = 397033723
+
+[files."jessemostipak_college-tuition-diversity-and-pay_diversity_school.csv"]
+dataset = "jessemostipak/college-tuition-diversity-and-pay"
+path = "diversity_school.csv"
+size = 3206496
+
+[files."jfreyberg_spotify-artist-feature-collaboration-network_nodes.csv"]
+dataset = "jfreyberg/spotify-artist-feature-collaboration-network"
+path = "nodes.csv"
+size = 9980131
+
+[files."jijagallery_art-market-dataset-selling-paintings-prediction_large_art_ecommerce_dataset.csv"]
+dataset = "jijagallery/art-market-dataset-selling-paintings-prediction"
+path = "large_art_ecommerce_dataset.csv"
+size = 396221
+
+[files."jishnukoliyadan_vibration-analysis-on-rotating-shaft_0D.csv"]
+dataset = "jishnukoliyadan/vibration-analysis-on-rotating-shaft"
+path = "0D.csv"
+size = 1871314260
+
+[files."jishnukoliyadan_vibration-analysis-on-rotating-shaft_0E.csv"]
+dataset = "jishnukoliyadan/vibration-analysis-on-rotating-shaft"
+path = "0E.csv"
+size = 488599914
+
+[files."jocelyndumlao_the-role-of-habits-in-investing-behaviors_The role of habits in investing behaviors_CODED_DATA(paper).csv"]
+dataset = "jocelyndumlao/the-role-of-habits-in-investing-behaviors"
+path = "The role of habits in investing behaviors/CODED_DATA(paper).csv"
+size = 24160
+
+[files."jockeroika_food-data_FoodData_Central_csv_2025-04-24_food.csv"]
+dataset = "jockeroika/food-data"
+path = "FoodData_Central_csv_2025-04-24/food.csv"
+size = 215581383
+
+[files."jockeroika_food-data_FoodData_Central_csv_2025-04-24_food_attribute.csv"]
+dataset = "jockeroika/food-data"
+path = "FoodData_Central_csv_2025-04-24/food_attribute.csv"
+size = 134871910
+
+[files."joebeachcapital_hotel-reviews_reviews.csv"]
+dataset = "joebeachcapital/hotel-reviews"
+path = "reviews.csv"
+size = 1014752487
+
+[files."joebeachcapital_s-and-p500-index-stocks-daily-updated_sp500_cache_ABNB.csv"]
+dataset = "joebeachcapital/s-and-p500-index-stocks-daily-updated"
+path = "sp500_cache/ABNB.csv"
+size = 288211
+
+[files."johnpendenque_women-volleyball-players_clean_data.csv"]
+dataset = "johnpendenque/women-volleyball-players"
+path = "clean_data.csv"
+size = 22862
+
+[files."jonbown_us-2020-traffic-accidents_veh_19.csv"]
+dataset = "jonbown/us-2020-traffic-accidents"
+path = "veh_19.csv"
+size = 161243123
+
+[files."joonasyoon_clustering-exercises_lines.csv"]
+dataset = "joonasyoon/clustering-exercises"
+path = "lines.csv"
+size = 161020
+
+[files."josephassaker_covid19-global-dataset_worldometer_coronavirus_daily_data.csv"]
+dataset = "josephassaker/covid19-global-dataset"
+path = "worldometer_coronavirus_daily_data.csv"
+size = 9182233
+
+[files."josephnehrenz_leek-wars-top-50-ai-builds-and-battle-logs_leek_ai.csv"]
+dataset = "josephnehrenz/leek-wars-top-50-ai-builds-and-battle-logs"
+path = "leek_ai.csv"
+size = 165921381
+
+[files."jpmiller_publicassistance_WICAgencies2013ytd_Total_Women.csv"]
+dataset = "jpmiller/publicassistance"
+path = "WICAgencies2013ytd/Total_Women.csv"
+size = 10831
+
+[files."jpmiller_publicassistance_WICAgencies2014ytd_Average_Food_Cost_Per_Person.csv"]
+dataset = "jpmiller/publicassistance"
+path = "WICAgencies2014ytd/Average_Food_Cost_Per_Person.csv"
+size = 12104
+
+[files."jsrojas_ip-network-traffic-flows-labeled-with-87-apps_Dataset-Unicauca-Version2-87Atts.csv"]
+dataset = "jsrojas/ip-network-traffic-flows-labeled-with-87-apps"
+path = "Dataset-Unicauca-Version2-87Atts.csv"
+size = 1767404086
+
+[files."juhibhojani_road-accidents-data-2022_dft-road-casualty-statistics-casualty-provisional-mid-year-unvalidated-2022 (1).csv"]
+dataset = "juhibhojani/road-accidents-data-2022"
+path = "dft-road-casualty-statistics-casualty-provisional-mid-year-unvalidated-2022 (1).csv"
+size = 5062919
+
+[files."juliusmwangi_ey-urban-heat-island_Test.csv"]
+dataset = "juliusmwangi/ey-urban-heat-island"
+path = "Test.csv"
+size = 468181
+
+[files."junnn0126_university-students-mental-health_mentalhealth_dataset.csv"]
+dataset = "junnn0126/university-students-mental-health"
+path = "mentalhealth_dataset.csv"
+size = 61063
+
+[files."justinas_nba-players-data_all_seasons.csv"]
+dataset = "justinas/nba-players-data"
+path = "all_seasons.csv"
+size = 1920482
+
+[files."jvanelteren_boardgamegeek-reviews_bgg-15m-reviews.csv"]
+dataset = "jvanelteren/boardgamegeek-reviews"
+path = "bgg-15m-reviews.csv"
+size = 1390898691
+
+[files."jvanelteren_boardgamegeek-reviews_bgg-19m-reviews.csv"]
+dataset = "jvanelteren/boardgamegeek-reviews"
+path = "bgg-19m-reviews.csv"
+size = 1624912131
+
+[files."jvanelteren_boardgamegeek-reviews_bgg-26m-reviews.csv"]
+dataset = "jvanelteren/boardgamegeek-reviews"
+path = "bgg-26m-reviews.csv"
+size = 2179204668
+
+[files."kaggle_kaggle-survey-2017_multipleChoiceResponses.csv"]
+dataset = "kaggle/kaggle-survey-2017"
+path = "multipleChoiceResponses.csv"
+size = 24876561
+
+[files."kaggle_us-baby-names_StateNames.csv"]
+dataset = "kaggle/us-baby-names"
+path = "StateNames.csv"
+size = 154696208
+
+[files."kaggle_us-consumer-finance-complaints_consumer_complaints.csv"]
+dataset = "kaggle/us-consumer-finance-complaints"
+path = "consumer_complaints.csv"
+size = 175385569
+
+[files."kaggler10240_msr-data_MSR_data_cleaned.csv"]
+dataset = "kaggler10240/msr-data"
+path = "MSR_data_cleaned.csv"
+size = 10785616314
+
+[files."kaiser14_network-anomaly-dataset_network_dataset_labeled.csv"]
+dataset = "kaiser14/network-anomaly-dataset"
+path = "network_dataset_labeled.csv"
+size = 100645
+
+[files."kamilsterniuk_gaze-tracking-during-asmr-and-binaural-beats_example16.csv"]
+dataset = "kamilsterniuk/gaze-tracking-during-asmr-and-binaural-beats"
+path = "example16.csv"
+size = 185068
+
+[files."kanchana1990_crypto-volatility-2025-bitcoin-and-memecoin-bull-run_crypto_volatility_dec2025_FINAL_2025-12-09.csv"]
+dataset = "kanchana1990/crypto-volatility-2025-bitcoin-and-memecoin-bull-run"
+path = "crypto_volatility_dec2025_FINAL_2025-12-09.csv"
+size = 6231398
+
+[files."kapturovalexander_bitcoin-and-ethereum-prices-from-start-to-2023_Ethereum_29_10_2023-28_10_2024_historical_data.csv"]
+dataset = "kapturovalexander/bitcoin-and-ethereum-prices-from-start-to-2023"
+path = "Ethereum_29_10_2023-28_10_2024_historical_data.csv"
+size = 86386
+
+[files."kapturovalexander_gold-and-silver-prices-2013-2023_silver prices.csv"]
+dataset = "kapturovalexander/gold-and-silver-prices-2013-2023"
+path = "silver prices.csv"
+size = 112354
+
+[files."kashnitsky_hierarchical-text-classification_val_10k.csv"]
+dataset = "kashnitsky/hierarchical-text-classification"
+path = "val_10k.csv"
+size = 4469048
+
+[files."keithzidandsouza_engineering-aptitude-test-questions_clean_general_aptitude_dataset.csv"]
+dataset = "keithzidandsouza/engineering-aptitude-test-questions"
+path = "clean_general_aptitude_dataset.csv"
+size = 28536
+
+[files."kekavigi_earthquakes-in-indonesia_katalog_gempa.csv"]
+dataset = "kekavigi/earthquakes-in-indonesia"
+path = "katalog_gempa.csv"
+size = 6962661
+
+[files."kendallgillies_nflstatistics_Career_Stats_Defensive.csv"]
+dataset = "kendallgillies/nflstatistics"
+path = "Career_Stats_Defensive.csv"
+size = 2330065
+
+[files."khandelwalmanas_daily-commodity-prices-india_csv_2011.csv"]
+dataset = "khandelwalmanas/daily-commodity-prices-india"
+path = "csv/2011.csv"
+size = 257479668
+
+[files."khandelwalmanas_daily-commodity-prices-india_csv_2016.csv"]
+dataset = "khandelwalmanas/daily-commodity-prices-india"
+path = "csv/2016.csv"
+size = 327044067
+
+[files."khandelwalmanas_daily-commodity-prices-india_csv_2017.csv"]
+dataset = "khandelwalmanas/daily-commodity-prices-india"
+path = "csv/2017.csv"
+size = 370118243
+
+[files."khoongweihao_aaplcsv_AAPL.csv"]
+dataset = "khoongweihao/aaplcsv"
+path = "AAPL.csv"
+size = 13900
+
+[files."khusheekapoor_coursera-courses-dataset-2021_Coursera.csv"]
+dataset = "khusheekapoor/coursera-courses-dataset-2021"
+path = "Coursera.csv"
+size = 5280109
+
+[files."khushikyad001_air-quality-weather-and-respiratory-health_air_quality_health_dataset.csv"]
+dataset = "khushikyad001/air-quality-weather-and-respiratory-health"
+path = "air_quality_health_dataset.csv"
+size = 1088496
+
+[files."khushikyad001_finance-and-economics-dataset-2000-present_finance_economics_dataset.csv"]
+dataset = "khushikyad001/finance-and-economics-dataset-2000-present"
+path = "finance_economics_dataset.csv"
+size = 481250
+
+[files."khushikyad001_smoking-and-other-risk-factors-dataset_Lung_Cancer_Trends_Realistic.csv"]
+dataset = "khushikyad001/smoking-and-other-risk-factors-dataset"
+path = "Lung_Cancer_Trends_Realistic.csv"
+size = 407086
+
+[files."kieranpoc_steam-reviews_all_reviews_all_reviews.csv"]
+dataset = "kieranpoc/steam-reviews"
+path = "all_reviews/all_reviews.csv"
+size = 42487005552
+
+[files."kierru_valorant-vct-champions-2025-dataset_economy.csv"]
+dataset = "kierru/valorant-vct-champions-2025-dataset"
+path = "economy.csv"
+size = 11771
+
+[files."kimdaegyeom_5g-traffic-datasets_5G_Traffic_Datasets_Game_Streaming_GeForce_Now_GeForce_Now_4.csv"]
+dataset = "kimdaegyeom/5g-traffic-datasets"
+path = "5G_Traffic_Datasets/Game_Streaming/GeForce_Now/GeForce_Now_4.csv"
+size = 1218119173
+
+[files."kimdaegyeom_5g-traffic-datasets_5G_Traffic_Datasets_Game_Streaming_KT_GameBox_KT_GameBox_2.csv"]
+dataset = "kimdaegyeom/5g-traffic-datasets"
+path = "5G_Traffic_Datasets/Game_Streaming/KT_GameBox/KT_GameBox_2.csv"
+size = 1185440088
+
+[files."kirkdco_protein-secondary-structure-2022_2022-08-06-pdb-intersect-pisces_pc30_r2.5.csv"]
+dataset = "kirkdco/protein-secondary-structure-2022"
+path = "2022-08-06-pdb-intersect-pisces_pc30_r2.5.csv"
+size = 11306099
+
+[files."kiva_data-science-for-good-kiva-crowdfunding_kiva_loans.csv"]
+dataset = "kiva/data-science-for-good-kiva-crowdfunding"
+path = "kiva_loans.csv"
+size = 195852823
+
+[files."konradb_tsdata-1_example_wp_log_R_outliers1.csv"]
+dataset = "konradb/tsdata-1"
+path = "example_wp_log_R_outliers1.csv"
+size = 76271
+
+[files."kritanjalijain_amazon-reviews_train.csv"]
+dataset = "kritanjalijain/amazon-reviews"
+path = "train.csv"
+size = 1585200224
+
+[files."krooz0_cve-and-cwe-mapping-dataset_Research Concept_RC_CWEs.csv"]
+dataset = "krooz0/cve-and-cwe-mapping-dataset"
+path = "Research Concept/RC_CWEs.csv"
+size = 2678059
+
+[files."kshitizregmi_jobs-and-job-description_job_title_des.csv"]
+dataset = "kshitizregmi/jobs-and-job-description"
+path = "job_title_des.csv"
+size = 4595963
+
+[files."kukuroo3_body-signal-of-smoking_smoking.csv"]
+dataset = "kukuroo3/body-signal-of-smoking"
+path = "smoking.csv"
+size = 6317929
+
+[files."kutayahin_wikipedia-link-graph-100k_links_export.csv"]
+dataset = "kutayahin/wikipedia-link-graph-100k"
+path = "links_export.csv"
+size = 5124112684
+
+[files."kutayahin_wikipedia-link-graph-15k_links_export.csv"]
+dataset = "kutayahin/wikipedia-link-graph-15k"
+path = "links_export.csv"
+size = 936946590
+
+[files."kwullum_fatal-police-shootings-in-the-us_PoliceKillingsUS.csv"]
+dataset = "kwullum/fatal-police-shootings-in-the-us"
+path = "PoliceKillingsUS.csv"
+size = 227653
+
+[files."kyleahmurphy_uk-electrical-load_House_10.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_10.csv"
+size = 385277785
+
+[files."kyleahmurphy_uk-electrical-load_House_15.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_15.csv"
+size = 340700926
+
+[files."kyleahmurphy_uk-electrical-load_House_16.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_16.csv"
+size = 322492370
+
+[files."kyleahmurphy_uk-electrical-load_House_19.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_19.csv"
+size = 309446313
+
+[files."kyleahmurphy_uk-electrical-load_House_2.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_2.csv"
+size = 313924142
+
+[files."kyleahmurphy_uk-electrical-load_House_7.csv"]
+dataset = "kyleahmurphy/uk-electrical-load"
+path = "House_7.csv"
+size = 375463713
+
+[files."lakshmanraj_vehicle-insurance-policy_Vehicle_policies_2020.csv"]
+dataset = "lakshmanraj/vehicle-insurance-policy"
+path = "Vehicle_policies_2020.csv"
+size = 4350719
+
+[files."lchikry_international-football-match-features-and-statistics_player_aggregates.csv"]
+dataset = "lchikry/international-football-match-features-and-statistics"
+path = "player_aggregates.csv"
+size = 192819
+
+[files."litvinenko630_insurance-claims_Insurance claims data.csv"]
+dataset = "litvinenko630/insurance-claims"
+path = "Insurance claims data.csv"
+size = 11787503
+
+[files."lopure_dec2025-playground-s5e12-oofs-testpreds_Hill Climbing_RealMLP_RealMLP_cv_0.728836_OOF_Preds.csv"]
+dataset = "lopure/dec2025-playground-s5e12-oofs-testpreds"
+path = "Hill Climbing/RealMLP/RealMLP_cv_0.728836_OOF_Preds.csv"
+size = 7997593
+
+[files."lorentzyeung_price-paid-data-202304_pp-complete.csv"]
+dataset = "lorentzyeung/price-paid-data-202304"
+path = "pp-complete.csv"
+size = 3201218725
+
+[files."louisteitelbaum_911-recordings_911_recordings_911_metadata.csv"]
+dataset = "louisteitelbaum/911-recordings"
+path = "911_recordings/911_metadata.csv"
+size = 340244
+
+[files."lucabasa_dutch-energy_Electricity_endinet_electricity_01012016.csv"]
+dataset = "lucabasa/dutch-energy"
+path = "Electricity/endinet_electricity_01012016.csv"
+size = 474507
+
+[files."lucasmorin_raw-crypto-1m-data-from-binance_data_ADA-BUSD.csv"]
+dataset = "lucasmorin/raw-crypto-1m-data-from-binance"
+path = "data/ADA-BUSD.csv"
+size = 132893657
+
+[files."lzytim_full-list-of-mrt-and-lrt-stations-in-singapore_mrt_lrt_stations_2025-01-14.csv"]
+dataset = "lzytim/full-list-of-mrt-and-lrt-stations-in-singapore"
+path = "mrt_lrt_stations_2025-01-14.csv"
+size = 57042
+
+[files."ma7555_cat-breeds-dataset_data_cats.csv"]
+dataset = "ma7555/cat-breeds-dataset"
+path = "data/cats.csv"
+size = 86553421
+
+[files."maajdl_yeh-concret-data_Concrete_Data_Yeh.csv"]
+dataset = "maajdl/yeh-concret-data"
+path = "Concrete_Data_Yeh.csv"
+size = 41431
+
+[files."madislemsalu_facebook-ad-campaign_data.csv"]
+dataset = "madislemsalu/facebook-ad-campaign"
+path = "data.csv"
+size = 90017
+
+[files."mahdiehhajian_albania-human-development-indicators_hdro-02b0b388-0660-4281-9eba-f22378b489b5_human-development-indicators-for-albania-1.csv"]
+dataset = "mahdiehhajian/albania-human-development-indicators"
+path = "hdro-02b0b388-0660-4281-9eba-f22378b489b5/human-development-indicators-for-albania-1.csv"
+size = 138381
+
+[files."mahendran1_icc-cricket_Bowling_Bowling_t20.csv"]
+dataset = "mahendran1/icc-cricket"
+path = "Bowling/Bowling_t20.csv"
+size = 132702
+
+[files."maheshdadhich_us-healthcare-data_Drugs_product.csv"]
+dataset = "maheshdadhich/us-healthcare-data"
+path = "Drugs_product.csv"
+size = 38743242
+
+[files."maheshdadhich_us-healthcare-data_Nhanes_2009_2010.csv"]
+dataset = "maheshdadhich/us-healthcare-data"
+path = "Nhanes_2009_2010.csv"
+size = 16427127
+
+[files."maiyenkhoa11_ubfc-s32_s32_bvp_s32_T3.csv"]
+dataset = "maiyenkhoa11/ubfc-s32"
+path = "s32/bvp_s32_T3.csv"
+size = 71171
+
+[files."maiyenkhoa11_ubfc-s40_s40_bvp_s40_T1.csv"]
+dataset = "maiyenkhoa11/ubfc-s40"
+path = "s40/bvp_s40_T1.csv"
+size = 66394
+
+[files."maiyenkhoa11_ubfc-s8_s8_bvp_s8_T1.csv"]
+dataset = "maiyenkhoa11/ubfc-s8"
+path = "s8/bvp_s8_T1.csv"
+size = 63637
+
+[files."malekzadeh_motionsense-dataset_A_DeviceMotion_data_A_DeviceMotion_data_dws_1_sub_11.csv"]
+dataset = "malekzadeh/motionsense-dataset"
+path = "A_DeviceMotion_data/A_DeviceMotion_data/dws_1/sub_11.csv"
+size = 304618
+
+[files."malekzadeh_motionsense-dataset_A_DeviceMotion_data_A_DeviceMotion_data_dws_1_sub_19.csv"]
+dataset = "malekzadeh/motionsense-dataset"
+path = "A_DeviceMotion_data/A_DeviceMotion_data/dws_1/sub_19.csv"
+size = 313287
+
+[files."malekzadeh_motionsense-dataset_A_DeviceMotion_data_A_DeviceMotion_data_dws_1_sub_21.csv"]
+dataset = "malekzadeh/motionsense-dataset"
+path = "A_DeviceMotion_data/A_DeviceMotion_data/dws_1/sub_21.csv"
+size = 442973
+
+[files."manann_quotes-500k_quotes.csv"]
+dataset = "manann/quotes-500k"
+path = "quotes.csv"
+size = 144428641
+
+[files."manas00000003_samanantar-hi-en_samanantar_hi_en_full.csv"]
+dataset = "manas00000003/samanantar-hi-en"
+path = "samanantar_hi_en_full.csv"
+size = 3554767169
+
+[files."manchunhui_us-election-2020-tweets_hashtag_joebiden.csv"]
+dataset = "manchunhui/us-election-2020-tweets"
+path = "hashtag_joebiden.csv"
+size = 380820416
+
+[files."mangeshwagle_mimic-iv-2-1_mimic-iv-2.1_hosp_emar.csv"]
+dataset = "mangeshwagle/mimic-iv-2-1"
+path = "mimic-iv-2.1/hosp/emar.csv"
+size = 3836128958
+
+[files."mangeshwagle_mimic-iv-2-1_mimic-iv-2.1_hosp_emar_detail.csv"]
+dataset = "mangeshwagle/mimic-iv-2-1"
+path = "mimic-iv-2.1/hosp/emar_detail.csv"
+size = 5444600366
+
+[files."mangeshwagle_mimic-iv-2-1_mimic-iv-2.1_hosp_labevents.csv"]
+dataset = "mangeshwagle/mimic-iv-2-1"
+path = "mimic-iv-2.1/hosp/labevents.csv"
+size = 13398065609
+
+[files."manishkc06_engineering-graduate-salary-prediction_Engineering_graduate_salary.csv"]
+dataset = "manishkc06/engineering-graduate-salary-prediction"
+path = "Engineering_graduate_salary.csv"
+size = 679982
+
+[files."mannattrivedi_indian-political-tweet-engagement-dataset_master_tweets.csv"]
+dataset = "mannattrivedi/indian-political-tweet-engagement-dataset"
+path = "master_tweets.csv"
+size = 22573535
+
+[files."mansoorsarookhh_global-school-electricity-access-data-1999-2020_school_electricity_analysis.csv"]
+dataset = "mansoorsarookhh/global-school-electricity-access-data-1999-2020"
+path = "school_electricity_analysis.csv"
+size = 26627
+
+[files."marawaneslam_insurance-dataset_train_sample (1).csv"]
+dataset = "marawaneslam/insurance-dataset"
+path = "train_sample (1).csv"
+size = 32351177
+
+[files."marcodena_mobile-phone-activity_mi-to-provinces-2013-11-02.csv"]
+dataset = "marcodena/mobile-phone-activity"
+path = "mi-to-provinces-2013-11-02.csv"
+size = 98232488
+
+[files."marcopale_housing_test.csv"]
+dataset = "marcopale/housing"
+path = "test.csv"
+size = 243930
+
+[files."mariolisboa_breast-cancer-wisconsin-original-data-set_breast_cancer_bd.csv"]
+dataset = "mariolisboa/breast-cancer-wisconsin-original-data-set"
+path = "breast_cancer_bd.csv"
+size = 20777
+
+[files."marquis03_age-assessment-and-disease-risk-prediction_ai4bio_testset_final_ai4bio_testset_final_testdata.csv"]
+dataset = "marquis03/age-assessment-and-disease-risk-prediction"
+path = "ai4bio_testset_final/ai4bio_testset_final/testdata.csv"
+size = 15258268794
+
+[files."marquis03_age-assessment-and-disease-risk-prediction_ai4bio_testset_final_ai4bio_testset_final_testmap.csv"]
+dataset = "marquis03/age-assessment-and-disease-risk-prediction"
+path = "ai4bio_testset_final/ai4bio_testset_final/testmap.csv"
+size = 46352
+
+[files."marquis03_age-assessment-and-disease-risk-prediction_ai4bio_trainset_traindata.csv"]
+dataset = "marquis03/age-assessment-and-disease-risk-prediction"
+path = "ai4bio_trainset/traindata.csv"
+size = 60838916012
+
+[files."marquis03_age-assessment-and-disease-risk-prediction_ai4bio_trainset_trainmap.csv"]
+dataset = "marquis03/age-assessment-and-disease-risk-prediction"
+path = "ai4bio_trainset/trainmap.csv"
+size = 424578
+
+[files."marsalanakhtar_ais-data-for-ships_AIS_2022_03_31.csv"]
+dataset = "marsalanakhtar/ais-data-for-ships"
+path = "AIS_2022_03_31.csv"
+size = 771151204
+
+[files."martinellis_nhl-game-data_game_scratches.csv"]
+dataset = "martinellis/nhl-game-data"
+path = "game_scratches.csv"
+size = 3117301
+
+[files."marwa80_userbehavior_UserBehavior.csv"]
+dataset = "marwa80/userbehavior"
+path = "UserBehavior.csv"
+size = 3672347465
+
+[files."marwanehosni_la-liga-20242025-season-dataset_LaLiga_24-25.csv"]
+dataset = "marwanehosni/la-liga-20242025-season-dataset"
+path = "LaLiga_24-25.csv"
+size = 25899
+
+[files."matthewjansen_pubmed-200k-rtc_PubMed_20k_RCT_test.csv"]
+dataset = "matthewjansen/pubmed-200k-rtc"
+path = "PubMed_20k_RCT/test.csv"
+size = 5734720
+
+[files."matthuan_northwind-dataset_orders.csv"]
+dataset = "matthuan/northwind-dataset"
+path = "orders.csv"
+size = 146149
+
+[files."maxbr0wn_culledjane-eyre-ljspeech_metadata.csv"]
+dataset = "maxbr0wn/culledjane-eyre-ljspeech"
+path = "metadata.csv"
+size = 2239601
+
+[files."mdsultanulislamovi_phishing-website-detection-datasets_dataset5.csv"]
+dataset = "mdsultanulislamovi/phishing-website-detection-datasets"
+path = "dataset5.csv"
+size = 12283023
+
+[files."mdsultanulislamovi_phishing-website-detection-datasets_dataset6.csv"]
+dataset = "mdsultanulislamovi/phishing-website-detection-datasets"
+path = "dataset6.csv"
+size = 1416307
+
+[files."mdsultanulislamovi_student-stress-monitoring-datasets_Stress_Dataset.csv"]
+dataset = "mdsultanulislamovi/student-stress-monitoring-datasets"
+path = "Stress_Dataset.csv"
+size = 109272
+
+[files."mehrabmahdian_food-freshness-electronic-nose-data_AllSmaples-Report_Blueberry D2.csv"]
+dataset = "mehrabmahdian/food-freshness-electronic-nose-data"
+path = "AllSmaples-Report/Blueberry D2.csv"
+size = 617066
+
+[files."mehrdat_newyork-times-new-dataset-2000-2025_NewYorkTime_2000_2026.csv"]
+dataset = "mehrdat/newyork-times-new-dataset-2000-2025"
+path = "NewYorkTime_2000_2026.csv"
+size = 845556129
+
+[files."mexwell_5m-trees-dataset_Anaheim_Final_2022-06-18.csv"]
+dataset = "mexwell/5m-trees-dataset"
+path = "Anaheim_Final_2022-06-18.csv"
+size = 15774702
+
+[files."mexwell_5m-trees-dataset_Austin_Final_2022-06-18.csv"]
+dataset = "mexwell/5m-trees-dataset"
+path = "Austin_Final_2022-06-18.csv"
+size = 1626694
+
+[files."mexwell_5m-trees-dataset_Baltimore_Final_2022-06-18.csv"]
+dataset = "mexwell/5m-trees-dataset"
+path = "Baltimore_Final_2022-06-18.csv"
+size = 29792332
+
+[files."mexwell_fake-reviews-dataset_fake reviews dataset.csv"]
+dataset = "mexwell/fake-reviews-dataset"
+path = "fake reviews dataset.csv"
+size = 15324616
+
+[files."mexwell_famous-paintings_image_link.csv"]
+dataset = "mexwell/famous-paintings"
+path = "image_link.csv"
+size = 10398545
+
+[files."mexwell_football-data-from-transfermarkt_players.csv"]
+dataset = "mexwell/football-data-from-transfermarkt"
+path = "players.csv"
+size = 9311184
+
+[files."mexwell_nba-shots_NBA_2013_Shots.csv"]
+dataset = "mexwell/nba-shots"
+path = "NBA_2013_Shots.csv"
+size = 39829995
+
+[files."mexwell_nba-shots_NBA_2018_Shots.csv"]
+dataset = "mexwell/nba-shots"
+path = "NBA_2018_Shots.csv"
+size = 42690294
+
+[files."mexwell_nba-shots_NBA_2019_Shots.csv"]
+dataset = "mexwell/nba-shots"
+path = "NBA_2019_Shots.csv"
+size = 44514889
+
+[files."mexwell_nba-shots_NBA_2022_Shots.csv"]
+dataset = "mexwell/nba-shots"
+path = "NBA_2022_Shots.csv"
+size = 45128641
+
+[files."mexwell_understat-database_understats_EPL_match_data.csv"]
+dataset = "mexwell/understat-database"
+path = "understats/EPL/match_data.csv"
+size = 430566
+
+[files."mgmitesh_sentiment-analysis-dataset_GoEmotions_goemotions_1.csv"]
+dataset = "mgmitesh/sentiment-analysis-dataset"
+path = "GoEmotions/goemotions_1.csv"
+size = 14103193
+
+[files."mhassansaboor_iran-economic-indicators-1960-2024_data.csv"]
+dataset = "mhassansaboor/iran-economic-indicators-1960-2024"
+path = "data.csv"
+size = 12260
+
+[files."miadul_irrigation-water-requirement-prediction-dataset_irrigation_prediction.csv"]
+dataset = "miadul/irrigation-water-requirement-prediction-dataset"
+path = "irrigation_prediction.csv"
+size = 1199515
+
+[files."miadul_medical-cost-predication-dataset_medical_cost_prediction_dataset.csv"]
+dataset = "miadul/medical-cost-predication-dataset"
+path = "medical_cost_prediction_dataset.csv"
+size = 402139
+
+[files."miadul_synthetic-diabetes-prediction-dataset_diabetes.csv"]
+dataset = "miadul/synthetic-diabetes-prediction-dataset"
+path = "diabetes.csv"
+size = 718658
+
+[files."michaelmatta0_movies-ultimate-metrics-features-and-metadata_Top Movies (Cleaned Data).csv"]
+dataset = "michaelmatta0/movies-ultimate-metrics-features-and-metadata"
+path = "Top Movies (Cleaned Data).csv"
+size = 4113930
+
+[files."michaelminhpham_vietnamese-tiki-e-commerce-dataset_vietnamese_tiki_products_backpacks_suitcases.csv"]
+dataset = "michaelminhpham/vietnamese-tiki-e-commerce-dataset"
+path = "vietnamese_tiki_products_backpacks_suitcases.csv"
+size = 2300111
+
+[files."michellevp_predicting-anxiety-in-mental-health-data_healthanxiety_dataset.csv"]
+dataset = "michellevp/predicting-anxiety-in-mental-health-data"
+path = "healthanxiety_dataset.csv"
+size = 4224525
+
+[files."microize_newyork-yellow-taxi-trip-data-2020-2019_yellow_tripdata_2019-07.csv"]
+dataset = "microize/newyork-yellow-taxi-trip-data-2020-2019"
+path = "yellow_tripdata_2019-07.csv"
+size = 584387609
+
+[files."microize_newyork-yellow-taxi-trip-data-2020-2019_yellow_tripdata_2019-08.csv"]
+dataset = "microize/newyork-yellow-taxi-trip-data-2020-2019"
+path = "yellow_tripdata_2019-08.csv"
+size = 562386202
+
+[files."miguelcorraljr_ted-ultimate-dataset_2020-05-01_ted_talks_es.csv"]
+dataset = "miguelcorraljr/ted-ultimate-dataset"
+path = "2020-05-01/ted_talks_es.csv"
+size = 46389747
+
+[files."miklgr500_jigsaw-train-multilingual-coments-google-api_jigsaw-toxic-comment-train-google-fr.csv"]
+dataset = "miklgr500/jigsaw-train-multilingual-coments-google-api"
+path = "jigsaw-toxic-comment-train-google-fr.csv"
+size = 111015308
+
+[files."mirzayasirabdullah07_household-electricity-usage_household_electricity_usage.csv"]
+dataset = "mirzayasirabdullah07/household-electricity-usage"
+path = "household_electricity_usage.csv"
+size = 1267904
+
+[files."mithil27360_digital-twin-bridge-structural-health-monitoring_bridge_digital_twin_dataset.csv"]
+dataset = "mithil27360/digital-twin-bridge-structural-health-monitoring"
+path = "bridge_digital_twin_dataset.csv"
+size = 37720822
+
+[files."mizanunswcyber_arp-spoofing-based-mitm-attack-dataset_UQ_MITM_ARP_labeled_data.csv"]
+dataset = "mizanunswcyber/arp-spoofing-based-mitm-attack-dataset"
+path = "UQ_MITM_ARP_labeled_data.csv"
+size = 1396569
+
+[files."mjawad17_climat-change-pak_climate-change_pak.csv"]
+dataset = "mjawad17/climat-change-pak"
+path = "climate-change_pak.csv"
+size = 158953
+
+[files."mkachuee_BloodPressureDataset_Samples_rec_102.csv"]
+dataset = "mkachuee/BloodPressureDataset"
+path = "Samples/rec_102.csv"
+size = 1358697
+
+[files."mkachuee_BloodPressureDataset_Samples_rec_105.csv"]
+dataset = "mkachuee/BloodPressureDataset"
+path = "Samples/rec_105.csv"
+size = 1376950
+
+[files."mkechinov_ecommerce-behavior-data-from-multi-category-store_2019-Nov.csv"]
+dataset = "mkechinov/ecommerce-behavior-data-from-multi-category-store"
+path = "2019-Nov.csv"
+size = 9006762395
+
+[files."mkechinov_ecommerce-behavior-data-from-multi-category-store_2019-Oct.csv"]
+dataset = "mkechinov/ecommerce-behavior-data-from-multi-category-store"
+path = "2019-Oct.csv"
+size = 5668612855
+
+[files."mkechinov_ecommerce-events-history-in-cosmetics-shop_2019-Nov.csv"]
+dataset = "mkechinov/ecommerce-events-history-in-cosmetics-shop"
+path = "2019-Nov.csv"
+size = 545839412
+
+[files."mkechinov_ecommerce-events-history-in-cosmetics-shop_2019-Oct.csv"]
+dataset = "mkechinov/ecommerce-events-history-in-cosmetics-shop"
+path = "2019-Oct.csv"
+size = 482542278
+
+[files."mkechinov_ecommerce-events-history-in-cosmetics-shop_2020-Jan.csv"]
+dataset = "mkechinov/ecommerce-events-history-in-cosmetics-shop"
+path = "2020-Jan.csv"
+size = 501792804
+
+[files."mohamedamineferrag_edgeiiotset-cyber-security-dataset-of-iot-iiot_Edge-IIoTset dataset_Attack traffic_Password_attack.csv"]
+dataset = "mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot"
+path = "Edge-IIoTset dataset/Attack traffic/Password_attack.csv"
+size = 653290138
+
+[files."mohamedasak_metacritic-movies-dataset_metacritic_movies.csv"]
+dataset = "mohamedasak/metacritic-movies-dataset"
+path = "metacritic_movies.csv"
+size = 23571058
+
+[files."mohamedbakhet_amazon-books-reviews_Books_rating.csv"]
+dataset = "mohamedbakhet/amazon-books-reviews"
+path = "Books_rating.csv"
+size = 2859504349
+
+[files."mohamedbastawi_kinetics-700-2020-zip-files_kinetics700_2020_kinetics700_2020_train.csv"]
+dataset = "mohamedbastawi/kinetics-700-2020-zip-files"
+path = "kinetics700_2020/kinetics700_2020/train.csv"
+size = 21086565
+
+[files."mokar2001_house-price-tehran-iran_housePrice.csv"]
+dataset = "mokar2001/house-price-tehran-iran"
+path = "housePrice.csv"
+size = 190184
+
+[files."momanyc_museum-collection_artworks.csv"]
+dataset = "momanyc/museum-collection"
+path = "artworks.csv"
+size = 34215052
+
+[files."montassarba_drug-drug-interactions-database-ddinter_ddinter_downloads_code_P.csv"]
+dataset = "montassarba/drug-drug-interactions-database-ddinter"
+path = "ddinter_downloads_code_P.csv"
+size = 317460
+
+[files."mostafaaliogab_cic-iot-diad-2024-dataset_CIC-IoT-DIAD2024_DDos_DDoS ACK Fragmentation_DDoS-ACK_Fragmentation6.pcap_Flow.csv"]
+dataset = "mostafaaliogab/cic-iot-diad-2024-dataset"
+path = "CIC-IoT-DIAD2024/DDos/DDoS ACK Fragmentation/DDoS-ACK_Fragmentation6.pcap_Flow.csv"
+size = 108091294
+
+[files."mostafaaliogab_cic-iot-diad-2024-dataset_CIC-IoT-DIAD2024_DDos_DDoS ICMP Flood_DDoS-ICMP_Flood12.pcap_Flow.csv"]
+dataset = "mostafaaliogab/cic-iot-diad-2024-dataset"
+path = "CIC-IoT-DIAD2024/DDos/DDoS ICMP Flood/DDoS-ICMP_Flood12.pcap_Flow.csv"
+size = 3836585
+
+[files."mostafabakr8962_ai-vs-human-classification-dataset_data.csv"]
+dataset = "mostafabakr8962/ai-vs-human-classification-dataset"
+path = "data.csv"
+size = 3852518332
+
+[files."moutasmtamimi_malicious-url-detection-dataset-enhanced-2026_final_dataset_with_all_features.csv"]
+dataset = "moutasmtamimi/malicious-url-detection-dataset-enhanced-2026"
+path = "final_dataset_with_all_features.csv"
+size = 125765177
+
+[files."mpwolke_cusersmarildownloadsscarcitycsv_scarcity.csv"]
+dataset = "mpwolke/cusersmarildownloadsscarcitycsv"
+path = "scarcity.csv"
+size = 52473
+
+[files."mrajaxnp_cert-insider-threat-detection-research_LDAP_2011-04.csv"]
+dataset = "mrajaxnp/cert-insider-threat-detection-research"
+path = "LDAP/2011-04.csv"
+size = 625777
+
+[files."mrdaniilak_russia-real-estate-20182021_all_v2.csv"]
+dataset = "mrdaniilak/russia-real-estate-20182021"
+path = "all_v2.csv"
+size = 408179741
+
+[files."mrisdal_fact-checking-facebook-politics-pages_facebook-fact-check.csv"]
+dataset = "mrisdal/fact-checking-facebook-politics-pages"
+path = "facebook-fact-check.csv"
+size = 364786
+
+[files."mrsimple07_student-exam-performance-prediction_student_exam_data.csv"]
+dataset = "mrsimple07/student-exam-performance-prediction"
+path = "student_exam_data.csv"
+size = 19102
+
+[files."mryanm_luflow-network-intrusion-detection-data-set_2020_06_2020.06.28_2020.06.28.csv"]
+dataset = "mryanm/luflow-network-intrusion-detection-data-set"
+path = "2020/06/2020.06.28/2020.06.28.csv"
+size = 115740339
+
+[files."mryanm_luflow-network-intrusion-detection-data-set_2020_07_2020.07.03_2020.07.03.csv"]
+dataset = "mryanm/luflow-network-intrusion-detection-data-set"
+path = "2020/07/2020.07.03/2020.07.03.csv"
+size = 87577717
+
+[files."mubeenfurqanahmed_automatic-short-answer-grading-dataset_train.csv"]
+dataset = "mubeenfurqanahmed/automatic-short-answer-grading-dataset"
+path = "train.csv"
+size = 487572
+
+[files."muhammadehsan02_global-football-results-18722024_Goal_Scorers.csv"]
+dataset = "muhammadehsan02/global-football-results-18722024"
+path = "Goal_Scorers.csv"
+size = 3033078
+
+[files."muhammadehsan02_olympic-summer-games-paris-2024_medallists.csv"]
+dataset = "muhammadehsan02/olympic-summer-games-paris-2024"
+path = "medallists.csv"
+size = 501597
+
+[files."muhammadhussnain09_global-geopolitical-conflict-dataset-20202025_geopolitical_conflict_risk_dataset.csv"]
+dataset = "muhammadhussnain09/global-geopolitical-conflict-dataset-20202025"
+path = "geopolitical_conflict_risk_dataset.csv"
+size = 418999
+
+[files."muhammadirfangull_cic-iiot-2025_combined_dataset.csv"]
+dataset = "muhammadirfangull/cic-iiot-2025"
+path = "combined_dataset.csv"
+size = 3302457978
+
+[files."muhammadrohman_covid-19-dataset_WHO COVID-19 cases.csv"]
+dataset = "muhammadrohman/covid-19-dataset"
+path = "WHO COVID-19 cases.csv"
+size = 3251603
+
+[files."mukeshdevrath007_indian-5000-cities-weather-data_w_d_1_Achampet.csv"]
+dataset = "mukeshdevrath007/indian-5000-cities-weather-data"
+path = "w_d_1/Achampet.csv"
+size = 20786109
+
+[files."mukeshdevrath007_indian-5000-cities-weather-data_w_d_1_Adalaj.csv"]
+dataset = "mukeshdevrath007/indian-5000-cities-weather-data"
+path = "w_d_1/Adalaj.csv"
+size = 20493945
+
+[files."mukeshmanral_graduates-admission-prediction_admission_data.csv"]
+dataset = "mukeshmanral/graduates-admission-prediction"
+path = "admission_data.csv"
+size = 14273
+
+[files."munyamdev_brics-economy-data_Economy_Data_102_General_government_final_consumption_expenditure__constant_2010_US__.csv"]
+dataset = "munyamdev/brics-economy-data"
+path = "Economy_Data_102_General_government_final_consumption_expenditure__constant_2010_US__.csv"
+size = 29739
+
+[files."muqaddasejaz_customer-support-ticket-dataset_customer_support_tickets.csv"]
+dataset = "muqaddasejaz/customer-support-ticket-dataset"
+path = "customer_support_tickets.csv"
+size = 3945533
+
+[files."murilozangari_jobs-and-salaries-in-data-field-2024_jobs_in_data_2024.csv"]
+dataset = "murilozangari/jobs-and-salaries-in-data-field-2024"
+path = "jobs_in_data_2024.csv"
+size = 1671528
+
+[files."mustafakeser4_sap-dataset-bigquery-dataset_cskt.csv"]
+dataset = "mustafakeser4/sap-dataset-bigquery-dataset"
+path = "cskt.csv"
+size = 3389566
+
+[files."muzammalnawaz_united-utilities-water-management-water-demand_netbase_inlet-outlet-cont_logged_user_April2018.csv"]
+dataset = "muzammalnawaz/united-utilities-water-management-water-demand"
+path = "netbase_inlet-outlet-cont_logged_user_April2018.csv"
+size = 8108824
+
+[files."mylesoneill_warcraft-avatar-history_zones.csv"]
+dataset = "mylesoneill/warcraft-avatar-history"
+path = "zones.csv"
+size = 16855
+
+[files."n3onnhowever_arh-data-v4_arh_data_v4.csv"]
+dataset = "n3onnhowever/arh-data-v4"
+path = "arh_data_v4.csv"
+size = 15124825
+
+[files."nadhmiauch_dataset_stats_across_runs_i_results.csv"]
+dataset = "nadhmiauch/dataset"
+path = "stats_across_runs_i_results.csv"
+size = 40344
+
+[files."nadyinky_sephora-products-and-skincare-reviews_reviews_1250-end.csv"]
+dataset = "nadyinky/sephora-products-and-skincare-reviews"
+path = "reviews_1250-end.csv"
+size = 24193736
+
+[files."naelaqel_synthetic-e-commerce-relational-dataset_csv_customers.csv"]
+dataset = "naelaqel/synthetic-e-commerce-relational-dataset"
+path = "csv/customers.csv"
+size = 146348625
+
+[files."naelaqel_synthetic-e-commerce-relational-dataset_csv_order_items.csv"]
+dataset = "naelaqel/synthetic-e-commerce-relational-dataset"
+path = "csv/order_items.csv"
+size = 609018469
+
+[files."naelaqel_synthetic-e-commerce-relational-dataset_csv_orders.csv"]
+dataset = "naelaqel/synthetic-e-commerce-relational-dataset"
+path = "csv/orders.csv"
+size = 437706667
+
+[files."najzeko_steam-reviews-2021_steam_reviews.csv"]
+dataset = "najzeko/steam-reviews-2021"
+path = "steam_reviews.csv"
+size = 8171787229
+
+[files."narendrabariha_e-commerce-target-sales-dataset_geolocation.csv"]
+dataset = "narendrabariha/e-commerce-target-sales-dataset"
+path = "geolocation.csv"
+size = 61273883
+
+[files."naseralqaydeh_named-entity-recognition-ner-corpus_ner.csv"]
+dataset = "naseralqaydeh/named-entity-recognition-ner-corpus"
+path = "ner.csv"
+size = 19690323
+
+[files."nayakganesh007_google-ads-sales-dataset_GoogleAds_DataAnalytics_Sales_Uncleaned.csv"]
+dataset = "nayakganesh007/google-ads-sales-dataset"
+path = "GoogleAds_DataAnalytics_Sales_Uncleaned.csv"
+size = 300367
+
+[files."nayaone_sme-uk-businesses-financial-statistics_Account_Receivable.csv"]
+dataset = "nayaone/sme-uk-businesses-financial-statistics"
+path = "Account_Receivable.csv"
+size = 3298010
+
+[files."neelagiriaditya_anime-dataset-jan-1917-to-oct-2025_datasets_characters.csv"]
+dataset = "neelagiriaditya/anime-dataset-jan-1917-to-oct-2025"
+path = "datasets/characters.csv"
+size = 75345168
+
+[files."neelagiriaditya_anime-dataset-jan-1917-to-oct-2025_datasets_favs.csv"]
+dataset = "neelagiriaditya/anime-dataset-jan-1917-to-oct-2025"
+path = "datasets/favs.csv"
+size = 102104765
+
+[files."neelagiriaditya_anime-dataset-jan-1917-to-oct-2025_datasets_ratings.csv"]
+dataset = "neelagiriaditya/anime-dataset-jan-1917-to-oct-2025"
+path = "datasets/ratings.csv"
+size = 4504586658
+
+[files."nehalbirla_vehicle-dataset-from-cardekho_CAR DETAILS FROM CAR DEKHO.csv"]
+dataset = "nehalbirla/vehicle-dataset-from-cardekho"
+path = "CAR DETAILS FROM CAR DEKHO.csv"
+size = 354635
+
+[files."neilclack_nyc-taxi-trip-data-google-public-data_taxi_trip_data.csv"]
+dataset = "neilclack/nyc-taxi-trip-data-google-public-data"
+path = "taxi_trip_data.csv"
+size = 1466182802
+
+[files."neilclack_nyc-taxi-trip-data-google-public-data_taxi_zone_geo.csv"]
+dataset = "neilclack/nyc-taxi-trip-data-google-public-data"
+path = "taxi_zone_geo.csv"
+size = 3483263
+
+[files."neurocipher_heartdisease_Heart_Disease_Prediction.csv"]
+dataset = "neurocipher/heartdisease"
+path = "Heart_Disease_Prediction.csv"
+size = 11928
+
+[files."neurocipher_student-performance_StudentPerformance.csv"]
+dataset = "neurocipher/student-performance"
+path = "StudentPerformance.csv"
+size = 175071
+
+[files."new-york-city_ny-311-service-requests_311-service-requests-from-2010-to-present.csv"]
+dataset = "new-york-city/ny-311-service-requests"
+path = "311-service-requests-from-2010-to-present.csv"
+size = 14687428722
+
+[files."ngotunglam_sample-data_drugbank_random_test_s0.csv"]
+dataset = "ngotunglam/sample-data"
+path = "drugbank_random/test_s0.csv"
+size = 247431
+
+[files."nguyentiennhan_vietnam-housing-dataset-2024_vietnam_housing_dataset.csv"]
+dataset = "nguyentiennhan/vietnam-housing-dataset-2024"
+path = "vietnam_housing_dataset.csv"
+size = 3532685
+
+[files."nguyenvy_nhanes-19882018_chemicals_clean.csv"]
+dataset = "nguyenvy/nhanes-19882018"
+path = "chemicals_clean.csv"
+size = 234543559
+
+[files."nguyenvy_nhanes-19882018_comments_clean.csv"]
+dataset = "nguyenvy/nhanes-19882018"
+path = "comments_clean.csv"
+size = 180207242
+
+[files."ngwkhai_vietnamese-stock-market-data_preprocessed_data_preprocessed_GAS_financial.csv"]
+dataset = "ngwkhai/vietnamese-stock-market-data"
+path = "preprocessed_data/preprocessed_GAS_financial.csv"
+size = 32325
+
+[files."nhutrinhanna_malicious-and-benign-urls-datasets_merged_urls_dataset.csv"]
+dataset = "nhutrinhanna/malicious-and-benign-urls-datasets"
+path = "merged_urls_dataset.csv"
+size = 168175016
+
+[files."nicolaswattiez_skillbuilder-data-2009-2010_2012-2013-data-with-predictions-4-final.csv"]
+dataset = "nicolaswattiez/skillbuilder-data-2009-2010"
+path = "2012-2013-data-with-predictions-4-final.csv"
+size = 3009494391
+
+[files."nikdavis_steam-store-raw_steam_app_data.csv"]
+dataset = "nikdavis/steam-store-raw"
+path = "steam_app_data.csv"
+size = 293494588
+
+[files."nikee7_parkinsons-tremor-classification-dataset_data_raw_data_023f6d37-0caf-11ed-be25-b469216ca443.csv"]
+dataset = "nikee7/parkinsons-tremor-classification-dataset"
+path = "data/raw_data_023f6d37-0caf-11ed-be25-b469216ca443.csv"
+size = 608693
+
+[files."nikee7_synthetic-tabular-data_train.csv"]
+dataset = "nikee7/synthetic-tabular-data"
+path = "train.csv"
+size = 51824143
+
+[files."nikhil1e9_netflix-stock-price_NETFLIX_monthly.csv"]
+dataset = "nikhil1e9/netflix-stock-price"
+path = "NETFLIX_monthly.csv"
+size = 32766
+
+[files."nikitamanaenkov_doc-concentration-in-forested-headwater-catchments_data_Metadata summary.csv"]
+dataset = "nikitamanaenkov/doc-concentration-in-forested-headwater-catchments"
+path = "data/Metadata summary.csv"
+size = 21341
+
+[files."nikitamanaenkov_meda-mars-weather-and-atmosphere-sensor-data_CAL_CAL_PS _SOL_101_200.csv"]
+dataset = "nikitamanaenkov/meda-mars-weather-and-atmosphere-sensor-data"
+path = "CAL/CAL_PS _SOL_101_200.csv"
+size = 442922186
+
+[files."nikitamanaenkov_meda-mars-weather-and-atmosphere-sensor-data_CAL_CAL_PS _SOL_401_500.csv"]
+dataset = "nikitamanaenkov/meda-mars-weather-and-atmosphere-sensor-data"
+path = "CAL/CAL_PS _SOL_401_500.csv"
+size = 364359529
+
+[files."nikitamanaenkov_meda-mars-weather-and-atmosphere-sensor-data_CAL_CAL_RDS _SOL_01_100.csv"]
+dataset = "nikitamanaenkov/meda-mars-weather-and-atmosphere-sensor-data"
+path = "CAL/CAL_RDS _SOL_01_100.csv"
+size = 966897401
+
+[files."nikitamanaenkov_meda-mars-weather-and-atmosphere-sensor-data_CAL_CAL_RDS _SOL_101_200.csv"]
+dataset = "nikitamanaenkov/meda-mars-weather-and-atmosphere-sensor-data"
+path = "CAL/CAL_RDS _SOL_101_200.csv"
+size = 1087124307
+
+[files."nikitamanaenkov_psychiatric-motor-activity-dataset_adhd_adhd_11.csv"]
+dataset = "nikitamanaenkov/psychiatric-motor-activity-dataset"
+path = "adhd/adhd_11.csv"
+size = 369942
+
+[files."nikitamanaenkov_psychiatric-motor-activity-dataset_adhd_adhd_45.csv"]
+dataset = "nikitamanaenkov/psychiatric-motor-activity-dataset"
+path = "adhd/adhd_45.csv"
+size = 331126
+
+[files."nikitamanaenkov_qm40-molecular-qm-dataset_xyz.csv"]
+dataset = "nikitamanaenkov/qm40-molecular-qm-dataset"
+path = "xyz.csv"
+size = 986349335
+
+[files."niladriroy0_performance-limits-in-rocket-propulsion-systems_rocket_propulsion_dataset_v1.csv"]
+dataset = "niladriroy0/performance-limits-in-rocket-propulsion-systems"
+path = "rocket_propulsion_dataset_v1.csv"
+size = 16208602
+
+[files."niloy333_kuhar_1.Raw_time_domian_data_0.Stand_1013_A_1.csv"]
+dataset = "niloy333/kuhar"
+path = "1.Raw_time_domian_data/0.Stand/1013_A_1.csv"
+size = 544812
+
+[files."nimishasen27_spotify-dataset_artists.csv"]
+dataset = "nimishasen27/spotify-dataset"
+path = "artists.csv"
+size = 61969476
+
+[files."nimishmagre_tmnist-glyphs-1812-characters_Glyphs_TMNIST_updated.csv"]
+dataset = "nimishmagre/tmnist-glyphs-1812-characters"
+path = "Glyphs_TMNIST_updated.csv"
+size = 1078171146
+
+[files."nina2025_19-december-2025-ps-s5e12_0.70442.xgb.csv"]
+dataset = "nina2025/19-december-2025-ps-s5e12"
+path = "0.70442.xgb.csv"
+size = 7779211
+
+[files."nina2025_19-june-2025-fertilizer_submission__LB__0_37_780.csv"]
+dataset = "nina2025/19-june-2025-fertilizer"
+path = "submission__LB__0_37_780.csv"
+size = 7060085
+
+[files."nishaanamin_march-madness-data_Conference Stats Home.csv"]
+dataset = "nishaanamin/march-madness-data"
+path = "Conference Stats Home.csv"
+size = 125565
+
+[files."nitishabharathi_cert-insider-threat_email.csv"]
+dataset = "nitishabharathi/cert-insider-threat"
+path = "email.csv"
+size = 1362101939
+
+[files."nitishraj_ycombinatorcompanies_yc_companies.csv"]
+dataset = "nitishraj/ycombinatorcompanies"
+path = "yc_companies.csv"
+size = 4532131
+
+[files."nnair25_Alcoholics_SMNI_CMI_TEST_Data113.csv"]
+dataset = "nnair25/Alcoholics"
+path = "SMNI_CMI_TEST/Data113.csv"
+size = 1044397
+
+[files."noriuk_us-education-datasets-unification-project_input_data_input_data_NCES_ENROLL_DISTRICTS_NCES_ENROLL_DISTRICTS_NCES_Enroll_Districts_G_9_12.csv"]
+dataset = "noriuk/us-education-datasets-unification-project"
+path = "input_data/input_data/NCES_ENROLL_DISTRICTS/NCES_ENROLL_DISTRICTS/NCES_Enroll_Districts_G_9_12.csv"
+size = 35175343
+
+[files."nosbielcs_brazilian-delivery-center_orders.csv"]
+dataset = "nosbielcs/brazilian-delivery-center"
+path = "orders.csv"
+size = 90250303
+
+[files."nphantawee_pump-sensor-data_sensor.csv"]
+dataset = "nphantawee/pump-sensor-data"
+path = "sensor.csv"
+size = 124058460
+
+[files."nudratabbas_marketing-funnel-dataset-chococrave2024_chococrave_marketing_funnel_2024 (1).csv"]
+dataset = "nudratabbas/marketing-funnel-dataset-chococrave2024"
+path = "chococrave_marketing_funnel_2024 (1).csv"
+size = 49622
+
+[files."odins0n_hm256x256_articles.csv"]
+dataset = "odins0n/hm256x256"
+path = "articles.csv"
+size = 36127865
+
+[files."odins0n_monthly-gold-prices_1990-2021.csv"]
+dataset = "odins0n/monthly-gold-prices"
+path = "1990-2021.csv"
+size = 55486
+
+[files."odins0n_top-20-play-store-app-reviews-daily-update_Flipboard.csv"]
+dataset = "odins0n/top-20-play-store-app-reviews-daily-update"
+path = "Flipboard.csv"
+size = 1321450
+
+[files."ofurkancoban_discogs-data-dumps-december-2025_discogs_20251201_releases.csv"]
+dataset = "ofurkancoban/discogs-data-dumps-december-2025"
+path = "discogs_20251201_releases.csv"
+size = 32715422380
+
+[files."ofurkancoban_discogs-data-dumps-november-2025_discogs_20251101_artists.csv"]
+dataset = "ofurkancoban/discogs-data-dumps-november-2025"
+path = "discogs_20251101_artists.csv"
+size = 1321389763
+
+[files."ofurkancoban_discogs-data-dumps-november-2025_discogs_20251101_releases.csv"]
+dataset = "ofurkancoban/discogs-data-dumps-november-2025"
+path = "discogs_20251101_releases.csv"
+size = 32541617037
+
+[files."ohagwucollinspatrick_ghana-crop-disease_Test.csv"]
+dataset = "ohagwucollinspatrick/ghana-crop-disease"
+path = "Test.csv"
+size = 42066
+
+[files."olegshpagin_crypto-coins-prices-ohlcv_D1_ACHUSDT_D1.csv"]
+dataset = "olegshpagin/crypto-coins-prices-ohlcv"
+path = "D1/ACHUSDT_D1.csv"
+size = 43836
+
+[files."oleksastepaniuk_prozorro-public-procurement-dataset_Suppliers.csv"]
+dataset = "oleksastepaniuk/prozorro-public-procurement-dataset"
+path = "Suppliers.csv"
+size = 1673622288
+
+[files."olgagmiufana1_fragrantica-com-fragrance-dataset_fra_cleaned.csv"]
+dataset = "olgagmiufana1/fragrantica-com-fragrance-dataset"
+path = "fra_cleaned.csv"
+size = 6773183
+
+[files."omarmohameddarwish_olist-store-data-analysis-project-pythonsqlbi_Project_OLIST_Cleaning_geolocation.csv"]
+dataset = "omarmohameddarwish/olist-store-data-analysis-project-pythonsqlbi"
+path = "Project_OLIST/Cleaning/geolocation.csv"
+size = 1135157
+
+[files."omermetinn_tweets-about-the-top-companies-from-2015-to-2020_Tweet.csv"]
+dataset = "omermetinn/tweets-about-the-top-companies-from-2015-to-2020"
+path = "Tweet.csv"
+size = 662090598
+
+[files."omershafiq_bitcoin-network-transactional-metadata_DG_out.csv"]
+dataset = "omershafiq/bitcoin-network-transactional-metadata"
+path = "DG_out.csv"
+size = 4163295351
+
+[files."omkarbhujbalrao_pokemon-dataset-gen-1-9_pokeformslist.csv"]
+dataset = "omkarbhujbalrao/pokemon-dataset-gen-1-9"
+path = "pokeformslist.csv"
+size = 14081
+
+[files."omsandeeppatil_indian-aqi-stations_Andhra_Pradesh_AP07.csv"]
+dataset = "omsandeeppatil/indian-aqi-stations"
+path = "Andhra_Pradesh/AP07.csv"
+size = 18872106
+
+[files."omsandeeppatil_indian-aqi-stations_Andhra_Pradesh_AP08.csv"]
+dataset = "omsandeeppatil/indian-aqi-stations"
+path = "Andhra_Pradesh/AP08.csv"
+size = 11150023
+
+[files."omsandeeppatil_indian-aqi-stations_Andhra_Pradesh_AP10.csv"]
+dataset = "omsandeeppatil/indian-aqi-stations"
+path = "Andhra_Pradesh/AP10.csv"
+size = 7257285
+
+[files."open-powerlifting_powerlifting-database_openpowerlifting.csv"]
+dataset = "open-powerlifting/powerlifting-database"
+path = "openpowerlifting.csv"
+size = 250773529
+
+[files."open-source-sports_baseball-databank_Fielding.csv"]
+dataset = "open-source-sports/baseball-databank"
+path = "Fielding.csv"
+size = 8332646
+
+[files."orogunadebola_credit-card-transaction-dataset-fraud-detection_data.csv"]
+dataset = "orogunadebola/credit-card-transaction-dataset-fraud-detection"
+path = "data.csv"
+size = 3354419812
+
+[files."outofskills_driving-behavior_test_motion_data.csv"]
+dataset = "outofskills/driving-behavior"
+path = "test_motion_data.csv"
+size = 257917
+
+[files."pablobravo73_real-estate-bogota_inmuebles_bogota.csv"]
+dataset = "pablobravo73/real-estate-bogota"
+path = "inmuebles_bogota.csv"
+size = 922300
+
+[files."patrickb1912_ipl-complete-dataset-20082020_deliveries.csv"]
+dataset = "patrickb1912/ipl-complete-dataset-20082020"
+path = "deliveries.csv"
+size = 27019953
+
+[files."patrickfleith_nasa-battery-dataset_cleaned_dataset_data_00015.csv"]
+dataset = "patrickfleith/nasa-battery-dataset"
+path = "cleaned_dataset/data/00015.csv"
+size = 122118
+
+[files."patricklford_life-but-not-as-we-know-it_HNP_Stats_CSV_HNP_StatsCountry-Series.csv"]
+dataset = "patricklford/life-but-not-as-we-know-it"
+path = "HNP_Stats_CSV/HNP_StatsCountry-Series.csv"
+size = 292034
+
+[files."patricklford_nhs-cancer-data_GDO_data_wide.csv"]
+dataset = "patricklford/nhs-cancer-data"
+path = "GDO_data_wide.csv"
+size = 41540844
+
+[files."pauloviniciusornelas_wwimporters_Sales_Sales.InvoiceLines.csv"]
+dataset = "pauloviniciusornelas/wwimporters"
+path = "Sales/Sales.InvoiceLines.csv"
+size = 22277088
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_August 2018_ira_tweets_csv_hashed.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/August 2018/ira_tweets_csv_hashed.csv"
+size = 5427044754
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_August 2018_ira_users_csv_hashed.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/August 2018/ira_users_csv_hashed.csv"
+size = 974704
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_August 2018_iranian_tweets_csv_hashed.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/August 2018/iranian_tweets_csv_hashed.csv"
+size = 699663227
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_August 2019_china_082019_1_tweets_csv_hashed.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/August 2019/china_082019_1_tweets_csv_hashed.csv"
+size = 759417758
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_January 2019_iran_201901_1_tweets_csv_hashed_2.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/January 2019/iran_201901_1_tweets_csv_hashed_2.csv"
+size = 951010493
+
+[files."paultimothymooney_twitter-election-data-archives_Twitter Election Data Archives_January 2019_russian_linked_tweets_csv_hashed.csv"]
+dataset = "paultimothymooney/twitter-election-data-archives"
+path = "Twitter Election Data Archives/January 2019/russian_linked_tweets_csv_hashed.csv"
+size = 601661482
+
+[files."paultimothymooney_zillow-house-price-data_City_Zhvi_5BedroomOrMore.csv"]
+dataset = "paultimothymooney/zillow-house-price-data"
+path = "City_Zhvi_5BedroomOrMore.csv"
+size = 37143656
+
+[files."pavankrishnanarne_global-stock-market-2008-present_2023_Global_Markets_Data.csv"]
+dataset = "pavankrishnanarne/global-stock-market-2008-present"
+path = "2023_Global_Markets_Data.csv"
+size = 182478
+
+[files."pavelgolubkov_dataset_results.csv"]
+dataset = "pavelgolubkov/dataset"
+path = "results.csv"
+size = 37103
+
+[files."pavelgolubkov_dataset_stats_across_runs_i_results.csv"]
+dataset = "pavelgolubkov/dataset"
+path = "stats_across_runs_i_results.csv"
+size = 21630
+
+[files."pavelgrigoryev_olist-order-reviews-translated_olist_order_reviews_dataset_translated.csv"]
+dataset = "pavelgrigoryev/olist-order-reviews-translated"
+path = "olist_order_reviews_dataset_translated.csv"
+size = 13341881
+
+[files."pavellexyr_ten-million-reddit-answers_ten-million-reddit-answers.csv"]
+dataset = "pavellexyr/ten-million-reddit-answers"
+path = "ten-million-reddit-answers.csv"
+size = 2972908331
+
+[files."pepepython_spotify-huge-database-daily-charts-over-3-years_Database to calculate popularity.csv"]
+dataset = "pepepython/spotify-huge-database-daily-charts-over-3-years"
+path = "Database to calculate popularity.csv"
+size = 1526072216
+
+[files."pepepython_spotify-huge-database-daily-charts-over-3-years_Final database.csv"]
+dataset = "pepepython/spotify-huge-database-daily-charts-over-3-years"
+path = "Final database.csv"
+size = 112572644
+
+[files."piyushjain16_amazon-product-data_dataset_train.csv"]
+dataset = "piyushjain16/amazon-product-data"
+path = "dataset/train.csv"
+size = 1655092058
+
+[files."polartech_500000-us-homes-data-for-sale-properties_600K US Housing Properties.csv"]
+dataset = "polartech/500000-us-homes-data-for-sale-properties"
+path = "600K US Housing Properties.csv"
+size = 204520010
+
+[files."prajwalnayakat_text-emotion_final_dataset.csv"]
+dataset = "prajwalnayakat/text-emotion"
+path = "final_dataset.csv"
+size = 11941822
+
+[files."pranavjha24_car-hacking-dataset_Fuzzy_dataset.csv"]
+dataset = "pranavjha24/car-hacking-dataset"
+path = "Fuzzy_dataset.csv"
+size = 198520767
+
+[files."prasoonkottarathil_btcinusd_BTC-2021min.csv"]
+dataset = "prasoonkottarathil/btcinusd"
+path = "BTC-2021min.csv"
+size = 62912837
+
+[files."prathameshvardhave07_data-science-jobs-salary-prediction_final dataset.csv"]
+dataset = "prathameshvardhave07/data-science-jobs-salary-prediction"
+path = "final dataset.csv"
+size = 43264175
+
+[files."pratyushpuri_grocery-store-sales-dataset-in-2025-1900-record_grocery_chain_data.csv"]
+dataset = "pratyushpuri/grocery-store-sales-dataset-in-2025-1900-record"
+path = "grocery_chain_data.csv"
+size = 163334
+
+[files."prince7489_ai-vs-human-comparison-dataset_ai_vs_human_dataset_medium.csv"]
+dataset = "prince7489/ai-vs-human-comparison-dataset"
+path = "ai_vs_human_dataset_medium.csv"
+size = 107760
+
+[files."prince7489_daily-ai-assistant-usage-behavior-dataset_Daily_AI_Assistant_Usage_Behavior_Dataset.csv"]
+dataset = "prince7489/daily-ai-assistant-usage-behavior-dataset"
+path = "Daily_AI_Assistant_Usage_Behavior_Dataset.csv"
+size = 18307
+
+[files."prince7489_post-covid-health-effects-dataset_post_covid_health_effects_dataset.csv"]
+dataset = "prince7489/post-covid-health-effects-dataset"
+path = "post_covid_health_effects_dataset.csv"
+size = 23513
+
+[files."priyamchoksi_100000-diabetes-clinical-dataset_diabetes_dataset.csv"]
+dataset = "priyamchoksi/100000-diabetes-clinical-dataset"
+path = "diabetes_dataset.csv"
+size = 6141373
+
+[files."priyankraval_nurse-stress-prediction-wearable-sensors_merged_data.csv"]
+dataset = "priyankraval/nurse-stress-prediction-wearable-sensors"
+path = "merged_data.csv"
+size = 861071702
+
+[files."programmer3_cloud-resource-usage-dataset-for-anomaly-detection_cloud_dataset.csv"]
+dataset = "programmer3/cloud-resource-usage-dataset-for-anomaly-detection"
+path = "cloud_dataset.csv"
+size = 948119
+
+[files."programmerrdai_child-and-infant-mortality_exclusive-breastfeeding.csv"]
+dataset = "programmerrdai/child-and-infant-mortality"
+path = "exclusive-breastfeeding.csv"
+size = 12434
+
+[files."programmerrdai_mental-health-dataset_prevalence-of-depression-males-vs-females.csv"]
+dataset = "programmerrdai/mental-health-dataset"
+path = "prevalence-of-depression-males-vs-females.csv"
+size = 1868459
+
+[files."proselotis_financial-ipo-data_IPODataFull.csv"]
+dataset = "proselotis/financial-ipo-data"
+path = "IPODataFull.csv"
+size = 30190844
+
+[files."pschale_mlb-pitch-data-20152018_pitches.csv"]
+dataset = "pschale/mlb-pitch-data-20152018"
+path = "pitches.csv"
+size = 833513234
+
+[files."psparks_instacart-market-basket-analysis_order_products__prior.csv"]
+dataset = "psparks/instacart-market-basket-analysis"
+path = "order_products__prior.csv"
+size = 577550706
+
+[files."purumalgi_music-genre-classification_test.csv"]
+dataset = "purumalgi/music-genre-classification"
+path = "test.csv"
+size = 872343
+
+[files."pyim59_classic-datasets_penguins.csv"]
+dataset = "pyim59/classic-datasets"
+path = "penguins.csv"
+size = 13516
+
+[files."pythonafroz_electricity-smart-meter-data-from-india_CEEW - Smart meter data Mathura 2020.csv"]
+dataset = "pythonafroz/electricity-smart-meter-data-from-india"
+path = "CEEW - Smart meter data Mathura 2020.csv"
+size = 182625294
+
+[files."pythonafroz_electricity-smart-meter-data-from-india_SM Cleaned Data MH2021.csv"]
+dataset = "pythonafroz/electricity-smart-meter-data-from-india"
+path = "SM Cleaned Data MH2021.csv"
+size = 26711040
+
+[files."pythonafroz_renewable-power-generation-and-weather-conditions_Renewable.csv"]
+dataset = "pythonafroz/renewable-power-generation-and-weather-conditions"
+path = "Renewable.csv"
+size = 14911008
+
+[files."pythonafroz_solar-power-generation-data_Solar_Power_Generation_data.csv"]
+dataset = "pythonafroz/solar-power-generation-data"
+path = "Solar_Power_Generation_data.csv"
+size = 10853364
+
+[files."pythonafroz_state-of-charge-and-state-of-health-of-batteries_Experimental_data_aged_cell.csv"]
+dataset = "pythonafroz/state-of-charge-and-state-of-health-of-batteries"
+path = "Experimental_data_aged_cell.csv"
+size = 14498932
+
+[files."pythonafroz_wind-turbine-scada-data_Aventa_AV7_IET_OST_SCADA.csv"]
+dataset = "pythonafroz/wind-turbine-scada-data"
+path = "Aventa_AV7_IET_OST_SCADA.csv"
+size = 3129570571
+
+[files."qicongliu_bugzilla-bug-reports_sev_test.csv"]
+dataset = "qicongliu/bugzilla-bug-reports"
+path = "sev_test.csv"
+size = 9064487
+
+[files."qiriro_stress_dataset_0. interim_swell_eda_p16.csv"]
+dataset = "qiriro/stress"
+path = "dataset/0. interim/swell/eda/p16.csv"
+size = 127361712
+
+[files."qiriro_stress_dataset_0. interim_swell_eda_p22.csv"]
+dataset = "qiriro/stress"
+path = "dataset/0. interim/swell/eda/p22.csv"
+size = 84213768
+
+[files."r1chardson_the-world-university-rankings-2011-2023_2012_rankings.csv"]
+dataset = "r1chardson/the-world-university-rankings-2011-2023"
+path = "2012_rankings.csv"
+size = 280413
+
+[files."rabahba_phm-data-challenge-2010_c1_c1_c_1_013.csv"]
+dataset = "rabahba/phm-data-challenge-2010"
+path = "c1/c1/c_1_013.csv"
+size = 9574914
+
+[files."raghavendragandhi_retail-customer-and-transaction-dataset_interactions.csv"]
+dataset = "raghavendragandhi/retail-customer-and-transaction-dataset"
+path = "interactions.csv"
+size = 17842050
+
+[files."rahulcris07_human-decision-drift-under-cognitive-load_test_labels.csv"]
+dataset = "rahulcris07/human-decision-drift-under-cognitive-load"
+path = "test_labels.csv"
+size = 2060630
+
+[files."rahulgarg28_mobile-battery-with-time_352944080639365.csv"]
+dataset = "rahulgarg28/mobile-battery-with-time"
+path = "352944080639365.csv"
+size = 49063418
+
+[files."raj713335_tbo-hotels-dataset_hotels.csv"]
+dataset = "raj713335/tbo-hotels-dataset"
+path = "hotels.csv"
+size = 2409352713
+
+[files."rajaisrarkiani_ufc-fights-and-fighter-stats-dataset_Fights Data.csv"]
+dataset = "rajaisrarkiani/ufc-fights-and-fighter-stats-dataset"
+path = "Fights Data.csv"
+size = 2567671
+
+[files."rajanand_education-in-india_2015_16_Districtwise.csv"]
+dataset = "rajanand/education-in-india"
+path = "2015_16_Districtwise.csv"
+size = 1895123
+
+[files."rajanand_education-in-india_2015_16_Statewise_Secondary.csv"]
+dataset = "rajanand/education-in-india"
+path = "2015_16_Statewise_Secondary.csv"
+size = 96505
+
+[files."rajanbhateja_indian-cities-aqi-2020-2024_hyderabad_combined.csv"]
+dataset = "rajanbhateja/indian-cities-aqi-2020-2024"
+path = "hyderabad_combined.csv"
+size = 148188
+
+[files."rajanbhateja_indian-cities-aqi-2020-2024_mumbai_combined.csv"]
+dataset = "rajanbhateja/indian-cities-aqi-2020-2024"
+path = "mumbai_combined.csv"
+size = 179933
+
+[files."rajeevw_ufcdata_preprocessed_data.csv"]
+dataset = "rajeevw/ufcdata"
+path = "preprocessed_data.csv"
+size = 5654597
+
+[files."rajugc_imdb-movies-dataset-based-on-genre_mystery.csv"]
+dataset = "rajugc/imdb-movies-dataset-based-on-genre"
+path = "mystery.csv"
+size = 7156399
+
+[files."rameezmeerasahib_electric-vehicle-ev-sales-and-adoption_test.csv"]
+dataset = "rameezmeerasahib/electric-vehicle-ev-sales-and-adoption"
+path = "test.csv"
+size = 17332
+
+[files."ranakrc_smart-building-system_KETI_415_pir.csv"]
+dataset = "ranakrc/smart-building-system"
+path = "KETI/415/pir.csv"
+size = 1303176
+
+[files."ranazak73_mrbeast-latest-2025-youtube-channel-dataset_Mr Beast YT data.csv"]
+dataset = "ranazak73/mrbeast-latest-2025-youtube-channel-dataset"
+path = "Mr Beast YT data.csv"
+size = 825390
+
+[files."randelmaglaya_sdss-dr19-2025_Skyserver_SQL_DR19_2025_100K.csv"]
+dataset = "randelmaglaya/sdss-dr19-2025"
+path = "Skyserver_SQL_DR19_2025_100K.csv"
+size = 15544961
+
+[files."rasooljader_gestational-diabetes_Gestational Diabetes.csv"]
+dataset = "rasooljader/gestational-diabetes"
+path = "Gestational Diabetes.csv"
+size = 31452
+
+[files."ratthachat_nakhunchumpolsathien-thaisum_thaisum_train.csv"]
+dataset = "ratthachat/nakhunchumpolsathien-thaisum"
+path = "thaisum_train.csv"
+size = 2942921166
+
+[files."ravalsmit_customer-segmentation-data_customer_segmentation_data.csv"]
+dataset = "ravalsmit/customer-segmentation-data"
+path = "customer_segmentation_data.csv"
+size = 8684551
+
+[files."ravikumargattu_network-traffic-dataset_Midterm_53_group.csv"]
+dataset = "ravikumargattu/network-traffic-dataset"
+path = "Midterm_53_group.csv"
+size = 55516901
+
+[files."ravindrasinghrana_country-military-size_Military_Size_by_Country.csv"]
+dataset = "ravindrasinghrana/country-military-size"
+path = "Military_Size_by_Country.csv"
+size = 689567
+
+[files."realalexanderwei_supermarket-product-images-thumbnails_supermarket_product_thumbnails_combined.csv"]
+dataset = "realalexanderwei/supermarket-product-images-thumbnails"
+path = "supermarket_product_thumbnails/combined.csv"
+size = 95309284
+
+[files."rexheng_ec2c3-datasets_wines.csv"]
+dataset = "rexheng/ec2c3-datasets"
+path = "wines.csv"
+size = 1215523
+
+[files."rhijudas_rna-3d-folding-templates_train_templates.v2.csv"]
+dataset = "rhijudas/rna-3d-folding-templates"
+path = "train_templates.v2.csv"
+size = 4690434286
+
+[files."rhijudas_stanford-rna-3d-folding-all-atom-train-data_train_allatom.v2.1.csv"]
+dataset = "rhijudas/stanford-rna-3d-folding-all-atom-train-data"
+path = "train_allatom.v2.1.csv"
+size = 4280864382
+
+[files."rhijudas_stanford-rna-3d-folding-all-atom-train-data_train_templates.v2.1.csv"]
+dataset = "rhijudas/stanford-rna-3d-folding-all-atom-train-data"
+path = "train_templates.v2.1.csv"
+size = 4688137172
+
+[files."rhijudas_stanford-rna-3d-folding-all-atom-train-data_train_v2_allatom_templates_SPLIT_train_v2.allatom_templates.0011_0020.csv"]
+dataset = "rhijudas/stanford-rna-3d-folding-all-atom-train-data"
+path = "train_v2_allatom_templates_SPLIT/train_v2.allatom_templates.0011_0020.csv"
+size = 151923167
+
+[files."rhijudas_stanford-rna-3d-folding-all-atom-train-data_train_v2_allatom_templates_SPLIT_train_v2.allatom_templates.0081_0090.csv"]
+dataset = "rhijudas/stanford-rna-3d-folding-all-atom-train-data"
+path = "train_v2_allatom_templates_SPLIT/train_v2.allatom_templates.0081_0090.csv"
+size = 334889008
+
+[files."rhythmghai_multilingual-sentiment-and-emotion-analysis-dataset_multilingual-emotion-dataset_imbalanced_val.csv"]
+dataset = "rhythmghai/multilingual-sentiment-and-emotion-analysis-dataset"
+path = "multilingual-emotion-dataset/imbalanced/val.csv"
+size = 70184
+
+[files."ricgomes_global-fashion-retail-stores-dataset_customers.csv"]
+dataset = "ricgomes/global-fashion-retail-stores-dataset"
+path = "customers.csv"
+size = 190549492
+
+[files."ricgomes_global-fashion-retail-stores-dataset_products.csv"]
+dataset = "ricgomes/global-fashion-retail-stores-dataset"
+path = "products.csv"
+size = 4991641
+
+[files."ricgomes_global-fashion-retail-stores-dataset_transactions.csv"]
+dataset = "ricgomes/global-fashion-retail-stores-dataset"
+path = "transactions.csv"
+size = 805152362
+
+[files."rikinzala_s-and-p-500-esg-and-stocks-data-2023-24_sp500_esg_data.csv"]
+dataset = "rikinzala/s-and-p-500-esg-and-stocks-data-2023-24"
+path = "sp500_esg_data.csv"
+size = 51741
+
+[files."rishabhkausish_reddit-depression-dataset_reddit_depression_dataset.csv"]
+dataset = "rishabhkausish/reddit-depression-dataset"
+path = "reddit_depression_dataset.csv"
+size = 1165277530
+
+[files."rishisankineni_text-similarity_train.csv"]
+dataset = "rishisankineni/text-similarity"
+path = "train.csv"
+size = 172629
+
+[files."riteshswami08_height-and-weight-dataset-with-bmi-age-and-gender_weight-height.csv"]
+dataset = "riteshswami08/height-and-weight-dataset-with-bmi-age-and-gender"
+path = "weight-height.csv"
+size = 4000877
+
+[files."rivalytics_er-wait-time_ER Wait Time Dataset.csv"]
+dataset = "rivalytics/er-wait-time"
+path = "ER Wait Time Dataset.csv"
+size = 770273
+
+[files."rizkykiky_gold-price-dataset_Weekly_EoP.csv"]
+dataset = "rizkykiky/gold-price-dataset"
+path = "Weekly_EoP.csv"
+size = 436482
+
+[files."rkiattisak_salaly-prediction-for-beginer_Salary Data.csv"]
+dataset = "rkiattisak/salaly-prediction-for-beginer"
+path = "Salary Data.csv"
+size = 19360
+
+[files."robikscube_flight-delay-dataset-20182022_Combined_Flights_2019.csv"]
+dataset = "robikscube/flight-delay-dataset-20182022"
+path = "Combined_Flights_2019.csv"
+size = 2821514721
+
+[files."robikscube_flight-delay-dataset-20182022_Combined_Flights_2020.csv"]
+dataset = "robikscube/flight-delay-dataset-20182022"
+path = "Combined_Flights_2020.csv"
+size = 1746637597
+
+[files."robikscube_flight-delay-dataset-20182022_Combined_Flights_2021.csv"]
+dataset = "robikscube/flight-delay-dataset-20182022"
+path = "Combined_Flights_2021.csv"
+size = 2214293351
+
+[files."robikscube_flight-delay-dataset-20182022_raw_Flights_2018_11.csv"]
+dataset = "robikscube/flight-delay-dataset-20182022"
+path = "raw/Flights_2018_11.csv"
+size = 318305406
+
+[files."robikscube_osha-injury-data-20162021_ITA Data CY 2021 submitted thru 3-14-2022 v3.csv"]
+dataset = "robikscube/osha-injury-data-20162021"
+path = "ITA Data CY 2021 submitted thru 3-14-2022 v3.csv"
+size = 85357047
+
+[files."roche-data-science-coalition_uncover_RDSC-07-30-Update_RDSC-07-30-Update_canadian_outbreak_tracker_canada-cumulative-case-count-by-new-hybrid-regional-health-boundaries.csv"]
+dataset = "roche-data-science-coalition/uncover"
+path = "RDSC-07-30-Update/RDSC-07-30-Update/canadian_outbreak_tracker/canada-cumulative-case-count-by-new-hybrid-regional-health-boundaries.csv"
+size = 12629353
+
+[files."rockyt07_cassandra-employee-dataset_Employee_Train_Dataset.csv"]
+dataset = "rockyt07/cassandra-employee-dataset"
+path = "Employee_Train_Dataset.csv"
+size = 5349912
+
+[files."rockyt07_global-semiconductor-industry-giants-stock_semiconductor_prices_timeseries.csv"]
+dataset = "rockyt07/global-semiconductor-industry-giants-stock"
+path = "semiconductor_prices_timeseries.csv"
+size = 25581008
+
+[files."rockyt07_us-banks-stock-all-time_bank_stock_data_CADE_Cadence_Bank.csv"]
+dataset = "rockyt07/us-banks-stock-all-time"
+path = "bank_stock_data/CADE_Cadence_Bank.csv"
+size = 1338859
+
+[files."rodmcn_askreddit-questions-and-answers_reddit_questions.csv"]
+dataset = "rodmcn/askreddit-questions-and-answers"
+path = "reddit_questions.csv"
+size = 27408406
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_DrDoS_MSSQL.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/DrDoS_MSSQL.csv"
+size = 1889181756
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_DrDoS_NTP.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/DrDoS_NTP.csv"
+size = 645008606
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_DrDoS_NetBIOS.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/DrDoS_NetBIOS.csv"
+size = 1697479829
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_DrDoS_SSDP.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/DrDoS_SSDP.csv"
+size = 1252686219
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_DrDoS_UDP.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/DrDoS_UDP.csv"
+size = 1506039371
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_01-12_TFTP.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "01-12/TFTP.csv"
+size = 9302011115
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_03-11_MSSQL.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "03-11/MSSQL.csv"
+size = 2386225228
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_03-11_NetBIOS.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "03-11/NetBIOS.csv"
+size = 1418468105
+
+[files."rodrigorosasilva_cic-ddos2019-30gb-full-dataset-csv-files_03-11_UDP.csv"]
+dataset = "rodrigorosasilva/cic-ddos2019-30gb-full-dataset-csv-files"
+path = "03-11/UDP.csv"
+size = 1792797298
+
+[files."rogate16_amazon-reviews-2018-full-dataset_amazon_reviews.csv"]
+dataset = "rogate16/amazon-reviews-2018-full-dataset"
+path = "amazon_reviews.csv"
+size = 1227077073
+
+[files."rohankasichhwa_nepse-daily-stock-data-2012-2025_BNT.csv"]
+dataset = "rohankasichhwa/nepse-daily-stock-data-2012-2025"
+path = "BNT.csv"
+size = 537309
+
+[files."rohankasichhwa_nepse-daily-stock-data-2012-2025_CHCL.csv"]
+dataset = "rohankasichhwa/nepse-daily-stock-data-2012-2025"
+path = "CHCL.csv"
+size = 961295
+
+[files."rohitrox_healthcare-provider-fraud-detection-analysis_Test-1542969243754.csv"]
+dataset = "rohitrox/healthcare-provider-fraud-detection-analysis"
+path = "Test-1542969243754.csv"
+size = 14894
+
+[files."rohullahakbari12_weather-prediction_Weather_Data.csv"]
+dataset = "rohullahakbari12/weather-prediction"
+path = "Weather_Data.csv"
+size = 284201
+
+[files."ronakbokaria_myntra-products-dataset_myntra202305041052.csv"]
+dataset = "ronakbokaria/myntra-products-dataset"
+path = "myntra202305041052.csv"
+size = 1431950082
+
+[files."roninn007_tmdb-movie-dataset-containing-32000-movies_TMDB_Dataset_movie_crew.csv"]
+dataset = "roninn007/tmdb-movie-dataset-containing-32000-movies"
+path = "TMDB_Dataset/movie_crew.csv"
+size = 187836607
+
+[files."rowhitswami_all-indian-companies-registration-data-1900-2019_registered_companies.csv"]
+dataset = "rowhitswami/all-indian-companies-registration-data-1900-2019"
+path = "registered_companies.csv"
+size = 592921427
+
+[files."rowhitswami_nips-papers-1987-2019-updated_authors.csv"]
+dataset = "rowhitswami/nips-papers-1987-2019-updated"
+path = "authors.csv"
+size = 935021
+
+[files."rrkcoder_zomato-data-40k-restaurants-of-indias-100-cities_zomato_dataset.csv"]
+dataset = "rrkcoder/zomato-data-40k-restaurants-of-indias-100-cities"
+path = "zomato_dataset.csv"
+size = 6406286
+
+[files."rsrishav_youtube-trending-video-dataset_BR_youtube_trending_data.csv"]
+dataset = "rsrishav/youtube-trending-video-dataset"
+path = "BR_youtube_trending_data.csv"
+size = 360199182
+
+[files."rsrishav_youtube-trending-video-dataset_DE_youtube_trending_data.csv"]
+dataset = "rsrishav/youtube-trending-video-dataset"
+path = "DE_youtube_trending_data.csv"
+size = 462208841
+
+[files."rtatman_stopword-lists-for-african-languages_ha_frequency_list.csv"]
+dataset = "rtatman/stopword-lists-for-african-languages"
+path = "ha_frequency_list.csv"
+size = 10242
+
+[files."ruchi798_bookcrossing-dataset_Book reviews_Book reviews_BX_Books.csv"]
+dataset = "ruchi798/bookcrossing-dataset"
+path = "Book reviews/Book reviews/BX_Books.csv"
+size = 77430569
+
+[files."ruchi798_shopping-cart-database_customers.csv"]
+dataset = "ruchi798/shopping-cart-database"
+path = "customers.csv"
+size = 102070
+
+[files."rudraprasadbhuyan_amazon-laptop-messy-dataset_amazon_laptop_9.csv"]
+dataset = "rudraprasadbhuyan/amazon-laptop-messy-dataset"
+path = "amazon_laptop_9.csv"
+size = 72160
+
+[files."ryanholbrook_fe-course-data_accidents.csv"]
+dataset = "ryanholbrook/fe-course-data"
+path = "accidents.csv"
+size = 21358170
+
+[files."ryanluong1_valorant-champion-tour-2021-2023-data_all_ids_all_matches_games_ids.csv"]
+dataset = "ryanluong1/valorant-champion-tour-2021-2023-data"
+path = "all_ids/all_matches_games_ids.csv"
+size = 3435590
+
+[files."ryanluong1_valorant-champion-tour-2021-2023-data_all_ids_all_players_ids.csv"]
+dataset = "ryanluong1/valorant-champion-tour-2021-2023-data"
+path = "all_ids/all_players_ids.csv"
+size = 198306
+
+[files."ryanluong1_valorant-champion-tour-2021-2023-data_vct_2021_matches_eco_stats.csv"]
+dataset = "ryanluong1/valorant-champion-tour-2021-2023-data"
+path = "vct_2021/matches/eco_stats.csv"
+size = 16656380
+
+[files."ryanluong1_valorant-champion-tour-2021-2023-data_vct_2021_matches_kills.csv"]
+dataset = "ryanluong1/valorant-champion-tour-2021-2023-data"
+path = "vct_2021/matches/kills.csv"
+size = 150651823
+
+[files."ryanluong1_valorant-champion-tour-2021-2023-data_vct_2021_matches_maps_scores.csv"]
+dataset = "ryanluong1/valorant-champion-tour-2021-2023-data"
+path = "vct_2021/matches/maps_scores.csv"
+size = 2175938
+
+[files."sachinkanchan92_reddit-top-posts-50-subreddit-analysis-2011-2024_food.csv"]
+dataset = "sachinkanchan92/reddit-top-posts-50-subreddit-analysis-2011-2024"
+path = "food.csv"
+size = 254331
+
+[files."sagarikashreevastava_cognitive-distortion-detetction-dataset_Annotated_data.csv"]
+dataset = "sagarikashreevastava/cognitive-distortion-detetction-dataset"
+path = "Annotated_data.csv"
+size = 2604907
+
+[files."sahiltailor_ipl-2024-ball-by-ball-dataset_ipl_2025_deliveries.csv"]
+dataset = "sahiltailor/ipl-2024-ball-by-ball-dataset"
+path = "ipl_2025_deliveries.csv"
+size = 2363696
+
+[files."saidaminsaidaxmadov_chocolate-sales_Chocolate Sales (2).csv"]
+dataset = "saidaminsaidaxmadov/chocolate-sales"
+path = "Chocolate Sales (2).csv"
+size = 212462
+
+[files."saifulislam7_cyberbullying-and-harassment-detection-using-ml_Approach to Social Media Cyberbullying and Harassment Detection Using Advanced Machine Learning.csv"]
+dataset = "saifulislam7/cyberbullying-and-harassment-detection-using-ml"
+path = "Approach to Social Media Cyberbullying and Harassment Detection Using Advanced Machine Learning.csv"
+size = 643396
+
+[files."salmon1_demo-gait-video_Participant_1_Experiment_1_E1T4_P1_E1T4.csv"]
+dataset = "salmon1/demo-gait-video"
+path = "Participant_1/Experiment_1/E1T4/P1_E1T4.csv"
+size = 104879
+
+[files."samanazhar_multilingual-sentiment-analysis_Scraped_Tweets_PMLN_Complete_Dataset.csv"]
+dataset = "samanazhar/multilingual-sentiment-analysis"
+path = "Scraped_Tweets/PMLN_Complete_Dataset.csv"
+size = 1137573960
+
+[files."samanazhar_multilingual-sentiment-analysis_Scraped_Tweets_PPP_Complete_Dataset.csv"]
+dataset = "samanazhar/multilingual-sentiment-analysis"
+path = "Scraped_Tweets/PPP_Complete_Dataset.csv"
+size = 2778128109
+
+[files."samanazhar_multilingual-sentiment-analysis_Scraped_Tweets_PTI_Complete_Dataset.csv"]
+dataset = "samanazhar/multilingual-sentiment-analysis"
+path = "Scraped_Tweets/PTI_Complete_Dataset.csv"
+size = 2767237883
+
+[files."samikshadalvi_pcos-diagnosis-dataset_pcos_dataset.csv"]
+dataset = "samikshadalvi/pcos-diagnosis-dataset"
+path = "pcos_dataset.csv"
+size = 19923
+
+[files."samuelcortinhas_house-price-prediction-seattle_test.csv"]
+dataset = "samuelcortinhas/house-price-prediction-seattle"
+path = "test.csv"
+size = 21950
+
+[files."samuelcortinhas_rsna-2022-spine-fracture-detection-metadata_meta_train_clean.csv"]
+dataset = "samuelcortinhas/rsna-2022-spine-fracture-detection-metadata"
+path = "meta_train_clean.csv"
+size = 48409227
+
+[files."sandeepkapri_banknifty-data-upto-2024_bank-nifty-1m-data.csv"]
+dataset = "sandeepkapri/banknifty-data-upto-2024"
+path = "bank-nifty-1m-data.csv"
+size = 54047104
+
+[files."sanjidh090_bd-food-review-dataset_BDFoodSent A Large-Scale Sentiment-Labeled Restaurant Review Dataset from Bangladesh_BDFoodSent-334k.csv"]
+dataset = "sanjidh090/bd-food-review-dataset"
+path = "BDFoodSent A Large-Scale Sentiment-Labeled Restaurant Review Dataset from Bangladesh/BDFoodSent-334k.csv"
+size = 231164813
+
+[files."sankar008_real-vul_realvul_renamed_train.csv"]
+dataset = "sankar008/real-vul"
+path = "realvul_renamed_train.csv"
+size = 1305064327
+
+[files."santiago123678_biological-data-of-human-ancestors-data-sets_Evolution_DataSets.csv"]
+dataset = "santiago123678/biological-data-of-human-ancestors-data-sets"
+path = "Evolution_DataSets.csv"
+size = 2869145
+
+[files."sarabhian_d1namo-ecg-glucose-data_diabetes_subset_ecg_data_diabetes_subset_ecg_data_001_sensor_data_2014_10_02-10_56_44_2014_10_02-10_56_44_ECG.csv"]
+dataset = "sarabhian/d1namo-ecg-glucose-data"
+path = "diabetes_subset_ecg_data/diabetes_subset_ecg_data/001/sensor_data/2014_10_02-10_56_44/2014_10_02-10_56_44_ECG.csv"
+size = 280259375
+
+[files."sarabhian_d1namo-ecg-glucose-data_diabetes_subset_ecg_data_diabetes_subset_ecg_data_002_sensor_data_2014_10_03-06_33_20_2014_10_03-06_33_20_ECG.csv"]
+dataset = "sarabhian/d1namo-ecg-glucose-data"
+path = "diabetes_subset_ecg_data/diabetes_subset_ecg_data/002/sensor_data/2014_10_03-06_33_20/2014_10_03-06_33_20_ECG.csv"
+size = 185489361
+
+[files."sarabhian_d1namo-ecg-glucose-data_diabetes_subset_ecg_data_diabetes_subset_ecg_data_002_sensor_data_2014_10_04-07_01_03_2014_10_04-07_01_03_ECG.csv"]
+dataset = "sarabhian/d1namo-ecg-glucose-data"
+path = "diabetes_subset_ecg_data/diabetes_subset_ecg_data/002/sensor_data/2014_10_04-07_01_03/2014_10_04-07_01_03_ECG.csv"
+size = 254694820
+
+[files."sarabhian_d1namo-ecg-glucose-data_diabetes_subset_ecg_data_diabetes_subset_ecg_data_004_sensor_data_2014_10_01-06_55_10_2014_10_01-06_55_10_ECG.csv"]
+dataset = "sarabhian/d1namo-ecg-glucose-data"
+path = "diabetes_subset_ecg_data/diabetes_subset_ecg_data/004/sensor_data/2014_10_01-06_55_10/2014_10_01-06_55_10_ECG.csv"
+size = 304886794
+
+[files."saurabhshahane_urdu-news-dataset_urdu-news-dataset-1M.csv"]
+dataset = "saurabhshahane/urdu-news-dataset"
+path = "urdu-news-dataset-1M.csv"
+size = 276791832
+
+[files."saurav9786_heart-rate-prediction_time_domain_features_train.csv"]
+dataset = "saurav9786/heart-rate-prediction"
+path = "time_domain_features_train.csv"
+size = 142487098
+
+[files."sebastienverpile_consumercomplaintsdata_Consumer_Complaints.csv"]
+dataset = "sebastienverpile/consumercomplaintsdata"
+path = "Consumer_Complaints.csv"
+size = 413497614
+
+[files."senthilkumarvaithi_historical-nifty-options-2024-all-expiries_2024_2024APR_NIFTY-02MAY24-19APR24.csv"]
+dataset = "senthilkumarvaithi/historical-nifty-options-2024-all-expiries"
+path = "2024/2024APR/NIFTY-02MAY24-19APR24.csv"
+size = 3161390
+
+[files."sethpointaverage_high-entropy-alloys-properties_High Entropy Alloy Properties.csv"]
+dataset = "sethpointaverage/high-entropy-alloys-properties"
+path = "High Entropy Alloy Properties.csv"
+size = 117219
+
+[files."shahmirvarqha_weather-data-malaysia_full_weather.csv"]
+dataset = "shahmirvarqha/weather-data-malaysia"
+path = "full_weather.csv"
+size = 2355974497
+
+[files."shankarpriya2913_crop-and-soil-dataset_data_core.csv"]
+dataset = "shankarpriya2913/crop-and-soil-dataset"
+path = "data_core.csv"
+size = 374725
+
+[files."shashankshukla123123_linkedin-job-data_linkdin_Job_data.csv"]
+dataset = "shashankshukla123123/linkedin-job-data"
+path = "linkdin_Job_data.csv"
+size = 19938465
+
+[files."shashi0dev_indian-used-car-listings-57480-clean-records_indian_used_cars_numeric_57058.csv"]
+dataset = "shashi0dev/indian-used-car-listings-57480-clean-records"
+path = "indian_used_cars_numeric_57058.csv"
+size = 13535020
+
+[files."shashi0dev_indian-used-car-listings-57480-clean-records_indian_used_cars_raw_57480.csv"]
+dataset = "shashi0dev/indian-used-car-listings-57480-clean-records"
+path = "indian_used_cars_raw_57480.csv"
+size = 4789654
+
+[files."shayanzk_cultural-superstitions-dataset_Cultural_Superstitions.csv"]
+dataset = "shayanzk/cultural-superstitions-dataset"
+path = "Cultural_Superstitions.csv"
+size = 24506
+
+[files."shebilmsp_youtube-trending-dataset-updated-daily_videos_country=AE_year=2025_month=12_trending_AE_2025-12-14.csv"]
+dataset = "shebilmsp/youtube-trending-dataset-updated-daily"
+path = "videos/country=AE/year=2025/month=12/trending_AE_2025-12-14.csv"
+size = 33682
+
+[files."shiamaashahen_vinbigdata-splitting-diseases_test_with_nofinding.csv"]
+dataset = "shiamaashahen/vinbigdata-splitting-diseases"
+path = "test_with_nofinding.csv"
+size = 209558
+
+[files."shilongzhuang_-women-clothing-ecommerce-sales-data_women_clothing_ecommerce_sales.csv"]
+dataset = "shilongzhuang/-women-clothing-ecommerce-sales-data"
+path = "women_clothing_ecommerce_sales.csv"
+size = 26273
+
+[files."shivan118_healthcare-analytics_Train_Third_Health_Camp_Attended.csv"]
+dataset = "shivan118/healthcare-analytics"
+path = "Train/Third_Health_Camp_Attended.csv"
+size = 110832
+
+[files."shtrausslearning_external-cfd-aero_30p30n_angvar_sst_10_tab_iter_cl.csv"]
+dataset = "shtrausslearning/external-cfd-aero"
+path = "30p30n/angvar_sst/10/tab_iter/cl.csv"
+size = 97820
+
+[files."shtrausslearning_external-cfd-aero_30p30n_angvar_sst_11_tab_final_sf.csv"]
+dataset = "shtrausslearning/external-cfd-aero"
+path = "30p30n/angvar_sst/11/tab_final/sf.csv"
+size = 95172
+
+[files."shubchat_1002-short-stories-from-project-guttenberg_stories.csv"]
+dataset = "shubchat/1002-short-stories-from-project-guttenberg"
+path = "stories.csv"
+size = 238045014
+
+[files."shubhammehta21_movie-lens-small-latest-dataset_movies.csv"]
+dataset = "shubhammehta21/movie-lens-small-latest-dataset"
+path = "movies.csv"
+size = 494431
+
+[files."shubhammkumaar_real-estate-listings-and-prices-in-india-2025_real_estate_dataset.csv"]
+dataset = "shubhammkumaar/real-estate-listings-and-prices-in-india-2025"
+path = "real_estate_dataset.csv"
+size = 51081
+
+[files."shubhankartiwari_chatbot-dataset_sft_combined.csv"]
+dataset = "shubhankartiwari/chatbot-dataset"
+path = "sft_combined.csv"
+size = 43186
+
+[files."shuvokumarbasak4004_fake-dataset-for-practice_datainfo.csv"]
+dataset = "shuvokumarbasak4004/fake-dataset-for-practice"
+path = "datainfo.csv"
+size = 5578068
+
+[files."shuyangli94_food-com-recipes-and-user-interactions_interactions_test.csv"]
+dataset = "shuyangli94/food-com-recipes-and-user-interactions"
+path = "interactions_test.csv"
+size = 522731
+
+[files."shuyangli94_interview-npr-media-dialog-transcripts_utterances.csv"]
+dataset = "shuyangli94/interview-npr-media-dialog-transcripts"
+path = "utterances.csv"
+size = 730192482
+
+[files."sid321axn_beijing-multisite-airquality-data-set_PRSA_Data_Huairou_20130301-20170228.csv"]
+dataset = "sid321axn/beijing-multisite-airquality-data-set"
+path = "PRSA_Data_Huairou_20130301-20170228.csv"
+size = 2641027
+
+[files."siddharth0935_synthetic-customer-analytics-dataset_synthetic_customers.csv"]
+dataset = "siddharth0935/synthetic-customer-analytics-dataset"
+path = "synthetic_customers.csv"
+size = 17344947
+
+[files."sidtwr_videogames-sales-dataset_PS4_GamesSales.csv"]
+dataset = "sidtwr/videogames-sales-dataset"
+path = "PS4_GamesSales.csv"
+size = 67304
+
+[files."sidtwr_videogames-sales-dataset_XboxOne_GameSales.csv"]
+dataset = "sidtwr/videogames-sales-dataset"
+path = "XboxOne_GameSales.csv"
+size = 40876
+
+[files."siliconx_favoritagrocerysalesforecastingextracted_train.csv"]
+dataset = "siliconx/favoritagrocerysalesforecastingextracted"
+path = "train.csv"
+size = 4997452288
+
+[files."snbitrngthi_implicit-vimacsa_roi_data.csv"]
+dataset = "snbitrngthi/implicit-vimacsa"
+path = "roi_data.csv"
+size = 552292
+
+[files."sobhanmoosavi_us-accidents_US_Accidents_March23.csv"]
+dataset = "sobhanmoosavi/us-accidents"
+path = "US_Accidents_March23.csv"
+size = 3058183727
+
+[files."sobhanmoosavi_us-road-construction-and-closures_US_Constructions_Dec21.csv"]
+dataset = "sobhanmoosavi/us-road-construction-and-closures"
+path = "US_Constructions_Dec21.csv"
+size = 2695838474
+
+[files."sobhanmoosavi_us-traffic-congestions-2016-2022_us_congestion_2016_2022_us_congestion_2016_2022.csv"]
+dataset = "sobhanmoosavi/us-traffic-congestions-2016-2022"
+path = "us_congestion_2016_2022/us_congestion_2016_2022.csv"
+size = 12875538897
+
+[files."sohaibanwaar1203_taxidemandfarepredictiondataset_yellow_tripdata_2015-02.csv"]
+dataset = "sohaibanwaar1203/taxidemandfarepredictiondataset"
+path = "yellow_tripdata_2015-02.csv"
+size = 1945357622
+
+[files."sohaibanwaar1203_taxidemandfarepredictiondataset_yellow_tripdata_2015-03.csv"]
+dataset = "sohaibanwaar1203/taxidemandfarepredictiondataset"
+path = "yellow_tripdata_2015-03.csv"
+size = 2087971794
+
+[files."solarmainframe_ids-intrusion-csv_02-20-2018.csv"]
+dataset = "solarmainframe/ids-intrusion-csv"
+path = "02-20-2018.csv"
+size = 4054925350
+
+[files."somnambwl_bookcrossing-dataset_Users.csv"]
+dataset = "somnambwl/bookcrossing-dataset"
+path = "Users.csv"
+size = 2465187
+
+[files."sonia22222_students-mental-health-assessments_students_mental_health_survey.csv"]
+dataset = "sonia22222/students-mental-health-assessments"
+path = "students_mental_health_survey.csv"
+size = 780836
+
+[files."sophalratitya_cambodia-traffic-signs-dataset_data_CAM_TSR_csv.csv"]
+dataset = "sophalratitya/cambodia-traffic-signs-dataset"
+path = "data/CAM_TSR_csv.csv"
+size = 326396
+
+[files."soumyodippal000_top-2000-companies-financial-data-2024-dataset_Top 2000 Companies Financial Data 2024.csv"]
+dataset = "soumyodippal000/top-2000-companies-financial-data-2024-dataset"
+path = "Top 2000 Companies Financial Data 2024.csv"
+size = 123923
+
+[files."spsayakpaul_arxiv-paper-abstracts_arxiv_data.csv"]
+dataset = "spsayakpaul/arxiv-paper-abstracts"
+path = "arxiv_data.csv"
+size = 67411252
+
+[files."sreshta140_ai-transformer-monitoring_TotalPower.csv"]
+dataset = "sreshta140/ai-transformer-monitoring"
+path = "TotalPower.csv"
+size = 1560439
+
+[files."sridhargutam_kcc-dataset_kcc_dataset.csv"]
+dataset = "sridhargutam/kcc-dataset"
+path = "kcc_dataset.csv"
+size = 7803240367
+
+[files."stackoverflow_pythonquestions_Answers.csv"]
+dataset = "stackoverflow/pythonquestions"
+path = "Answers.csv"
+size = 818925553
+
+[files."stackoverflow_pythonquestions_Questions.csv"]
+dataset = "stackoverflow/pythonquestions"
+path = "Questions.csv"
+size = 888008590
+
+[files."stackoverflow_stacksample_Answers.csv"]
+dataset = "stackoverflow/stacksample"
+path = "Answers.csv"
+size = 1607914819
+
+[files."stackoverflow_stacksample_Questions.csv"]
+dataset = "stackoverflow/stacksample"
+path = "Questions.csv"
+size = 1923682009
+
+[files."stanleyosias_ride-bike_202511-divvy-tripdata.csv"]
+dataset = "stanleyosias/ride-bike"
+path = "202511-divvy-tripdata.csv"
+size = 71109639
+
+[files."starblasters8_human-vs-llm-text-corpus_data.csv"]
+dataset = "starblasters8/human-vs-llm-text-corpus"
+path = "data.csv"
+size = 2489500898
+
+[files."stefanoleone992_fifa-21-complete-player-dataset_players_18.csv"]
+dataset = "stefanoleone992/fifa-21-complete-player-dataset"
+path = "players_18.csv"
+size = 9441811
+
+[files."stefanoleone992_fifa-22-complete-player-dataset_female_players_22.csv"]
+dataset = "stefanoleone992/fifa-22-complete-player-dataset"
+path = "female_players_22.csv"
+size = 237334
+
+[files."stefanoleone992_fifa-22-complete-player-dataset_players_15.csv"]
+dataset = "stefanoleone992/fifa-22-complete-player-dataset"
+path = "players_15.csv"
+size = 10543754
+
+[files."stefanoleone992_fifa-23-complete-player-dataset_male_players.csv"]
+dataset = "stefanoleone992/fifa-23-complete-player-dataset"
+path = "male_players.csv"
+size = 5637100640
+
+[files."stefanoleone992_filmtv-movies-dataset_filmtv_movies_ita.csv"]
+dataset = "stefanoleone992/filmtv-movies-dataset"
+path = "filmtv_movies_ita.csv"
+size = 31935245
+
+[files."stefanoleone992_rotten-tomatoes-movies-and-critic-reviews-dataset_rotten_tomatoes_movies.csv"]
+dataset = "stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset"
+path = "rotten_tomatoes_movies.csv"
+size = 17115750
+
+[files."stephengoldie_big-databiopharmaceutical-manufacturing_Mendeley_data_100_Batches_IndPenSim_V3.csv"]
+dataset = "stephengoldie/big-databiopharmaceutical-manufacturing"
+path = "Mendeley_data/100_Batches_IndPenSim_V3.csv"
+size = 2566827626
+
+[files."subirbiswas19_eeg-dataset_EEG_Scaled_data.csv"]
+dataset = "subirbiswas19/eeg-dataset"
+path = "EEG_Scaled_data.csv"
+size = 2647079495
+
+[files."suchintikasarkar_sentiment-analysis-for-mental-health_Combined Data.csv"]
+dataset = "suchintikasarkar/sentiment-analysis-for-mental-health"
+path = "Combined Data.csv"
+size = 31469558
+
+[files."sudalairajkumar_chennai-water-management_chennai_reservoir_rainfall.csv"]
+dataset = "sudalairajkumar/chennai-water-management"
+path = "chennai_reservoir_rainfall.csv"
+size = 130861
+
+[files."sudalairajkumar_cryptocurrency-historical-prices-coingecko_axie-infinity.csv"]
+dataset = "sudalairajkumar/cryptocurrency-historical-prices-coingecko"
+path = "axie-infinity.csv"
+size = 99195
+
+[files."sudalairajkumar_cryptocurrencypricehistory_coin_Monero.csv"]
+dataset = "sudalairajkumar/cryptocurrencypricehistory"
+path = "coin_Monero.csv"
+size = 335516
+
+[files."sudalairajkumar_nifty-indices-dataset_NIFTY NEXT 50.csv"]
+dataset = "sudalairajkumar/nifty-indices-dataset"
+path = "NIFTY NEXT 50.csv"
+size = 350181
+
+[files."sudalairajkumar_novel-corona-virus-2019-dataset_time_series_covid_19_deaths.csv"]
+dataset = "sudalairajkumar/novel-corona-virus-2019-dataset"
+path = "time_series_covid_19_deaths.csv"
+size = 448965
+
+[files."sudalairajkumar_telugu-nlp_telugu_news_train_telugu_news.csv"]
+dataset = "sudalairajkumar/telugu-nlp"
+path = "telugu_news/train_telugu_news.csv"
+size = 69330663
+
+[files."sudhanshuy17_pccomponents_PcData_PowerSupply.csv"]
+dataset = "sudhanshuy17/pccomponents"
+path = "PcData/PowerSupply.csv"
+size = 93895
+
+[files."sukritchatterjee_used-cars-dataset-cardekho_cars_details_merges.csv"]
+dataset = "sukritchatterjee/used-cars-dataset-cardekho"
+path = "cars_details_merges.csv"
+size = 122324327
+
+[files."sumairaziz_subf-v2-0-dataset-bearing-faults-sound-data_Dataset_Inner Race Fault_S_IR(1003).csv"]
+dataset = "sumairaziz/subf-v2-0-dataset-bearing-faults-sound-data"
+path = "Dataset/Inner Race Fault/S_IR(1003).csv"
+size = 1792382
+
+[files."sumairaziz_vibration-based-fault-diagnosis-of-machines_Data_Cracking_Cracking_X_M(3).csv"]
+dataset = "sumairaziz/vibration-based-fault-diagnosis-of-machines"
+path = "Data/Cracking/Cracking_X/M(3).csv"
+size = 56238
+
+[files."sumitrodatta_nba-aba-baa-stats_Opponent Stats Per 100 Poss.csv"]
+dataset = "sumitrodatta/nba-aba-baa-stats"
+path = "Opponent Stats Per 100 Poss.csv"
+size = 215382
+
+[files."sumitrodatta_nba-aba-baa-stats_Player Shooting.csv"]
+dataset = "sumitrodatta/nba-aba-baa-stats"
+path = "Player Shooting.csv"
+size = 2829283
+
+[files."sunnysai12345_nse-future-and-options-dataset-3m_3mfanddo.csv"]
+dataset = "sunnysai12345/nse-future-and-options-dataset-3m"
+path = "3mfanddo.csv"
+size = 218614021
+
+[files."supplejade_rt-iot2022real-time-internet-of-things_RT_IOT2022.csv"]
+dataset = "supplejade/rt-iot2022real-time-internet-of-things"
+path = "RT_IOT2022.csv"
+size = 54781796
+
+[files."surajsooraj26_iot-23_dataset12.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset12.csv"
+size = 9430583144
+
+[files."surajsooraj26_iot-23_dataset14.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset14.csv"
+size = 10958930124
+
+[files."surajsooraj26_iot-23_dataset18.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset18.csv"
+size = 7922374416
+
+[files."surajsooraj26_iot-23_dataset19.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset19.csv"
+size = 24539344
+
+[files."surajsooraj26_iot-23_dataset22.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset22.csv"
+size = 8194029717
+
+[files."surajsooraj26_iot-23_dataset4.csv"]
+dataset = "surajsooraj26/iot-23"
+path = "dataset4.csv"
+size = 999837764
+
+[files."surendra365_recruitement-dataset_job_applicant_dataset.csv"]
+dataset = "surendra365/recruitement-dataset"
+path = "job_applicant_dataset.csv"
+size = 10107155
+
+[files."suriyaganesh_resume-dataset-structured_02_abilities.csv"]
+dataset = "suriyaganesh/resume-dataset-structured"
+path = "02_abilities.csv"
+size = 38224448
+
+[files."suryatejakeerthi_synthetic-cognitive-behavior-dataset-scbd_synthetic_human_training_data.csv"]
+dataset = "suryatejakeerthi/synthetic-cognitive-behavior-dataset-scbd"
+path = "synthetic_human_training_data.csv"
+size = 7884721
+
+[files."suyogghimire_nepse-daily-index-data-2020-2025_nepse_daily_data_2020_2025.csv"]
+dataset = "suyogghimire/nepse-daily-index-data-2020-2025"
+path = "nepse_daily_data_2020_2025.csv"
+size = 36614
+
+[files."svaningelgem_crypto-currencies-daily-prices_CAKE.csv"]
+dataset = "svaningelgem/crypto-currencies-daily-prices"
+path = "CAKE.csv"
+size = 88816
+
+[files."svaningelgem_nasdaq-daily-stock-prices_AAL.csv"]
+dataset = "svaningelgem/nasdaq-daily-stock-prices"
+path = "AAL.csv"
+size = 203895
+
+[files."svaningelgem_nasdaq-daily-stock-prices_ABAT.csv"]
+dataset = "svaningelgem/nasdaq-daily-stock-prices"
+path = "ABAT.csv"
+size = 21047
+
+[files."svaningelgem_nyse-daily-stock-prices_AAP.csv"]
+dataset = "svaningelgem/nyse-daily-stock-prices"
+path = "AAP.csv"
+size = 276410
+
+[files."svaningelgem_nyse-daily-stock-prices_ACA.csv"]
+dataset = "svaningelgem/nyse-daily-stock-prices"
+path = "ACA.csv"
+size = 79515
+
+[files."swainproject_synthetic-data-person_person_100000.csv"]
+dataset = "swainproject/synthetic-data-person"
+path = "person_100000.csv"
+size = 12985844
+
+[files."swaptr_fifa-world-cup-2022-player-data_player_possession.csv"]
+dataset = "swaptr/fifa-world-cup-2022-player-data"
+path = "player_possession.csv"
+size = 53957
+
+[files."swarooprangle_indian-agriculture-and-climate-dataset-1961-2018_data_Crops_cucumber.csv"]
+dataset = "swarooprangle/indian-agriculture-and-climate-dataset-1961-2018"
+path = "data/Crops/cucumber.csv"
+size = 27391
+
+[files."syahrulapriansyah2_myanimelist-2025_mal_anime.csv"]
+dataset = "syahrulapriansyah2/myanimelist-2025"
+path = "mal_anime.csv"
+size = 39261464
+
+[files."talha97s_smart-water-leak-detection-dataset_location_aware_gis_leakage_dataset.csv"]
+dataset = "talha97s/smart-water-leak-detection-dataset"
+path = "location_aware_gis_leakage_dataset.csv"
+size = 896992
+
+[files."taqiyyaghazi_indonesian-marketplace-product-reviews_reviews.csv"]
+dataset = "taqiyyaghazi/indonesian-marketplace-product-reviews"
+path = "reviews.csv"
+size = 103463
+
+[files."taranvee_smart-home-dataset-with-weather-information_HomeC.csv"]
+dataset = "taranvee/smart-home-dataset-with-weather-information"
+path = "HomeC.csv"
+size = 130953384
+
+[files."tarekmasryo_llm-system-ops-production-telemetry-and-sft_data_llm_system_sessions_summary.csv"]
+dataset = "tarekmasryo/llm-system-ops-production-telemetry-and-sft"
+path = "data/llm_system_sessions_summary.csv"
+size = 515304
+
+[files."tarekmasryo_youtube-shorts-and-tiktok-trends-2025_youtube_shorts_tiktok_trends_2025.csv_ML.csv"]
+dataset = "tarekmasryo/youtube-shorts-and-tiktok-trends-2025"
+path = "youtube_shorts_tiktok_trends_2025.csv_ML.csv"
+size = 18099462
+
+[files."tencars_392-crypto-currency-pairs-at-minute-resolution_aavef0ustf0.csv"]
+dataset = "tencars/392-crypto-currency-pairs-at-minute-resolution"
+path = "aavef0ustf0.csv"
+size = 85239
+
+[files."terminus7_pokemon-challenge_tests.csv"]
+dataset = "terminus7/pokemon-challenge"
+path = "tests.csv"
+size = 77342
+
+[files."tevecsystems_retail-sales-forecasting_mock_kaggle.csv"]
+dataset = "tevecsystems/retail-sales-forecasting"
+path = "mock_kaggle.csv"
+size = 22230
+
+[files."thanhnguyen2612_traffic-flow-data-in-ho-chi-minh-city-viet-nam_streets.csv"]
+dataset = "thanhnguyen2612/traffic-flow-data-in-ho-chi-minh-city-viet-nam"
+path = "streets.csv"
+size = 201060
+
+[files."thedevastator_2010-new-york-state-hospital-inpatient-discharge_hospital-inpatient-discharges-sparcs-de-identified-2010-1.csv"]
+dataset = "thedevastator/2010-new-york-state-hospital-inpatient-discharge"
+path = "hospital-inpatient-discharges-sparcs-de-identified-2010-1.csv"
+size = 1031301333
+
+[files."thedevastator_analyzing-credit-card-spending-habits-in-india_Credit card transactions - India - Simple.csv"]
+dataset = "thedevastator/analyzing-credit-card-spending-habits-in-india"
+path = "Credit card transactions - India - Simple.csv"
+size = 1497585
+
+[files."thedevastator_club-soccer-predictions-using-spi-ratings-and-fo_spi_matches.csv"]
+dataset = "thedevastator/club-soccer-predictions-using-spi-ratings-and-fo"
+path = "spi_matches.csv"
+size = 9835543
+
+[files."thedevastator_improve-breast-cancer-prognostics-using-machine_wdbc.data.csv"]
+dataset = "thedevastator/improve-breast-cancer-prognostics-using-machine"
+path = "wdbc.data.csv"
+size = 127271
+
+[files."thedevastator_improve-breast-cancer-prognostics-using-machine_wpbc.data.csv"]
+dataset = "thedevastator/improve-breast-cancer-prognostics-using-machine"
+path = "wpbc.data.csv"
+size = 45690
+
+[files."thedevastator_mental-health-support-feature-analysis_adhd_2019_features_tfidf_256.csv"]
+dataset = "thedevastator/mental-health-support-feature-analysis"
+path = "adhd_2019_features_tfidf_256.csv"
+size = 29407808
+
+[files."thedevastator_open-orca-slimorca-gpt-4-completions_train.csv"]
+dataset = "thedevastator/open-orca-slimorca-gpt-4-completions"
+path = "train.csv"
+size = 973916957
+
+[files."thedevastator_open-source-educational-textbook-library_train.csv"]
+dataset = "thedevastator/open-source-educational-textbook-library"
+path = "train.csv"
+size = 3165290670
+
+[files."thedevastator_properties-of-stars-in-our-galaxy_final.csv"]
+dataset = "thedevastator/properties-of-stars-in-our-galaxy"
+path = "final.csv"
+size = 10673
+
+[files."thedevastator_python-code-instruction-dataset_train.csv"]
+dataset = "thedevastator/python-code-instruction-dataset"
+path = "train.csv"
+size = 25218662
+
+[files."thedevastator_synthetic-therapy-conversations-dataset_train.csv"]
+dataset = "thedevastator/synthetic-therapy-conversations-dataset"
+path = "train.csv"
+size = 449313048
+
+[files."thedevastator_who-health-indicators-for-ireland_injuries-and-violence-indicators-for-ireland-34.csv"]
+dataset = "thedevastator/who-health-indicators-for-ireland"
+path = "injuries-and-violence-indicators-for-ireland-34.csv"
+size = 17825
+
+[files."thedrcat_daigt-proper-train-dataset_train_drcat_04.csv"]
+dataset = "thedrcat/daigt-proper-train-dataset"
+path = "train_drcat_04.csv"
+size = 103653768
+
+[files."therohithanand_used-car-price-prediction_used_car_price_dataset_extended.csv"]
+dataset = "therohithanand/used-car-price-prediction"
+path = "used_car_price_dataset_extended.csv"
+size = 652228
+
+[files."therohk_urban-dictionary-words-dataset_urbandict-word-defs.csv"]
+dataset = "therohk/urban-dictionary-words-dataset"
+path = "urbandict-word-defs.csv"
+size = 538150516
+
+[files."theworldbank_education-statistics_edstats-csv-zip-32-mb-_EdStatsCountry-Series.csv"]
+dataset = "theworldbank/education-statistics"
+path = "edstats-csv-zip-32-mb-/EdStatsCountry-Series.csv"
+size = 48961
+
+[files."threnjen_2019-airline-delays-and-cancellations_raw_data_ONTIME_REPORTING_03.csv"]
+dataset = "threnjen/2019-airline-delays-and-cancellations"
+path = "raw_data/ONTIME_REPORTING_03.csv"
+size = 120633813
+
+[files."threnjen_2019-airline-delays-and-cancellations_raw_data_ONTIME_REPORTING_2020_02.csv"]
+dataset = "threnjen/2019-airline-delays-and-cancellations"
+path = "raw_data/ONTIME_REPORTING_2020_02.csv"
+size = 109506839
+
+[files."tinu10kumar_sms-spam-dataset_combined_dataset.csv"]
+dataset = "tinu10kumar/sms-spam-dataset"
+path = "combined_dataset.csv"
+size = 5898303
+
+[files."tlam25_mnli-graph-data-lemma_mismatched_facetoface_facetoface_train.csv"]
+dataset = "tlam25/mnli-graph-data-lemma"
+path = "mismatched/facetoface/facetoface_train.csv"
+size = 148263989
+
+[files."tonygordonjr_spotify-dataset-2023_spotify_data_12_20_2023.csv"]
+dataset = "tonygordonjr/spotify-dataset-2023"
+path = "spotify_data_12_20_2023.csv"
+size = 212805413
+
+[files."tonygordonjr_spotify-dataset-2023_spotify_features_data_2023.csv"]
+dataset = "tonygordonjr/spotify-dataset-2023"
+path = "spotify_features_data_2023.csv"
+size = 117294178
+
+[files."towhidultonmoy_cicids2018_Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv"]
+dataset = "towhidultonmoy/cicids2018"
+path = "Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv"
+size = 4054925350
+
+[files."trainingdatapro_asos-e-commerce-dataset-30845-products_products_asos.csv"]
+dataset = "trainingdatapro/asos-e-commerce-dataset-30845-products"
+path = "products_asos.csv"
+size = 56318864
+
+[files."travisdaws_spatiotemporal-wildlife-dataset_bonus_metadata_mammalia_global.csv"]
+dataset = "travisdaws/spatiotemporal-wildlife-dataset"
+path = "bonus/metadata_mammalia_global.csv"
+size = 355000653
+
+[files."tsr564_goldpriceindianmarket_gold_data.csv"]
+dataset = "tsr564/goldpriceindianmarket"
+path = "gold_data.csv"
+size = 87634
+
+[files."tunguz_bank-marketing-data-set_bank-additional.csv"]
+dataset = "tunguz/bank-marketing-data-set"
+path = "bank-additional.csv"
+size = 583898
+
+[files."tunguz_clickstream-data-for-online-shopping_e-shop clothing 2008.csv"]
+dataset = "tunguz/clickstream-data-for-online-shopping"
+path = "e-shop clothing 2008.csv"
+size = 6675312
+
+[files."tvictor02_d1namo-preprocessed-ecg-feature_preprocessed_ecg_features_patient_006_session_2014_10_02-08_03_53.csv"]
+dataset = "tvictor02/d1namo-preprocessed-ecg-feature"
+path = "preprocessed_ecg_features/patient_006_session_2014_10_02-08_03_53.csv"
+size = 8929943
+
+[files."ubiratanfilho_sds-dataset_compressed_annotations_train_images_metadata.csv"]
+dataset = "ubiratanfilho/sds-dataset"
+path = "compressed/annotations/train_images_metadata.csv"
+size = 2002516
+
+[files."ucimachinelearning_photoplethysmography-ppg-dataset_PPG_Dataset.csv"]
+dataset = "ucimachinelearning/photoplethysmography-ppg-dataset"
+path = "PPG_Dataset.csv"
+size = 63798840
+
+[files."umarnabibhat_semester-results-2025_Semester Results.csv"]
+dataset = "umarnabibhat/semester-results-2025"
+path = "Semester Results.csv"
+size = 261516
+
+[files."umeradnaan_prediction-of-disaster-management-in-2024_natural_disasters_2024.csv"]
+dataset = "umeradnaan/prediction-of-disaster-management-in-2024"
+path = "natural_disasters_2024.csv"
+size = 813893
+
+[files."umuttuygurr_e-commerce-fraud-detection-dataset_transactions.csv"]
+dataset = "umuttuygurr/e-commerce-fraud-detection-dataset"
+path = "transactions.csv"
+size = 26303272
+
+[files."unanimad_dataisbeautiful_r_dataisbeautiful_posts.csv"]
+dataset = "unanimad/dataisbeautiful"
+path = "r_dataisbeautiful_posts.csv"
+size = 40950666
+
+[files."usamabuttar_significant-earthquakes_Significant_Earthquakes.csv"]
+dataset = "usamabuttar/significant-earthquakes"
+path = "Significant_Earthquakes.csv"
+size = 20232296
+
+[files."usgs_earthquake-database_database.csv"]
+dataset = "usgs/earthquake-database"
+path = "database.csv"
+size = 2397103
+
+[files."ushaveerina_coffee-sales-analysis_index_1.csv"]
+dataset = "ushaveerina/coffee-sales-analysis"
+path = "index_1.csv"
+size = 224626
+
+[files."utkarshx27_fairs-extramarital-affairs-data_Affairs.csv"]
+dataset = "utkarshx27/fairs-extramarital-affairs-data"
+path = "Affairs.csv"
+size = 22546
+
+[files."uysalserkan_fault-induction-motor-dataset_imbalance_imbalance_10g_32.768.csv"]
+dataset = "uysalserkan/fault-induction-motor-dataset"
+path = "imbalance/imbalance/10g/32.768.csv"
+size = 17606670
+
+[files."valakhorasani_bank-transaction-dataset-for-fraud-detection_bank_transactions_data_2.csv"]
+dataset = "valakhorasani/bank-transaction-dataset-for-fraud-detection"
+path = "bank_transactions_data_2.csv"
+size = 344980
+
+[files."vashisthrahul13_mobile-price-and-specs-2025_mysmartprice_mobile_dataset.csv"]
+dataset = "vashisthrahul13/mobile-price-and-specs-2025"
+path = "mysmartprice_mobile_dataset.csv"
+size = 1742735
+
+[files."vbmokin_nlp-reports-news-classification_water_problem_nlp_en_for_Kaggle_100.csv"]
+dataset = "vbmokin/nlp-reports-news-classification"
+path = "water_problem_nlp_en_for_Kaggle_100.csv"
+size = 16176
+
+[files."vbmokin_nlp-reports-news-classification_water_problem_nlp_ua_for_Kaggle_100.csv"]
+dataset = "vbmokin/nlp-reports-news-classification"
+path = "water_problem_nlp_ua_for_Kaggle_100.csv"
+size = 15510
+
+[files."vetrirah_ml-iot_test_ML_IOT.csv"]
+dataset = "vetrirah/ml-iot"
+path = "test_ML_IOT.csv"
+size = 413302
+
+[files."victorsoeiro_netflix-tv-shows-and-movies_titles.csv"]
+dataset = "victorsoeiro/netflix-tv-shows-and-movies"
+path = "titles.csv"
+size = 2028486
+
+[files."vigneshvenkateswaran_bot-iot_data_12.csv"]
+dataset = "vigneshvenkateswaran/bot-iot"
+path = "data_12.csv"
+size = 201327733
+
+[files."vijayj0shi_starlink-satellite-tlecsv-dataset-april-2025_STARLINK_INDIVIDUAL_SATELLITE_CSV_TLE_FILES_WITH_TIME_RANGE_STARLINK-30278_2024_01_01__2025_06_01.csv"]
+dataset = "vijayj0shi/starlink-satellite-tlecsv-dataset-april-2025"
+path = "STARLINK_INDIVIDUAL_SATELLITE_CSV_TLE_FILES_WITH_TIME_RANGE/STARLINK-30278_2024_01_01__2025_06_01.csv"
+size = 150288
+
+[files."vijayveersingh_nasa-firms-active-fire-dataset-modisviirs_fire_nrt_J1V-C2_565335.csv"]
+dataset = "vijayveersingh/nasa-firms-active-fire-dataset-modisviirs"
+path = "fire_nrt_J1V-C2_565335.csv"
+size = 284783317
+
+[files."vijayvvenkitesh_microsoft-stock-time-series-analysis_Microsoft_Stock.csv"]
+dataset = "vijayvvenkitesh/microsoft-stock-time-series-analysis"
+path = "Microsoft_Stock.csv"
+size = 81704
+
+[files."vinayaks0n1_ipl-2025_IPL2025Batters.csv"]
+dataset = "vinayaks0n1/ipl-2025"
+path = "IPL2025Batters.csv"
+size = 13326
+
+[files."vincentcornlius_sales-orders_sales_data.csv"]
+dataset = "vincentcornlius/sales-orders"
+path = "sales_data.csv"
+size = 25956568
+
+[files."virginiamanasiri_dataset_results.csv"]
+dataset = "virginiamanasiri/dataset"
+path = "results.csv"
+size = 75224
+
+[files."vishala28_swat-dataset-secure-water-treatment-system_normal.csv"]
+dataset = "vishala28/swat-dataset-secure-water-treatment-system"
+path = "normal.csv"
+size = 402374633
+
+[files."vishnupriyan123_annual-co2-emissions-per-country_annual-co2-emissions-per-country.csv"]
+dataset = "vishnupriyan123/annual-co2-emissions-per-country"
+path = "annual-co2-emissions-per-country.csv"
+size = 860428
+
+[files."vitaliikaplan_employee-engagement-survey_EES-2024-05.csv"]
+dataset = "vitaliikaplan/employee-engagement-survey"
+path = "EES-2024-05.csv"
+size = 23218
+
+[files."vivekkapri_imdb-movie-reviews_imdb_train.csv"]
+dataset = "vivekkapri/imdb-movie-reviews"
+path = "imdb_train.csv"
+size = 33347116
+
+[files."vjcalling_ouladdata_studentVle_3.csv"]
+dataset = "vjcalling/ouladdata"
+path = "studentVle_3.csv"
+size = 57878754
+
+[files."wajidhassanmoosa_multilingual-hatespeech-dataset_Dataset_Testing_Test2_IrishTranslatedHateSpeech.csv"]
+dataset = "wajidhassanmoosa/multilingual-hatespeech-dataset"
+path = "Dataset/Testing/Test2/IrishTranslatedHateSpeech.csv"
+size = 1817318
+
+[files."waqarkha_cicapt-iiot_phase1_NetworkData.csv"]
+dataset = "waqarkha/cicapt-iiot"
+path = "phase1_NetworkData.csv"
+size = 5472798114
+
+[files."waqarkha_cicapt-iiot_phase2_NetworkData.csv"]
+dataset = "waqarkha/cicapt-iiot"
+path = "phase2_NetworkData.csv"
+size = 4336376799
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_1990.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "1990.csv"
+size = 509194687
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_1995.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "1995.csv"
+size = 530751568
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_1999.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "1999.csv"
+size = 552926022
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_2000.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "2000.csv"
+size = 570151613
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_2003.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "2003.csv"
+size = 626745242
+
+[files."wenxingdi_data-expo-2009-airline-on-time-data_2006.csv"]
+dataset = "wenxingdi/data-expo-2009-airline-on-time-data"
+path = "2006.csv"
+size = 672068096
+
+[files."willianleite_boston-housing-dataset_Boston.csv"]
+dataset = "willianleite/boston-housing-dataset"
+path = "Boston.csv"
+size = 38165
+
+[files."willianoliveiragibin_crop-harvest-traits_crop harvest traits new.csv"]
+dataset = "willianoliveiragibin/crop-harvest-traits"
+path = "crop harvest traits new.csv"
+size = 12616
+
+[files."willianoliveiragibin_esg-data-emerging_ESG_Data_Emerging new.csv"]
+dataset = "willianoliveiragibin/esg-data-emerging"
+path = "ESG_Data_Emerging new.csv"
+size = 265284
+
+[files."wilmerarltstrmberg_recipe-dataset-over-2m_recipes_data.csv"]
+dataset = "wilmerarltstrmberg/recipe-dataset-over-2m"
+path = "recipes_data.csv"
+size = 2310899322
+
+[files."wyattowalsh_basketball_csv_play_by_play.csv"]
+dataset = "wyattowalsh/basketball"
+path = "csv/play_by_play.csv"
+size = 2256476839
+
+[files."xfkzujqjvx97n_football-datasets_player_market_value_player_market_value.csv"]
+dataset = "xfkzujqjvx97n/football-datasets"
+path = "player_market_value/player_market_value.csv"
+size = 23873747
+
+[files."xfkzujqjvx97n_football-datasets_player_teammates_played_with_player_teammates_played_with.csv"]
+dataset = "xfkzujqjvx97n/football-datasets"
+path = "player_teammates_played_with/player_teammates_played_with.csv"
+size = 47705635
+
+[files."xushihuilis_dataset_results.csv"]
+dataset = "xushihuilis/dataset"
+path = "results.csv"
+size = 39244
+
+[files."yadiraespinoza_world-happiness-2015-2024_world_happiness_2016.csv"]
+dataset = "yadiraespinoza/world-happiness-2015-2024"
+path = "world_happiness_2016.csv"
+size = 13137
+
+[files."yamaerenay_spotify-dataset-19212020-600k-tracks_artists.csv"]
+dataset = "yamaerenay/spotify-dataset-19212020-600k-tracks"
+path = "artists.csv"
+size = 64893749
+
+[files."yashdev01_vehicle-energy-and-telemetry-dataset_vehicle_data.csv"]
+dataset = "yashdev01/vehicle-energy-and-telemetry-dataset"
+path = "vehicle_data.csv"
+size = 910803330
+
+[files."yashwant020_ecommerce-clickstream-dataset-5-27-gb_2019-Oct.csv"]
+dataset = "yashwant020/ecommerce-clickstream-dataset-5-27-gb"
+path = "2019-Oct.csv"
+size = 5668612855
+
+[files."yasinnaal_bikes-sales-sample-data_SalesOrders.csv"]
+dataset = "yasinnaal/bikes-sales-sample-data"
+path = "SalesOrders.csv"
+size = 37629
+
+[files."yasiralifarrukh_unsw-and-cicids2017-labelled-pcap-data_Payload_data_CICIDS2017.csv"]
+dataset = "yasiralifarrukh/unsw-and-cicids2017-labelled-pcap-data"
+path = "Payload_data_CICIDS2017.csv"
+size = 4910831729
+
+[files."yassershrief_goggle-play-data_user_reviews.csv"]
+dataset = "yassershrief/goggle-play-data"
+path = "user_reviews.csv"
+size = 7669276
+
+[files."yeashusemwal_nse-stocks-15min-data-from-2019-03-01_AARTIDRUGS.csv"]
+dataset = "yeashusemwal/nse-stocks-15min-data-from-2019-03-01"
+path = "AARTIDRUGS.csv"
+size = 1475780
+
+[files."yekahaaagayeham_revenue-cycle-management-us-healthcare_OBGYN_practice_dataset.csv"]
+dataset = "yekahaaagayeham/revenue-cycle-management-us-healthcare"
+path = "OBGYN_practice_dataset.csv"
+size = 5133005
+
+[files."yekenot_tree-survival-prediction_Tree_Data.csv"]
+dataset = "yekenot/tree-survival-prediction"
+path = "Tree_Data.csv"
+size = 390719
+
+[files."ymirsky_network-attack-dataset-kitsune_ARP MitM_ARP_MitM_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "ARP MitM/ARP_MitM_dataset.csv"
+size = 7213741515
+
+[files."ymirsky_network-attack-dataset-kitsune_Active Wiretap_Active_Wiretap_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "Active Wiretap/Active_Wiretap_dataset.csv"
+size = 6565241947
+
+[files."ymirsky_network-attack-dataset-kitsune_Fuzzing_Fuzzing_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "Fuzzing/Fuzzing_dataset.csv"
+size = 6466349443
+
+[files."ymirsky_network-attack-dataset-kitsune_OS Scan_OS_Scan_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "OS Scan/OS_Scan_dataset.csv"
+size = 4891679954
+
+[files."ymirsky_network-attack-dataset-kitsune_SSDP Flood_SSDP_Flood_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "SSDP Flood/SSDP_Flood_dataset.csv"
+size = 11749831795
+
+[files."ymirsky_network-attack-dataset-kitsune_SSL Renegotiation_SSL_Renegotiation_dataset.csv"]
+dataset = "ymirsky/network-attack-dataset-kitsune"
+path = "SSL Renegotiation/SSL_Renegotiation_dataset.csv"
+size = 6361027668
+
+[files."yoshifumimiya_6-ovarian-cancer-datasets_Filtering_pyComBat.csv"]
+dataset = "yoshifumimiya/6-ovarian-cancer-datasets"
+path = "Filtering_pyComBat.csv"
+size = 45775475
+
+[files."yoshifumimiya_6-ovarian-cancer-datasets_GSE9891.csv"]
+dataset = "yoshifumimiya/6-ovarian-cancer-datasets"
+path = "GSE9891.csv"
+size = 100865788
+
+[files."younaniskander_medicines-from-egyptian-pharmacies_medicines_data_updated.csv"]
+dataset = "younaniskander/medicines-from-egyptian-pharmacies"
+path = "medicines_data_updated.csv"
+size = 19382592
+
+[files."youneseloiarm_nasdaq-cme-future-nq_NQ_in_1_hour.csv"]
+dataset = "youneseloiarm/nasdaq-cme-future-nq"
+path = "NQ_in_1_hour.csv"
+size = 791548
+
+[files."youssefelebiary_air-quality-2024_Brasilia_Air_Quality.csv"]
+dataset = "youssefelebiary/air-quality-2024"
+path = "Brasilia_Air_Quality.csv"
+size = 560421
+
+[files."youssefelebiary_human-written-text_Gutenberg.csv"]
+dataset = "youssefelebiary/human-written-text"
+path = "Gutenberg.csv"
+size = 2057076771
+
+[files."youssefelebiary_human-written-text_Human.csv"]
+dataset = "youssefelebiary/human-written-text"
+path = "Human.csv"
+size = 2117366967
+
+[files."yuanyuwendymu_airline-delay-and-cancellation-data-2009-2018_2009.csv"]
+dataset = "yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018"
+path = "2009.csv"
+size = 792609318
+
+[files."yuanyuwendymu_airline-delay-and-cancellation-data-2009-2018_2014.csv"]
+dataset = "yuanyuwendymu/airline-delay-and-cancellation-data-2009-2018"
+path = "2014.csv"
+size = 719599833
+
+[files."yuliiabulana_canada-housing_data_bc.csv"]
+dataset = "yuliiabulana/canada-housing"
+path = "data_bc.csv"
+size = 34656022
+
+[files."yuliiabulana_canada-housing_data_pe.csv"]
+dataset = "yuliiabulana/canada-housing"
+path = "data_pe.csv"
+size = 16884894
+
+[files."yuriykatser_power-transformers-fdd-and-rul_data_test_2_trans_1003.csv"]
+dataset = "yuriykatser/power-transformers-fdd-and-rul"
+path = "data_test/2_trans_1003.csv"
+size = 28147
+
+[files."yuriykatser_power-transformers-fdd-and-rul_data_test_2_trans_1037.csv"]
+dataset = "yuriykatser/power-transformers-fdd-and-rul"
+path = "data_test/2_trans_1037.csv"
+size = 27752
+
+[files."yutodennou_construction-investment-amount-in-japan_Construction_investment_amount_in_japan.csv"]
+dataset = "yutodennou/construction-investment-amount-in-japan"
+path = "Construction_investment_amount_in_japan.csv"
+size = 54706
+
+[files."zafarali27_house-price-prediction-dataset_House Price Prediction Dataset.csv"]
+dataset = "zafarali27/house-price-prediction-dataset"
+path = "House Price Prediction Dataset.csv"
+size = 91297
+
+[files."zakariaeyoussefi_cell-towers-worldwide-location-data-by-continent_Asia towers.csv"]
+dataset = "zakariaeyoussefi/cell-towers-worldwide-location-data-by-continent"
+path = "Asia towers.csv"
+size = 1561776553
+
+[files."zakariaeyoussefi_cell-towers-worldwide-location-data-by-continent_Europe towers.csv"]
+dataset = "zakariaeyoussefi/cell-towers-worldwide-location-data-by-continent"
+path = "Europe towers.csv"
+size = 2000391212
+
+[files."zanjibar_100-million-data-csv_custom_1988_2020.csv"]
+dataset = "zanjibar/100-million-data-csv"
+path = "custom_1988_2020.csv"
+size = 4544707885
+
+[files."zfturbo_audioset_class_labels_indices.csv"]
+dataset = "zfturbo/audioset"
+path = "class_labels_indices.csv"
+size = 14675
+
+[files."zhaxidelebsz_10-gym-exercises-with-615-abstracted-features_RecGym.csv"]
+dataset = "zhaxidelebsz/10-gym-exercises-with-615-abstracted-features"
+path = "RecGym.csv"
+size = 475013586
+
+[files."ziya07_bim-ai-integrated-dataset_bim_ai_civil_engineering_dataset.csv"]
+dataset = "ziya07/bim-ai-integrated-dataset"
+path = "bim_ai_civil_engineering_dataset.csv"
+size = 359496
+
+[files."ziya07_urbanairnet-urban-air-quality-and-weather-dataset_UrbanAirPollutionDataset.csv"]
+dataset = "ziya07/urbanairnet-urban-air-quality-and-weather-dataset"
+path = "UrbanAirPollutionDataset.csv"
+size = 43890579
+
+[files."zusmani_pakistan-corona-virus-citywise-data_PK COVID-19-10may.csv"]
+dataset = "zusmani/pakistan-corona-virus-citywise-data"
+path = "PK COVID-19-10may.csv"
+size = 80611
+
+[files."zusmani_pakistan-corona-virus-citywise-data_PK COVID-19-30apr.csv"]
+dataset = "zusmani/pakistan-corona-virus-citywise-data"
+path = "PK COVID-19-30apr.csv"
+size = 69241
+
+[files."zusmani_pakistan-stock-exchange-kse-100_Stock Exchange KSE 100(Pakistan).csv"]
+dataset = "zusmani/pakistan-stock-exchange-kse-100"
+path = "Stock Exchange KSE 100(Pakistan).csv"
+size = 250903
+
+[files."zusmani_rainfall-in-pakistan_Rainfall_1901_2016_PAK.csv"]
+dataset = "zusmani/rainfall-in-pakistan"
+path = "Rainfall_1901_2016_PAK.csv"
+size = 29330
+
+[files."zusmani_us-mass-shootings-last-50-years_Mass Shootings Dataset Ver 5.csv"]
+dataset = "zusmani/us-mass-shootings-last-50-years"
+path = "Mass Shootings Dataset Ver 5.csv"
+size = 140270
+

@@ -1,0 +1,5 @@
+# Manual overrides for files where DuckDB's sniffer can't detect the dialect.
+
+[files."examples_data_uspop-latin1.csv"]
+terminator = "LF"
+columns = 5

@@ -1,0 +1,143 @@
+name: Rust
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  # Incremental artifacts are useless across CI runs and bloat the cache.
+  CARGO_INCREMENTAL: 0
+  # Debuginfo increases build time and target-dir size, and CI never opens a debugger.
+  CARGO_PROFILE_DEV_DEBUG: 0
+  CARGO_PROFILE_TEST_DEBUG: 0
+  # CI needs no native codegen, and it prevents issues with cached builds.
+  RUSTFLAGS: ""
+
+# A newer push to the same ref makes the in-flight run obsolete; no need to pay for it
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    # pwsh does not abort a multi-line `run:` when a native command fails, so a
+    # broken example on Windows could pass unnoticed. bash exists on every runner.
+    shell: bash
+
+jobs:
+  # Decides how wide the build matrix is. Feature branches get the Linux legs
+  # only; main, a manual dispatch, or a `[ci full]` commit get every platform.
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      legs: ${{ steps.pick.outputs.legs }}
+    steps:
+    - id: pick
+      env:
+        MSG: ${{ github.event.head_commit.message }}
+      run: |
+        cat > legs.json <<'JSON'
+        [
+          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "stable",  "features": ""},
+          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "nightly", "features": "--features simd"},
+          {"tier": "full", "os": "macos-latest",   "toolchain": "stable",  "features": ""},
+          {"tier": "full", "os": "macos-latest",   "toolchain": "nightly", "features": "--features simd"},
+          {"tier": "full", "os": "windows-latest", "toolchain": "stable",  "features": ""},
+          {"tier": "full", "os": "windows-latest", "toolchain": "nightly", "features": "--features simd"}
+        ]
+        JSON
+        if [ "${{ github.ref }}" = "refs/heads/main" ] \
+          || [ "${{ github.event_name }}" != "push" ] \
+          || printf '%s' "$MSG" | grep -qF '[ci full]'; then
+          select=true
+        else
+          select='.tier == "lean"'
+        fi
+        # `tier` is only a selector; drop it so it stays out of the job names.
+        legs=$(jq -c "[.[] | select($select) | del(.tier)]" legs.json)
+        echo "legs=$legs" >> "$GITHUB_OUTPUT"
+        echo "matrix: $legs"
+
+  build:
+    needs: matrix
+    runs-on: ${{ matrix.os }}
+    # Override the nightly pin in rust-toolchain.toml per-matrix-leg so the
+    # stable leg actually runs on stable (RUSTUP_TOOLCHAIN > rust-toolchain.toml).
+    env:
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.matrix.outputs.legs) }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install toolchain
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ matrix.toolchain }}
+    - uses: Swatinem/rust-cache@v2
+      with:
+        shared-key: build-${{ matrix.toolchain }}
+    - name: Build
+      run: cargo build --locked --all-targets ${{ matrix.features }}
+    - name: Run unit tests
+      run: cargo test --lib ${{ matrix.features }}
+    - name: Run examples
+      run: |
+        set -euo pipefail
+        for ex in advanced builder inputs outputs simple; do
+          cargo run --example "$ex" ${{ matrix.features }}
+        done
+    - name: Run integration tests
+      run: cargo test --test integration ${{ matrix.features }}
+    - name: Check benches compile
+      if: runner.os == 'Linux'
+      run: cargo build --benches ${{ matrix.features }} --features bench
+    - name: Build and test with instrumentation
+      if: runner.os == 'Linux'
+      run: |
+        set -euo pipefail
+        cargo build --all-targets ${{ matrix.features }} --features trace
+        cargo test --lib ${{ matrix.features }} --features trace
+        cargo run --example trace ${{ matrix.features }} --features trace-example
+
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    # Read the floor out of the manifest so this job cannot drift away.
+    - name: Read rust-version from Cargo.toml
+      id: msrv
+      run: |
+        version=$(grep -m1 '^rust-version' Cargo.toml | sed -E 's/.*"(.*)".*/\1/')
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+        echo "Declared MSRV: $version"
+    - name: Install toolchain
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ steps.msrv.outputs.version }}
+    - uses: Swatinem/rust-cache@v2
+      with:
+        key: msrv-${{ steps.msrv.outputs.version }}
+    # `--lib` only, and `+<version>` to override the nightly pin in rust-toolchain.toml.
+    - name: Check library builds on MSRV
+      run: |
+        set -euo pipefail
+        cargo +${{ steps.msrv.outputs.version }} check --locked --lib
+        cargo +${{ steps.msrv.outputs.version }} check --locked --lib --features trace
+
+  lint:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install rustfmt and clippy
+      run: rustup component add rustfmt clippy
+    - uses: Swatinem/rust-cache@v2
+      with:
+        key: lint
+    - name: Check formatting
+      run: cargo fmt --all -- --check
+    - name: Run clippy
+      run: cargo clippy --locked --all-targets --features simd,trace -- -D warnings

@@ -1,0 +1,1075 @@
+# Manual overrides for files where DuckDB's sniffer can't detect the dialect.
+
+[files."benchmark_imdb_answers_05c.csv"]
+flexible = true
+
+[files."data_csv_14512_og.csv"]
+columns = 26
+
+[files."data_csv_17738.csv"]
+flexible = true
+
+[files."data_csv_17738_rn.csv"]
+flexible = true
+
+[files."data_csv_afl_6.csv"]
+flexible = true
+
+[files."data_csv_afl_7.csv"]
+flexible = true
+
+[files."data_csv_afl_8.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_9.csv"]
+flexible = true
+
+[files."data_csv_afl_10.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_12.csv"]
+flexible = true
+
+[files."data_csv_afl_13.csv"]
+flexible = true
+
+[files."data_csv_afl_14.csv"]
+flexible = true
+
+[files."data_csv_afl_15.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_16.csv"]
+flexible = true
+
+[files."data_csv_afl_17.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_18.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_19.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_20.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_21.csv"]
+flexible = true
+
+[files."data_csv_afl_22.csv"]
+flexible = true
+
+[files."data_csv_afl_24.csv"]
+flexible = true
+
+[files."data_csv_afl_3977_case_1.csv"]
+flexible = true
+
+[files."data_csv_afl_3977_case_6.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_7.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_8.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_9.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_10.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_11.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_12.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_13.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_14.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_15.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_16.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_17.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_18.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_19.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_20.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_21.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_22.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_23.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_24.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_25.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_26.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_28.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_29.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_30.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_31.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_32.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_33.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_34.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_35.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_36.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_38.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_39.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_40.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_41.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_42.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_43.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_44.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_45.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_46.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_47.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_48.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_49.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_50.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_51.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_52.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_53.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_54.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_55.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_56.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_57.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_58.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_59.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_60.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_61.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_62.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_63.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_64.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_65.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_66.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_67.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_68.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_69.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_70.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_71.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_72.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_73.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_74.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_75.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_76.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_77.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_78.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_79.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_80.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_81.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_82.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_83.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_84.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_85.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_86.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_87.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3977_case_88.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_0.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_1.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_2.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_3.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_4.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_5.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_3981_case_6.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_4086_case_2.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_4086_case_3.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_4496_crashes_case_0.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_4496_crashes_case_1.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_4793_crashes_case_0.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_5194_crashes_case_4.csv"]
+flexible = true
+
+[files."data_csv_afl_20250211_csv_fuzz_crash_case_53.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_1.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_10.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_11.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_12.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_13.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_14.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_15.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_16.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_17.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_18.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_19.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_20.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_21.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_24.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_25.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_26.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_ignore_errors_27.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_28.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_29.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_30.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_31.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_33.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_34.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_35.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_36.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_37.csv"]
+flexible = true
+
+[files."data_csv_afl_ignore_errors_38.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_39.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_40.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_41.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_42.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_43.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_44.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_45.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_46.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_47.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_48.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_49.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_50.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_51.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_52.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_53.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_54.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_ignore_errors_55.csv"]
+flexible = true
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_no_parameter_13.csv"]
+flexible = true
+
+[files."data_csv_afl_no_parameter_18.csv"]
+columns = 6
+
+[files."data_csv_afl_null_padding_1.csv"]
+flexible = true
+
+[files."data_csv_afl_null_padding_2.csv"]
+flexible = true
+
+[files."data_csv_afl_null_padding_6.csv"]
+flexible = true
+
+[files."data_csv_afl_null_padding_7.csv"]
+flexible = true
+
+[files."data_csv_afl_null_padding_9.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_14.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_18.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_19.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_20.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_21.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_23.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_29.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_30.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_31.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_null_padding_32.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_33.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_37.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_null_padding_38.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_afl_null_padding_40.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_afl_skip_1.csv"]
+flexible = true
+
+[files."data_csv_afl_skip_2.csv"]
+flexible = true
+expect_error = "unterminated quoted field"
+
+[files."data_csv_csv_quoted_newline_odd.csv"]
+flexible = true
+
+[files."data_csv_empty_space_start_value.csv"]
+flexible = true
+
+[files."data_csv_encodings_all_utf16.csv"]
+encoding = "non-utf-8"
+flexible = true
+
+[files."data_csv_encodings_latin1.csv"]
+columns = 2
+encoding = "non-utf-8"
+
+[files."data_csv_encodings_only_latin1.csv"]
+columns = 2
+encoding = "non-utf-8"
+
+[files."data_csv_encodings_only_utf16.csv"]
+flexible = true
+encoding = "non-utf-8"
+
+[files."data_csv_encodings_shift_jis.csv"]
+columns = 2
+encoding = "non-utf-8"
+
+[files."data_csv_encodings_utf16.csv"]
+flexible = true
+encoding = "non-utf-8"
+
+[files."data_csv_error_banklist.csv"]
+columns = 7
+
+[files."data_csv_error_json.csv"]
+flexible = true
+
+[files."data_csv_comments_comment_skip.csv"]
+comment = "#"
+
+[files."data_csv_comments_empty_space.csv"]
+flexible = true
+
+[files."data_csv_comments_error.csv"]
+flexible = true
+
+[files."data_csv_comments_invalid_rows.csv"]
+flexible = true
+
+[files."data_csv_comments_mid_line.csv"]
+flexible = true
+
+[files."data_csv_comments_mid_line_header.csv"]
+flexible = true
+
+[files."data_csv_comments_mid_line_null.csv"]
+flexible = true
+
+[files."data_csv_comments_mid_line_quote.csv"]
+flexible = true
+
+[files."data_csv_comments_midline_big.csv"]
+flexible = true
+
+[files."data_csv_comments_midline_empty_space.csv"]
+flexible = true
+
+[files."data_csv_comments_simple_mid_line.csv"]
+flexible = true
+
+[files."data_csv_all_quotes.csv"]
+quote = '"'
+columns = 4
+flexible = true
+
+[files."data_csv_auto_invalid_time.csv"]
+has_headers = false
+
+[files."data_csv_auto_multiple_skip_row.csv"]
+flexible = true
+
+[files."data_csv_bad_csv_file_2047.csv"]
+columns = 15
+flexible = true
+
+[files."data_csv_bug_12596.csv"]
+columns = 3
+
+[files."data_csv_fuzzing_1.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_5.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_6.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_7.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_8.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_9.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_10.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_12.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_18.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_19.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_22.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_23.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_fuzzing_24.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_25.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_26.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_29.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_30.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_32.csv"]
+expect_error = "invalid UTF-8"
+
+[files."data_csv_fuzzing_33.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_34.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_36.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_37.csv"]
+flexible = true
+
+[files."data_csv_fuzzing_38.csv"]
+flexible = true
+
+[files."data_csv_headers_undetected_type.csv"]
+has_headers = true
+
+[files."data_csv_inconsistencies_inconsistent_columns_3.csv"]
+has_headers = true
+
+[files."data_csv_inconsistent_cells.csv"]
+flexible = true
+
+[files."data_csv_issue5077_aligned.csv"]
+flexible = true
+
+[files."data_csv_locations_row_trailing_comma.csv"]
+flexible = true
+
+[files."data_csv_mixed_new_line.csv"]
+columns = 3
+
+[files."data_csv_mixed_new_line_2.csv"]
+flexible = true
+
+[files."data_csv_multidelimiter_unterminated_quote_escape.csv"]
+expect_error = "unterminated quoted field"
+
+[files."data_csv_nullpadding.csv"]
+flexible = true
+
+[files."data_csv_nullpadding_big_mixed.csv"]
+flexible = true
+
+[files."data_csv_public_daily_sample.csv"]
+flexible = true
+
+[files."data_csv_rejects_frankstein_nightmare.csv"]
+flexible = true
+
+[files."data_csv_rejects_multiple_errors_cast_and_more_col.csv"]
+flexible = true
+
+[files."data_csv_rejects_multiple_errors_invalid_utf_cast.csv"]
+columns = 4
+
+[files."data_csv_rejects_multiple_errors_invalid_utf_less.csv"]
+flexible = true
+
+[files."data_csv_rejects_multiple_errors_invalid_utf_max_line.csv"]
+flexible = true
+
+[files."data_csv_rejects_multiple_errors_invalid_utf_more.csv"]
+flexible = true
+
+[files."data_csv_rejects_multiple_errors_invalid_utf_unquoted.csv"]
+columns = 5
+
+[files."data_csv_rejects_multiple_errors_more_col_and_max_line.csv"]
+flexible = true
+
+[files."data_csv_test_default_option.csv"]
+quote = '"'
+
+[files."data_csv_test_default_option_2.csv"]
+quote = '"'
+
+[files."data_csv_test_invalid_utf_big.csv"]
+columns = 3
+
+[files."data_csv_test_invalid_utf_complex.csv"]
+columns = 3
+
+[files."data_csv_test_invalid_utf_header.csv"]
+columns = 3
+
+[files."data_csv_test_invalid_utf_quoted.csv"]
+columns = 3
+
+[files."data_csv_test_invalid_utf_quoted_nl.csv"]
+columns = 3
+
+[files."data_csv_test_mixed_line_endings.csv"]
+columns = 3
+
+[files."data_csv_test_timestampformat.csv"]
+has_headers = false
+
+[files."data_csv_union-by-name_null_padding_np1.csv"]
+flexible = true
+
+[files."data_csv_union-by-name_null_padding_np2.csv"]
+flexible = true
+
+[files."data_csv_union_by_name_2_3.csv"]
+has_headers = false
+
+[files."tools_pythonpkg_tests_fast_data_unquote_without_delimiter.csv"]
+has_headers = false
+
+[files."data_csv_test_long_escaped_value.csv"]
+quote = '"'
+escape = '"'
+has_headers = false
+
+[files."benchmark_clickbench_answers_q00.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q01.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q02.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q03.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q04.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q05.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q06.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q07.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q08.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q09.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q10.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q11.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q12.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q13.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q14.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q15.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q16.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q17.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q18.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q19.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q20.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q21.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q22.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q23.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q24.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q25.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q26.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q27.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q28.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q29.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q30.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q31.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q32.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q33.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q34.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q35.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q36.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q37.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q38.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q39.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q40.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q41.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."benchmark_clickbench_answers_q42.csv"]
+delimiter = "|"
+quote = '"'
+escape = '"'
+
+[files."data_csv_afl_no_parameter_10.csv"]
+simd_skip = true
+
+[files."data_csv_afl_no_parameter_7.csv"]
+simd_skip = true

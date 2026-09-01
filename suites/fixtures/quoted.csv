@@ -1,0 +1,7 @@
+id,note,city
+1,plain,Bremen
+2,"has,embedded,delimiters",Hamburg
+3,"has ""escaped"" quotes",Berlin
+4,"has
+an embedded newline",Köln
+5,"  leading and trailing  ",München

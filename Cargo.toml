@@ -1,10 +1,99 @@
 [package]
 name = "csveee"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2024"
-description = "A fast CSV library (name reservation — real code coming soon)."
+rust-version = "1.88"
+description = "A very fast, parallel CSV parser."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/ackxolotl/csveee"
 readme = "README.md"
+keywords = ["csv", "parser", "parallel", "simd"]
+categories = ["parser-implementations", "encoding", "concurrency"]
+include = [
+    "/src/",
+    "/examples/",
+    "/suites/fixtures/",
+    "/tests/common/data.rs",
+    "/README.md",
+    "/LICENSE-APACHE",
+    "/LICENSE-MIT",
+]
 
 [dependencies]
+libc = "0.2"
+
+# Opt-in accelerator; see the `simdutf8` feature.
+simdutf8 = { version = "0.1", optional = true }
+
+# Optional: all call sites go through `src/trace.rs` by default.
+tracing = { version = "0.1", optional = true }
+
+# Optional: only pulled in when building the DuckDB baseline for `benches/throughput.rs`.
+duckdb = { version = "1", features = ["bundled"], optional = true }
+
+# Optional: only used by `examples/trace.rs`.
+tracing-subscriber = { version = "0.3", features = ["env-filter", ], optional = true }
+tracing-perfetto = { version = "0.1.5", optional = true }
+
+# Optional for the same reason: only the benches need these.
+criterion = { version = "0.8", optional = true }
+regex = { version = "1.13", optional = true }
+
+[features]
+# Enables the SIMD-vectorized chunk parser which requires nightly.
+# Off by default so the crate builds on stable (DFA parser only).
+simd = []
+# SIMD-accelerated UTF-8 validation of each chunk, used by `Text` output.
+# Off by default; without it validation goes through `core::str::from_utf8`.
+simdutf8 = ["dep:simdutf8"]
+# Enables `tracing` instrumentation. Off by default.
+trace = ["dep:tracing"]
+# Everything `examples/trace.rs` needs: the instrumentation plus a subscriber.
+# Only this feature drags in the subscriber stack, so other examples stay cheap to build.
+trace-example = ["trace", "dep:tracing-subscriber", "dep:tracing-perfetto"]
+# Required by every `[[bench]]` target: `cargo bench --features bench`.
+bench = ["dep:criterion", "dep:regex"]
+# Enables DuckDB for benchmarking. Off by default.
+bench-duckdb = ["dep:duckdb"]
+
+# docs.rs builds on nightly, so document the SIMD parser too.
+[package.metadata.docs.rs]
+features = ["simd"]
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows-sys = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_System_SystemInformation",
+    "Win32_System_Memory",
+    "Win32_Storage_FileSystem",
+    "Win32_Security",
+] }
+
+[dev-dependencies]
+csv = "1.4"
+tempfile = "3.27"
+toml = "1.1"
+serde = { version = "1.0", features = ["derive"] }
+libtest-mimic = "0.8"
+
+[[example]]
+name = "trace"
+required-features = ["trace-example"]
+
+[[test]]
+name = "integration"
+harness = false
+
+[[test]]
+name = "simd_diff"
+harness = false
+required-features = ["simd"]
+
+[[bench]]
+name = "throughput"
+harness = false
+required-features = ["bench"]
+
+[profile.release-with-debug]
+inherits = "release"
+debug = true

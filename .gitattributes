@@ -1,0 +1,2 @@
+# Never let git translate EOLs — files are LF, CR, CRLF on purpose.
+data/**/*.csv -text

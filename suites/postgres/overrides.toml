@@ -1,0 +1,8 @@
+# Manual overrides for files where DuckDB's sniffer can't detect the dialect.
+
+[files."contrib_file_fdw_data_agg.csv"]
+quote = "@"
+
+[files."contrib_file_fdw_data_multiline_header.csv"]
+has_headers = true
+flexible = true

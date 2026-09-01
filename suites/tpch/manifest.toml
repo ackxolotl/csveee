@@ -1,0 +1,22 @@
+# Hand-maintained unlike the scraped suites
+
+[files."lineitem-sf1.csv"]
+delimiter = "|"
+terminator = "LF"
+quote = ""
+escape = ""
+columns = 16
+
+[files."lineitem-sf10.csv"]
+delimiter = "|"
+terminator = "LF"
+quote = ""
+escape = ""
+columns = 16
+
+[files."lineitem-sf100.csv"]
+delimiter = "|"
+terminator = "LF"
+quote = ""
+escape = ""
+columns = 16

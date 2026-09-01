@@ -1,0 +1,3 @@
+# Import layout: std/core/alloc, then external crates, then crate-local.
+group_imports = "StdExternalCrate"
+imports_granularity = "Module"
