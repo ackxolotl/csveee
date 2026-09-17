@@ -60,6 +60,9 @@ impl Parser<Arity, Text> {
     /// ```ignore
     /// parser.parse("data.csv", init, acc, merge)
     /// ```
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse<P, S, I, A, M, R, const N: usize>(
         &mut self,
         path: P,
@@ -91,6 +94,7 @@ impl Parser<Arity, Text> {
     /// Sequential and single-threaded — for inputs without random access
     /// (stdin, pipes, sockets, decompressors). Prefer [`Self::parse`] for
     /// files on disk, which parses in parallel.
+    /// No speculation, so the accumulator sees every record exactly once.
     ///
     /// Do not wrap `reader` in a `BufReader`: the parser reads into its own
     /// ring buffer in large blocks, so an intermediate buffer only adds a copy.
@@ -129,6 +133,9 @@ impl Parser<Arity, Text> {
     /// The parser writes into the buffer it parses, so the bytes are copied
     /// into thread-private buffers rather than parsed in place; `data` itself
     /// is never modified.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse_slice<D, S, I, A, M, R, const N: usize>(
         &mut self,
         data: D,
@@ -171,6 +178,9 @@ impl Parser<Variadic, Text> {
     /// ```ignore
     /// parser.parse("data.csv", init, acc, merge)
     /// ```
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse<P, S, I, A, M, R>(
         &mut self,
         path: P,
@@ -212,6 +222,9 @@ impl Parser<Variadic, Text> {
     /// Parse CSV already in memory, with a variable number of fields per
     /// record. Chunked and parsed in parallel like [`Self::parse`]; see
     /// [`Parser::parse_slice`] for what `data` may be.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse_slice<D, S, I, A, M, R>(
         &mut self,
         data: D,
@@ -235,6 +248,9 @@ impl Parser<Arity, Bytes> {
     /// Parse a CSV file with a fixed number of raw byte fields per record.
     ///
     /// The file is split into chunks and parsed in parallel.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse<P, S, I, A, M, R, const N: usize>(
         &mut self,
         path: P,
@@ -289,6 +305,9 @@ impl Parser<Arity, Bytes> {
     ///
     /// Chunked and parsed in parallel like [`Self::parse`]; see
     /// [`Parser::parse_slice`] for what `data` may be.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse_slice<D, S, I, A, M, R, const N: usize>(
         &mut self,
         data: D,
@@ -328,6 +347,9 @@ impl Parser<Variadic, Bytes> {
     /// Parse a CSV file with a variable number of raw byte fields per record.
     ///
     /// The file is split into chunks and parsed in parallel.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse<P, S, I, A, M, R>(
         &mut self,
         path: P,
@@ -369,6 +391,9 @@ impl Parser<Variadic, Bytes> {
     /// Parse in-memory CSV as raw byte fields, variable field count per
     /// record. Chunked and parsed in parallel like [`Self::parse`]; see
     /// [`Parser::parse_slice`] for what `data` may be.
+    ///
+    /// The accumulator also runs on records from speculative passes that
+    /// turn out wrong — see [side effects](crate#side-effects).
     pub fn parse_slice<D, S, I, A, M, R>(
         &mut self,
         data: D,

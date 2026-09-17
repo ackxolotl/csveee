@@ -1,10 +1,10 @@
-//! A parallel CSV parser.
+//! A very fast, parallel CSV parser.
 //!
-//! An input is split into chunks that are parsed concurrently. Each
-//! worker accumulates into its own state and a merge function folds the
-//! per-worker states into the result. Fields are handed to the callback
-//! as mutable slices into the parser's own buffer, so no per-record
-//! allocation happens.
+//! An input is split into chunks that are parsed concurrently, each
+//! into a state of its own, and a merge function folds the per-chunk
+//! states into the result. Fields are handed to the callback as mutable
+//! slices into the parser's own buffer, so no per-record allocation
+//! happens.
 //!
 //! ```no_run
 //! use csveee::Parser;
@@ -28,6 +28,19 @@
 //! (delimiter, quoting, comments), the output mode ([`Variadic`] for
 //! slices instead of fixed-size arrays, [`Bytes`] to skip UTF-8
 //! validation) and the execution and I/O backends.
+//!
+//! # Side effects
+//!
+//! A chunk's starting state — inside a quoted field or outside it — is
+//! a guess, and a wrong one is retried, so the accumulator may run over
+//! a chunk more than once. A wrong guess cuts the same bytes into
+//! different fields and records; that pass is dropped at merge time,
+//! and a chunk that must be reparsed accumulates a second time. Only
+//! what `merge` folds matches the file; an effect the accumulator has
+//! outside the state it is handed — a print, a shared counter — is not
+//! undone. A one-chunk input never speculates, so small tests hide
+//! this.
+//! [`Parser::parse_stream`] is sequential and sees every record once.
 
 #![cfg_attr(test, allow(clippy::field_reassign_with_default))]
 #![cfg_attr(feature = "simd", feature(portable_simd))]

@@ -1,12 +1,15 @@
 # csveee
 
-A very fast, parallel CSV parser for Rust.
+A very fast, parallel CSV parser.
 
-`csveee` parses a CSV file across all your cores. It splits the input into
-chunks, parses them concurrently, and folds the per-worker results into one —
-without giving up on the messy files the real world is full of. Across ~1,000
-real-world CSV files it is around **10× faster than rust-csv**, and on a large
-server it peaks at **192 GB/s**.
+`csveee` splits a CSV file into chunks and parses them across all your cores.
+It inverts the usual interface: instead of the parser handing records to your
+code, you hand your code to the parser. That buys what an iterator cannot —
+parsing that stays lazy *and* runs in parallel — since your processing happens
+during the parse rather than after it. And it does so without giving up on the
+messy files the real world is full of: across ~1,000 real-world CSV files it is
+around **10× faster than rust-csv**, and on a large server it peaks at
+**192 GB/s**.
 
 The parsing scheme and the fused accumulate-and-merge programming model come
 from [*One Pass to Parse Them All: Fused Parallel CSV
@@ -16,18 +19,18 @@ crate has grown past the paper since. See [How it works](#how-it-works).
 ## Features
 
 - **Parallel by default.** Every chunk is parsed on its own thread and the
-  per-worker results are folded back together in file order.
-- **Parsing and processing in one pass.** Your record processing runs inside the
-  parser, so records never take the trip out to memory and back — a round trip
-  that holds throughput on larger-than-cache files well below memory bandwidth.
+  per-chunk results are folded back together in file order.
+- **Parsing and processing in one pass.** Your processing runs inside the
+  parser, so a file larger than the CPU caches passes through them once, not
+  twice — a separate pass would cap throughput at half the memory bandwidth.
 - **A SIMD chunk parser** on nightly, and a DFA-based one that builds on stable
   and handles every configuration.
 - **Many dialects, not just RFC 4180, real files.** Configurable delimiters,
   terminators, escapes, comments, and three different quote handling modes.
   Records of varying length, `\r\n`/`\n`/`\r` and mixed newlines, headers,
   comments, blank lines.
-- **I/O that suits the input.** Memory maps, a bounded ring buffer, per-chunk
-  reads, or borrowed in-memory slices — picked automatically or chosen by hand.
+- **I/O that suits the input.** Per-chunk reads, a bounded ring buffer, or
+  memory maps — automatically picked by file size.
 - **No per-record allocation.** Fields arrive as mutable slices into the
   parser's own buffer. Nothing is copied unless you copy it.
 
@@ -49,10 +52,10 @@ let cities = parser.parse(
 )?;
 ```
 
-Three arguments beyond the path: a function that creates a worker's initial
-state, an accumulator called once per record, and a merge that folds the worker
-states together. The array pattern in the accumulator declares the record
-arity — a record with a different number of fields is an error.
+Three arguments beyond the path: a function that creates an initial state, an
+accumulator called once per record, and a merge that folds the per-chunk states
+together. The array pattern in the accumulator declares the record arity — a
+record with a different number of fields is an error.
 
 `parse_slice` does the same for bytes already in memory, and `parse_stream` is a
 sequential fallback for sources without random access.
@@ -128,10 +131,13 @@ $ cargo bench --features bench
 
 A chunk boundary can land anywhere, including in the middle of a quoted field,
 so a worker cannot know the state its chunk starts in. Rather than scanning the
-file first to find out, each chunk is parsed **speculatively** under every
-possible starting state and the passes that turn out to be wrong are thrown away.
+file first to find out, each chunk is parsed **speculatively**: one pass per
+possible starting state, each from a fresh initial state, until one holds up.
+Every pass is kept, not just the one that turns out to be right: on a genuinely
+broken file they all end in an error, and the merge needs them all to report
+the real one.
 
-A merge phase then walks the chunks in order, aligning record boundaries: the
+The merge phase then walks the chunks in order, aligning record boundaries: the
 pass whose first record starts where its predecessor's last record ended is the
 correct one. The surviving states are folded with the merge function. The cost
 of the speculation is a constant factor of extra parsing work per chunk, and it
@@ -146,20 +152,20 @@ chunk, and the mismatch surfaces only in the merge phase, which reparses that
 chunk sequentially. The result is correct either way; the cost is the wasted
 work.
 
-Each chunk is handed to one of two parsers. The **DFA parser** drives a state
-machine byte by byte; it supports every configuration and builds on stable Rust.
-The **SIMD parser** (the `simd` feature, nightly-only, built on `portable_simd`)
-finds delimiters, terminators, and quotes a vector at a time and resolves quoted
-regions with bit-parallel arithmetic. It covers the common dialects and the
-parser falls back to the DFA where it does not apply, so the choice is usually
-one you can leave to `ParserBackend::Auto`.
+There are two chunk parsers, and the same one handles every chunk of a parse.
+The **DFA parser** drives a state machine byte by byte; it supports every
+configuration and builds on stable Rust. The **SIMD parser** (the `simd`
+feature, nightly-only, built on `portable_simd`) finds delimiters, terminators,
+and quotes a vector at a time and resolves quoted regions with bit-parallel
+arithmetic. It covers the common dialects, and `ParserBackend::Auto` takes it
+whenever the feature is on and the configuration allows — the DFA otherwise.
 
-Input is read through one of four I/O backends. **Memory maps** give each thread
-its own private mapping and let the page cache do the work. A **ring buffer**
-gives each thread its own bounded window, for large machines where mmap does not 
-scale or the input is a stream. **Per-chunk reads** copy a chunk at a time into a
-per-thread buffer. **Borrowed slices** parse in place with no copy at all. `Auto`
-tries to pick the most suitable one.
+Input is read through one of three I/O backends. **Per-chunk reads** copy a
+chunk at a time into a per-thread buffer; a **ring buffer** gives each thread
+its own bounded window, for large machines or streamed input; **memory maps**
+give each thread its own private mapping and let the page cache do the work.
+`Auto` takes the first for small files and the second for large ones; mmap is
+opt-in and Unix-only.
 
 Speculative parsing, the merge phase that fuses parsing with the user's
 accumulator, the vectorized parser, and the ring buffer were developed and

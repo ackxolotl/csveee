@@ -68,6 +68,8 @@ impl<Encoding: ?Sized> ParserBuilder<Arity, Encoding> {
     /// With the field count unconstrained, the accumulator is the only oracle a
     /// speculative parse is checked against. An accumulation function that accepts
     /// any record may lead to expensive sequential reparsing at merge time.
+    /// That reparse runs the accumulator over the chunk again — see
+    /// [side effects](crate#side-effects).
     pub fn flexible(self) -> ParserBuilder<Variadic, Encoding> {
         let mut config = self.config;
         config.flexible = true;
