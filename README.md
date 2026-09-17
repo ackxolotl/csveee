@@ -7,7 +7,7 @@ It inverts the usual interface: instead of the parser handing records to your
 code, you hand your code to the parser. That buys what an iterator cannot —
 parsing that stays lazy *and* runs in parallel — since your processing happens
 during the parse rather than after it. And it does so without giving up on the
-messy files the real world is full of: across ~1,000 real-world CSV files it is
+messy files the real world is full of: across 1,000 real-world CSV files it is
 around **10× faster than rust-csv**, and on a large server it peaks at
 **192 GB/s**.
 
@@ -20,19 +20,16 @@ crate has grown past the paper since. See [How it works](#how-it-works).
 
 - **Parallel by default.** Every chunk is parsed on its own thread and the
   per-chunk results are folded back together in file order.
-- **Parsing and processing in one pass.** Your processing runs inside the
-  parser, so a file larger than the CPU caches passes through them once, not
-  twice — a separate pass would cap throughput at half the memory bandwidth.
-- **A SIMD chunk parser** on nightly, and a DFA-based one that builds on stable
-  and handles every configuration.
+- **Parsing and processing in one pass.** A file larger than the CPU caches
+  passes through them once, not twice — twice would halve throughput.
+- **Two chunk parsers.** SIMD on nightly, a DFA on stable for any configuration.
 - **Many dialects, not just RFC 4180, real files.** Configurable delimiters,
   terminators, escapes, comments, and three different quote handling modes.
   Records of varying length, `\r\n`/`\n`/`\r` and mixed newlines, headers,
   comments, blank lines.
-- **I/O that suits the input.** Per-chunk reads, a bounded ring buffer, or
-  memory maps — automatically picked by file size.
-- **No per-record allocation.** Fields arrive as mutable slices into the
-  parser's own buffer. Nothing is copied unless you copy it.
+- **I/O picked by file size.** Per-chunk reads or a ring buffer; mmap opt-in.
+- **No per-record allocation.** Fields are slices into the parser's own buffer.
+  Nothing is copied unless you copy it.
 
 ## Usage
 
@@ -43,22 +40,32 @@ let mut parser = Parser::new();
 
 let cities = parser.parse(
     "data.csv",
-    Vec::new,
-    |acc, [_name, _age, city]| {
+    Vec::new,                       // init  -> Vec<String>, one per chunk
+    |acc, [_name, _age, city]| {    // acc   (&mut Vec<String>, [&mut str; 3])
         acc.push(city.to_string());
-        Ok(())
+        Ok(())                      //        Err(_) rejects the record
     },
-    |states| states.concat(),
+    |states| states.concat(),       // merge (&mut [Vec<String>]) -> Vec<String>
 )?;
 ```
 
-Three arguments beyond the path: a function that creates an initial state, an
-accumulator called once per record, and a merge that folds the per-chunk states
-together. The array pattern in the accumulator declares the record arity — a
-record with a different number of fields is an error.
+The three callbacks form a user-defined aggregate: `init` creates a state, `acc`
+fills it, and `merge` combines the per-chunk states. The `[_name, _age, city]`
+pattern declares the record arity — a record with a different number of fields
+is rejected, just as when the accumulator returns an error. Fields are
+`&mut str` into the parser's buffer, valid for the call only. `init` and `acc`
+are `Fn` and `Sync` — they run on all the threads in parallel, `init` once per
+chunk, in fact once per speculative pass.
 
-`parse_slice` does the same for bytes already in memory, and `parse_stream` is a
-sequential fallback for sources without random access.
+The accumulator does double duty: it folds records into the state, and its
+rejections refute the parse state assumed for a chunk, which is then parsed
+again under the next one. So `acc` may see the same bytes twice, cut into
+different records each time.
+
+`merge` is `FnOnce`: it folds the surviving states, in file order, sequentially.
+
+For bytes already in memory there is `parse_slice`, and for sources without
+random access `parse_stream`, a sequential fallback.
 
 ### Configuration
 
@@ -73,7 +80,7 @@ let mut parser = ParserBuilder::new()
     .quote_handling(QuoteHandling::Strict)
     .terminator(RecordTerminator::LF)
     .comment(Some(b'#'))
-    .has_headers(true)
+    .has_headers(false)
     .concurrency(4)
     .build();
 ```
@@ -143,14 +150,13 @@ correct one. The surviving states are folded with the merge function. The cost
 of the speculation is a constant factor of extra parsing work per chunk, and it
 buys a parser that never has to look at the file twice.
 
-What kills a wrong pass early is validation. The declared record arity and
+What kills a wrong pass early is validation. The declared record arity and the
 errors the accumulator returns (e.g., failed type conversions) form the oracle
 the speculation is checked against, so the more it rejects, the sooner a wrong
-pass dies. An oracle with no information — `flexible()` together with an
-accumulator that accepts every record — lets a wrong pass run to the end of the
-chunk, and the mismatch surfaces only in the merge phase, which reparses that
-chunk sequentially. The result is correct either way; the cost is the wasted
-work.
+pass dies. An oracle with no information — `flexible()` plus an accumulator that
+accepts every record — lets a wrong pass run to the end of the chunk, and the
+merge reparses it sequentially. The result is correct either way; the cost is
+the wasted work.
 
 There are two chunk parsers, and the same one handles every chunk of a parse.
 The **DFA parser** drives a state machine byte by byte; it supports every
@@ -167,12 +173,10 @@ give each thread its own private mapping and let the page cache do the work.
 `Auto` takes the first for small files and the second for large ones; mmap is
 opt-in and Unix-only.
 
-Speculative parsing, the merge phase that fuses parsing with the user's
-accumulator, the vectorized parser, and the ring buffer were developed and
-evaluated in full in the [paper](https://db.in.tum.de/~ellmann/papers/csveee.pdf).
-This crate is an extended version of what was evaluated there: the DFA
-parser is the flexible-but-slower backend the paper leaves as future work,
-and the dialect coverage and the other I/O backends likewise go beyond it.
+Speculative parsing, the merge phase, the vectorized parser, and the ring
+buffer were developed and evaluated in full in the
+[paper](https://db.in.tum.de/~ellmann/papers/csveee.pdf); the DFA parser, the
+dialect coverage, and the other I/O backends go beyond it.
 
 ## Correctness
 
