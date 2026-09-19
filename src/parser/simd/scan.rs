@@ -102,6 +102,10 @@ impl Scanner {
 
     /// Consume one 64-byte vector, returning the previous vector's
     /// completed output (`None` on a fresh scanner's first call).
+    ///
+    /// `#[inline]` only pays off together with [`Scanner::resolve_unquoted`]:
+    /// alone it is 12% slower, since the general resolve spills.
+    #[inline]
     pub(super) fn step(&mut self, input: &[u8; VECTOR_BYTES]) -> Option<VectorOutput> {
         let cfg = self.config;
         let s = match_structural(input, cfg.delim, cfg.term, cfg.term_b, cfg.quote);
@@ -128,6 +132,13 @@ impl Scanner {
     /// LSBs, so a structural at byte 63 terminates within the vector.
     #[inline]
     fn resolve(&mut self, prev: &Pending, next: Option<Lookahead>) -> VectorOutput {
+        // The common vector, since quoting is on by default but most
+        // CSV has none: every quote-dependent term below folds away.
+        if prev.structural.quote == 0 && prev.m == 0 {
+            let next_term_lsb = next.is_some_and(|n| (n.term_ooq & 1) != 0);
+            return self.resolve_unquoted(prev, next_term_lsb);
+        }
+
         let p_delim_ooq = prev.structural.delim & !prev.m;
         let p_term_ooq = prev.structural.term & !prev.m;
         let (next_delim_ooq, next_term_ooq, next_quote) =
@@ -174,6 +185,40 @@ impl Scanner {
             e,
             r,
             // One boundary per record: the verifier keys off collapsed run ends.
+            d_struct: d_struct_b,
+            term: run_end,
+        }
+    }
+
+    /// [`Scanner::resolve`] with `Q = 0` and `M = 0`, which empties
+    /// `QB`, `QE` and `R` and leaves only trivial carries. It still
+    /// *consumes* the incoming ones: the vector before may have ended
+    /// mid-quote.
+    #[inline]
+    fn resolve_unquoted(&mut self, prev: &Pending, next_term_lsb: bool) -> VectorOutput {
+        let p_delim_ooq = prev.structural.delim;
+        let p_term_ooq = prev.structural.term;
+
+        let run_end = terminator_run_ends(p_term_ooq, next_term_lsb);
+        let run_start = terminator_run_starts(p_term_ooq, self.prev_term_msb);
+        let d_struct_b = p_delim_ooq | run_end;
+        let d_struct_e = p_delim_ooq | run_start;
+
+        let b = ((d_struct_b << 1) | (self.begins_carry.d_struct_msb as u64))
+            | (self.begins_carry.qb_msb as u64);
+        let e = d_struct_e & !(self.ends_carry as u64);
+
+        self.begins_carry = BeginsCarry {
+            d_struct_msb: (d_struct_b >> 63) & 1 != 0,
+            qb_msb: false,
+        };
+        self.ends_carry = false;
+        self.prev_term_msb = (p_term_ooq >> 63) & 1 != 0;
+
+        VectorOutput {
+            b,
+            e,
+            r: 0,
             d_struct: d_struct_b,
             term: run_end,
         }

@@ -116,27 +116,53 @@ where
     Ok(())
 }
 
+/// Offsets written per unrolled iteration; the tail overshoots by up to
+/// one less. Eight measured worse: the overshoot is paid every call.
+const EXTRACT_UNROLL: usize = 4;
+
+/// Popcounts at or below this skip the unrolled loop, whose overshoot
+/// would otherwise be most of the work.
+const EXTRACT_SPARSE: usize = 2;
+
 /// Append the offset of every set bit in `mask` to `out`, shifted by
 /// `base` and sorted ascending. Runs three times per vector, so it
 /// reserves up front and writes unchecked instead of `push`ing.
 #[inline]
 pub(super) fn extend_offsets(out: &mut Vec<usize>, mask: u64, base: usize) {
+    if mask == 0 {
+        return;
+    }
     let count = mask.count_ones() as usize;
-    out.reserve(count);
-    let mut len = out.len();
-    // SAFETY: `reserve(count)` covers the exactly `count` elements the
-    // loop writes, and `set_len` publishes only initialized slots.
+    out.reserve(count + (EXTRACT_UNROLL - 1));
+    let len = out.len();
+    // SAFETY: the `reserve` covers every slot written, overshoot
+    // included; `set_len` publishes only the `count` real offsets.
     unsafe {
-        let ptr = out.as_mut_ptr();
+        let mut ptr = out.as_mut_ptr().add(len);
         let mut m = mask;
-        while m != 0 {
-            // `wrapping_add`: the prologue's base is a wrapped `-misalign`,
-            // but its low lanes are pad, so every offset is non-negative.
-            *ptr.add(len) = base.wrapping_add(m.trailing_zeros() as usize);
-            len += 1;
-            m &= m - 1;
+        // `wrapping_add`: the prologue's base is a wrapped `-misalign`,
+        // but its low lanes are pad, so every offset is non-negative.
+        if count <= EXTRACT_SPARSE {
+            let mut i = 0;
+            while m != 0 {
+                *ptr.add(i) = base.wrapping_add(m.trailing_zeros() as usize);
+                m &= m.wrapping_sub(1);
+                i += 1;
+            }
+        } else {
+            // Trip count from the popcount, so the bits no longer decide
+            // when to stop — that is what takes the per-bit branch out.
+            let mut written = 0;
+            while written < count {
+                for i in 0..EXTRACT_UNROLL {
+                    *ptr.add(i) = base.wrapping_add(m.trailing_zeros() as usize);
+                    m &= m.wrapping_sub(1);
+                }
+                ptr = ptr.add(EXTRACT_UNROLL);
+                written += EXTRACT_UNROLL;
+            }
         }
-        out.set_len(len);
+        out.set_len(len + count);
     }
 }
 
