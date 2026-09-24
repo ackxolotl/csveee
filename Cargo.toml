@@ -6,6 +6,7 @@ rust-version = "1.88"
 description = "A very fast, parallel CSV parser."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/ackxolotl/csveee"
+documentation = "https://docs.rs/csveee"
 readme = "README.md"
 keywords = ["csv", "parser", "parallel", "simd"]
 categories = ["parser-implementations", "encoding", "concurrency"]
