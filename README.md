@@ -2,19 +2,20 @@
 
 A very fast, parallel CSV parser.
 
-`csveee` splits a CSV file into chunks and parses them across all your cores.
-It inverts the usual interface: instead of the parser handing records to your
+`csveee` splits a CSV file into chunks and parses them across all cores. It
+inverts the usual interface: instead of the parser handing records to your
 code, you hand your code to the parser. That buys what an iterator cannot —
-parsing that stays lazy *and* runs in parallel — since your processing happens
-during the parse rather than after it. And it does so without giving up on the
-messy files the real world is full of: across 1,000 real-world CSV files it is
-around **10× faster than rust-csv**, and on a large server it peaks at
-**192 GB/s**.
+parsing that stays lazy *and* runs in parallel. Your code runs inside the
+parse. Speculatively, before a chunk's true record boundaries are known
+([how it works](#how-it-works)).
 
-The parsing scheme and the fused accumulate-and-merge programming model come
-from [*One Pass to Parse Them All: Fused Parallel CSV
-Processing*](https://db.in.tum.de/~ellmann/papers/csveee.pdf) (VLDB '26); the
-crate has grown past the paper since. See [How it works](#how-it-works).
+It does all this without giving up on the messy files the real world is full
+of, and it is quick about it: across 1,000 CSV files `csveee` is around
+**10× faster than rust-csv**, and on a large server it peaks at **192 GB/s**.
+
+The parsing scheme and the fused programming model come from
+[*One Pass to Parse Them All: Fused Parallel CSV Processing*](https://db.in.tum.de/~ellmann/papers/csveee.pdf) (VLDB '26); the
+crate has grown past the paper since.
 
 ## Features
 
@@ -41,8 +42,8 @@ let mut parser = Parser::new();
 let cities = parser.parse(
     "data.csv",
     Vec::new,                       // init  -> Vec<String>, one per chunk
-    |acc, [_name, _age, city]| {    // acc   (&mut Vec<String>, [&mut str; 3])
-        acc.push(city.to_string());
+    |state, [_name, _age, city]| {  // acc   (&mut Vec<String>, [&mut str; 3])
+        state.push(city.to_string());
         Ok(())                      //        Err(_) rejects the record
     },
     |states| states.concat(),       // merge (&mut [Vec<String>]) -> Vec<String>
@@ -116,14 +117,14 @@ The geometric mean of per-file throughput is 7.7 GB/s — 4.7 GB/s with the DFA
 parser on stable — against 0.8 GB/s for rust-csv and 0.3 GB/s for DuckDB: a
 geometric-mean speedup of **10.85× over rust-csv** and **25× over DuckDB**.
 
-The speedup is a curve, not a constant. Startup is a fixed cost, so the more
-bytes there are to parse the smaller its share becomes, and the parsing that
-remains is split across every available core. Against rust-csv, small files
-spend most of their time in startup and land nearer 2–4×; from there the margin
-widens with each extra byte and each extra core, past 200× on the largest files.
-DuckDB pays a fixed per-query cost of its own, so its curve starts high, bottoms
-out near 100 MB once that cost is amortized over enough bytes, and widens again
-as parallelism takes over.
+The speedup is a curve. Startup is a fixed cost, so the more bytes there are
+to parse the smaller its share becomes, and the parsing that remains is split
+across every available core. Against rust-csv, small files spend most of their
+time in startup and land nearer 2–4×; from there the margin widens with each
+extra byte and each extra core, past 200× on the largest files. DuckDB pays a
+fixed per-query cost of its own, so its curve starts high, bottoms out near
+100 MB once that cost is amortized over enough bytes, and widens again as
+parallelism takes over.
 
 Benchmarks live in [`benches/throughput.rs`](benches/throughput.rs). Reproduce
 them with:
@@ -146,9 +147,10 @@ the real one.
 
 The merge phase then walks the chunks in order, aligning record boundaries: the
 pass whose first record starts where its predecessor's last record ended is the
-correct one. The surviving states are folded with the merge function. The cost
-of the speculation is a constant factor of extra parsing work per chunk, and it
-buys a parser that never has to look at the file twice.
+correct one. The surviving states are folded with your `merge` callback (see
+[Usage](#usage)). The cost of the speculation is a constant factor of extra
+parsing work per chunk, and it buys a parser that never has to look at the
+file twice.
 
 What kills a wrong pass early is validation. The declared record arity and the
 errors the accumulator returns (e.g., failed type conversions) form the oracle
