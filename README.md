@@ -203,7 +203,7 @@ All are off by default; the crate builds on stable with the DFA parser alone.
 ## Status
 
 Early days — the API is not stable yet and may change between releases. Requires
-Rust 1.88 or newer (edition 2024). Tested on Linux, macOS, and Windows.
+Rust 1.89 or newer (edition 2024). Tested on Linux, macOS, and Windows.
 
 ## Citation
 

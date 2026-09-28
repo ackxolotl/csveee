@@ -2,13 +2,10 @@
 //! `i` per byte `i`. See the paper's §Vectorization for the math and
 //! [`super::scan`] for how the outputs become B/E/R indices.
 
-use std::simd::Simd;
-use std::simd::cmp::SimdPartialEq;
+use super::lanes::Lanes;
 
 /// Vector width in bytes — one cacheline.
 pub(super) const VECTOR_BYTES: usize = 64;
-
-type ByteVec = Simd<u8, VECTOR_BYTES>;
 
 /// Per-vector structural-character bitmasks; bit `i` is byte `i` of the
 /// input vector. The byte values must be distinct (`Config::validate`).
@@ -47,14 +44,14 @@ pub(super) fn match_structural(
     term2: Option<u8>,
     quote: Option<u8>,
 ) -> Structural {
-    let v = ByteVec::from_array(*input);
-    let delim_mask = v.simd_eq(ByteVec::splat(delim)).to_bitmask();
-    let mut term_mask = v.simd_eq(ByteVec::splat(term)).to_bitmask();
+    let v = Lanes::load(input);
+    let delim_mask = v.eq_mask(delim);
+    let mut term_mask = v.eq_mask(term);
     if let Some(t2) = term2 {
-        term_mask |= v.simd_eq(ByteVec::splat(t2)).to_bitmask();
+        term_mask |= v.eq_mask(t2);
     }
     let quote_mask = match quote {
-        Some(q) => v.simd_eq(ByteVec::splat(q)).to_bitmask(),
+        Some(q) => v.eq_mask(q),
         None => 0,
     };
     Structural {

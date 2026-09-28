@@ -2,7 +2,7 @@
 name = "csveee"
 version = "0.1.1"
 edition = "2024"
-rust-version = "1.88"
+rust-version = "1.89"
 description = "A very fast, parallel CSV parser."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/ackxolotl/csveee"

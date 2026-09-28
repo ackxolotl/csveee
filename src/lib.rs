@@ -43,7 +43,6 @@
 //! [`Parser::parse_stream`] is sequential and sees every record once.
 
 #![cfg_attr(test, allow(clippy::field_reassign_with_default))]
-#![cfg_attr(feature = "simd", feature(portable_simd))]
 
 mod builder;
 mod config;

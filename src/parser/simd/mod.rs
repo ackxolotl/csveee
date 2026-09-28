@@ -5,6 +5,7 @@ mod fieldcount;
 mod findstart;
 mod index;
 mod index_stepper;
+mod lanes;
 mod scan;
 
 use self::cursor_stepper::SimdCursorStepper;
