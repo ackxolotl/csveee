@@ -111,6 +111,15 @@ impl<I: Isa> Scanner<I> {
     /// alone it is 12% slower, since the general resolve spills.
     #[inline]
     pub(super) fn step(&mut self, input: &[u8; VECTOR_BYTES]) -> Option<VectorOutput> {
+        // Its own `vectorize`: the stepper's does not reach in when this
+        // stays out of line, which it does.
+        let isa = self.isa;
+        isa.vectorize(|| self.step_body(input))
+    }
+
+    /// [`Self::step`]'s body, compiled for the token's ISA.
+    #[inline(always)]
+    fn step_body(&mut self, input: &[u8; VECTOR_BYTES]) -> Option<VectorOutput> {
         let cfg = self.config;
         let s = match_structural(self.isa, input, cfg.delim, cfg.term, cfg.term_b, cfg.quote);
         let (m, in_quotes_carry_out) = compute_in_quotes(self.isa, s.quote, self.in_quotes_carry);

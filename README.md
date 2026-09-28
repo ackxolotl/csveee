@@ -166,10 +166,11 @@ The **DFA parser** drives a state machine byte by byte; it supports every
 configuration. The **SIMD parser** finds delimiters, terminators, and quotes 64
 bytes at a time and resolves quoted regions with bit-parallel arithmetic. It
 covers the common dialects, and `ParserBackend::Auto` takes it whenever the
-configuration allows — the DFA otherwise. Its instruction set (AVX-512, AVX2,
-SSE2, or NEON) is picked at compile time, so a default x86_64 build uses SSE2;
-build with `-C target-cpu=native`, or your deployment target's level, for the
-wider ones.
+configuration allows — the DFA otherwise. Its instruction set is picked at
+runtime: on x86_64, AVX-512 or AVX2 (with BMI2 and carry-less multiply) where
+the CPU has them, SSE2 otherwise; on aarch64, NEON, with `pmull` where
+available. With `-C target-cpu=native`, the levels that CPU supports are
+compiled in statically instead of being detected.
 
 Input is read through one of three I/O backends. **Per-chunk reads** copy a
 chunk at a time into a per-thread buffer; a **ring buffer** gives each thread

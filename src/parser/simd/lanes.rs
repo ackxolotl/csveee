@@ -1,26 +1,51 @@
 //! Byte-equality bitmasks over a 64-byte vector: the one per-ISA kernel
 //! under [`super::bitmask::match_structural`]. Each ISA is an inner
-//! module with the same [`Lanes`] shape; the widest one the target
-//! enables at compile time is re-exported. SSE2 and NEON are baseline on
-//! their targets, so only other architectures take the scalar fallback.
+//! module with the same shape: `load` and `eq_mask`, both `unsafe` with
+//! the sole contract that the CPU supports that ISA. The x86 kernels are
+//! all compiled on x86_64 and carry `#[target_feature]`, so runtime
+//! dispatch can pick one; [`CompileTimeLanes`] is the widest one the
+//! target enables at compile time. SSE2 and NEON are baseline on their
+//! targets, so only other architectures fall back to scalar code.
 
+// An x86 kernel goes unused where the build's own features already cover
+// the dispatch level that would run it, e.g. SSE2 in an AVX2 build.
+#[cfg(target_arch = "x86_64")]
+#[allow(unused_imports)]
+pub(super) use self::avx2::Avx2Lanes;
+#[cfg(target_arch = "x86_64")]
+#[allow(unused_imports)]
+pub(super) use self::avx512::Avx512Lanes;
+#[cfg(target_arch = "aarch64")]
+pub(super) use self::neon::NeonLanes;
+#[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
+pub(super) use self::scalar::ScalarLanes;
+#[cfg(target_arch = "x86_64")]
+#[allow(unused_imports)]
+pub(super) use self::sse2::Sse2Lanes;
+use super::bitmask::VECTOR_BYTES;
+
+/// The widest kernel `cfg(target_feature)` enables.
+#[cfg(all(target_arch = "x86_64", target_feature = "avx512bw"))]
+pub(super) type CompileTimeLanes = Avx512Lanes;
+/// The widest kernel `cfg(target_feature)` enables.
 #[cfg(all(
     target_arch = "x86_64",
     target_feature = "avx2",
     not(target_feature = "avx512bw"),
 ))]
-pub(super) use self::avx2::Lanes;
-#[cfg(all(target_arch = "x86_64", target_feature = "avx512bw"))]
-pub(super) use self::avx512::Lanes;
-#[cfg(target_arch = "aarch64")]
-pub(super) use self::neon::Lanes;
-#[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
-pub(super) use self::scalar::Lanes;
+pub(super) type CompileTimeLanes = Avx2Lanes;
+/// The widest kernel `cfg(target_feature)` enables.
 #[cfg(all(target_arch = "x86_64", not(target_feature = "avx2")))]
-pub(super) use self::sse2::Lanes;
-use super::bitmask::VECTOR_BYTES;
+pub(super) type CompileTimeLanes = Sse2Lanes;
+/// The widest kernel `cfg(target_feature)` enables.
+#[cfg(target_arch = "aarch64")]
+pub(super) type CompileTimeLanes = NeonLanes;
+/// The widest kernel `cfg(target_feature)` enables.
+#[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
+pub(super) type CompileTimeLanes = ScalarLanes;
 
-#[cfg(all(target_arch = "x86_64", target_feature = "avx512bw"))]
+#[cfg(target_arch = "x86_64")]
+#[allow(dead_code)] // see the re-exports above
 mod avx512 {
     use std::arch::x86_64::{
         __m512i, _mm512_cmpeq_epi8_mask, _mm512_loadu_si512, _mm512_set1_epi8,
@@ -30,30 +55,32 @@ mod avx512 {
 
     /// A 64-byte input vector in one ZMM register.
     #[derive(Clone, Copy)]
-    pub(in crate::parser::simd) struct Lanes(__m512i);
+    pub(in crate::parser::simd) struct Avx512Lanes(__m512i);
 
-    impl Lanes {
+    impl Avx512Lanes {
+        /// # Safety
+        /// The CPU must support AVX-512F and AVX-512BW.
+        #[target_feature(enable = "avx512f,avx512bw")]
         #[inline]
-        pub fn load(input: &[u8; VECTOR_BYTES]) -> Self {
-            // SAFETY: the cfg gate guarantees AVX-512F; `input` is 64
-            // readable bytes and the load is unaligned.
-            unsafe { Self(_mm512_loadu_si512(input.as_ptr().cast())) }
+        pub unsafe fn load(input: &[u8; VECTOR_BYTES]) -> Self {
+            // SAFETY: `input` is 64 readable bytes and the load is unaligned.
+            Self(unsafe { _mm512_loadu_si512(input.as_ptr().cast()) })
         }
 
         /// Bit `i` set iff byte `i` equals `b`.
+        ///
+        /// # Safety
+        /// The CPU must support AVX-512F and AVX-512BW.
+        #[target_feature(enable = "avx512f,avx512bw")]
         #[inline]
-        pub fn eq_mask(self, b: u8) -> u64 {
-            // SAFETY: the cfg gate guarantees AVX-512BW.
-            unsafe { _mm512_cmpeq_epi8_mask(self.0, _mm512_set1_epi8(b as i8)) }
+        pub unsafe fn eq_mask(self, b: u8) -> u64 {
+            _mm512_cmpeq_epi8_mask(self.0, _mm512_set1_epi8(b as i8))
         }
     }
 }
 
-#[cfg(all(
-    target_arch = "x86_64",
-    target_feature = "avx2",
-    not(target_feature = "avx512bw"),
-))]
+#[cfg(target_arch = "x86_64")]
+#[allow(dead_code)] // see the re-exports above
 mod avx2 {
     use std::arch::x86_64::{__m256i, _mm256_cmpeq_epi8, _mm256_loadu_si256, _mm256_set1_epi8};
 
@@ -62,10 +89,11 @@ mod avx2 {
     /// `vpmovmskb` as opaque asm: LLVM otherwise sees through the
     /// intrinsic and rebuilds a vector of 64 booleans, which it can only
     /// scalarize bit by bit on AVX2 without AVX-512 mask registers.
-    #[inline(always)]
+    #[target_feature(enable = "avx2")]
+    #[inline]
     fn movemask(v: __m256i) -> u32 {
         let m: u32;
-        // SAFETY: the cfg gate guarantees AVX2; register-only operands.
+        // SAFETY: register-only operands; AVX2 is enabled for this fn.
         unsafe {
             std::arch::asm!(
                 "vpmovmskb {m:e}, {v}",
@@ -79,32 +107,36 @@ mod avx2 {
 
     /// A 64-byte input vector in two YMM registers.
     #[derive(Clone, Copy)]
-    pub(in crate::parser::simd) struct Lanes([__m256i; 2]);
+    pub(in crate::parser::simd) struct Avx2Lanes([__m256i; 2]);
 
-    impl Lanes {
+    impl Avx2Lanes {
+        /// # Safety
+        /// The CPU must support AVX2.
+        #[target_feature(enable = "avx2")]
         #[inline]
-        pub fn load(input: &[u8; VECTOR_BYTES]) -> Self {
+        pub unsafe fn load(input: &[u8; VECTOR_BYTES]) -> Self {
             let p = input.as_ptr().cast::<__m256i>();
-            // SAFETY: the cfg gate guarantees AVX; `input` is 64 readable
-            // bytes, two unaligned 32-byte loads.
+            // SAFETY: `input` is 64 readable bytes, two unaligned 32-byte loads.
             unsafe { Self([_mm256_loadu_si256(p), _mm256_loadu_si256(p.add(1))]) }
         }
 
         /// Bit `i` set iff byte `i` equals `b`.
+        ///
+        /// # Safety
+        /// The CPU must support AVX2.
+        #[target_feature(enable = "avx2")]
         #[inline]
-        pub fn eq_mask(self, b: u8) -> u64 {
-            // SAFETY: the cfg gate guarantees AVX2.
-            unsafe {
-                let s = _mm256_set1_epi8(b as i8);
-                let lo = movemask(_mm256_cmpeq_epi8(self.0[0], s));
-                let hi = movemask(_mm256_cmpeq_epi8(self.0[1], s));
-                (lo as u64) | ((hi as u64) << 32)
-            }
+        pub unsafe fn eq_mask(self, b: u8) -> u64 {
+            let s = _mm256_set1_epi8(b as i8);
+            let lo = movemask(_mm256_cmpeq_epi8(self.0[0], s));
+            let hi = movemask(_mm256_cmpeq_epi8(self.0[1], s));
+            (lo as u64) | ((hi as u64) << 32)
         }
     }
 }
 
-#[cfg(all(target_arch = "x86_64", not(target_feature = "avx2")))]
+#[cfg(target_arch = "x86_64")]
+#[allow(dead_code)] // see the re-exports above
 mod sse2 {
     use std::arch::x86_64::{
         __m128i, _mm_cmpeq_epi8, _mm_loadu_si128, _mm_movemask_epi8, _mm_set1_epi8,
@@ -114,14 +146,16 @@ mod sse2 {
 
     /// A 64-byte input vector in four XMM registers.
     #[derive(Clone, Copy)]
-    pub(in crate::parser::simd) struct Lanes([__m128i; 4]);
+    pub(in crate::parser::simd) struct Sse2Lanes([__m128i; 4]);
 
-    impl Lanes {
+    impl Sse2Lanes {
+        /// # Safety
+        /// None beyond x86_64, where SSE2 is baseline; `unsafe` only to
+        /// share the other kernels' signature.
         #[inline]
-        pub fn load(input: &[u8; VECTOR_BYTES]) -> Self {
+        pub unsafe fn load(input: &[u8; VECTOR_BYTES]) -> Self {
             let p = input.as_ptr().cast::<__m128i>();
-            // SAFETY: SSE2 is baseline on x86_64; `input` is 64 readable
-            // bytes, four unaligned 16-byte loads.
+            // SAFETY: `input` is 64 readable bytes, four unaligned 16-byte loads.
             unsafe {
                 Self([
                     _mm_loadu_si128(p),
@@ -133,8 +167,11 @@ mod sse2 {
         }
 
         /// Bit `i` set iff byte `i` equals `b`.
+        ///
+        /// # Safety
+        /// As for [`Self::load`].
         #[inline]
-        pub fn eq_mask(self, b: u8) -> u64 {
+        pub unsafe fn eq_mask(self, b: u8) -> u64 {
             // SAFETY: SSE2 is baseline on x86_64.
             unsafe {
                 let s = _mm_set1_epi8(b as i8);
@@ -161,20 +198,26 @@ mod neon {
 
     /// A 64-byte input vector in four Q registers.
     #[derive(Clone, Copy)]
-    pub(in crate::parser::simd) struct Lanes(uint8x16x4_t);
+    pub(in crate::parser::simd) struct NeonLanes(uint8x16x4_t);
 
-    impl Lanes {
+    impl NeonLanes {
+        /// # Safety
+        /// None beyond aarch64, where NEON is baseline; `unsafe` only to
+        /// share the other kernels' signature.
         #[inline]
-        pub fn load(input: &[u8; VECTOR_BYTES]) -> Self {
-            // SAFETY: NEON is baseline on aarch64; `input` is 64 readable bytes.
+        pub unsafe fn load(input: &[u8; VECTOR_BYTES]) -> Self {
+            // SAFETY: `input` is 64 readable bytes.
             unsafe { Self(vld1q_u8_x4(input.as_ptr())) }
         }
 
         /// Bit `i` set iff byte `i` equals `b`. NEON has no `movemask`:
         /// weight each matching lane by its bit within the byte, then fold
         /// 64 lanes into 8 bytes with pairwise adds (simdjson's reduction).
+        ///
+        /// # Safety
+        /// As for [`Self::load`].
         #[inline]
-        pub fn eq_mask(self, b: u8) -> u64 {
+        pub unsafe fn eq_mask(self, b: u8) -> u64 {
             const WEIGHTS: [u8; 16] = [1, 2, 4, 8, 16, 32, 64, 128, 1, 2, 4, 8, 16, 32, 64, 128];
             // SAFETY: NEON is baseline on aarch64; `WEIGHTS` is 16 readable bytes.
             unsafe {
@@ -198,17 +241,22 @@ mod scalar {
 
     /// A 64-byte input vector, compared byte by byte.
     #[derive(Clone, Copy)]
-    pub(in crate::parser::simd) struct Lanes([u8; VECTOR_BYTES]);
+    pub(in crate::parser::simd) struct ScalarLanes([u8; VECTOR_BYTES]);
 
-    impl Lanes {
+    impl ScalarLanes {
+        /// # Safety
+        /// None; `unsafe` only to share the other kernels' signature.
         #[inline]
-        pub fn load(input: &[u8; VECTOR_BYTES]) -> Self {
+        pub unsafe fn load(input: &[u8; VECTOR_BYTES]) -> Self {
             Self(*input)
         }
 
         /// Bit `i` set iff byte `i` equals `b`.
+        ///
+        /// # Safety
+        /// None; `unsafe` only to share the other kernels' signature.
         #[inline]
-        pub fn eq_mask(self, b: u8) -> u64 {
+        pub unsafe fn eq_mask(self, b: u8) -> u64 {
             super::eq_mask_scalar(&self.0, b)
         }
     }
@@ -229,31 +277,51 @@ fn eq_mask_scalar(input: &[u8; VECTOR_BYTES], b: u8) -> u64 {
 mod tests {
     use super::*;
 
-    #[test]
-    fn eq_mask_matches_scalar_for_every_byte_and_lane() {
-        // Distinct bytes per lane, rotated so each value visits each lane.
+    /// Check one kernel against the scalar oracle: every byte value in
+    /// every lane, then repeated high bytes, where signed compares trip.
+    fn check_kernel(name: &str, eq_mask: impl Fn(&[u8; VECTOR_BYTES], u8) -> u64) {
         for rot in 0..=255u8 {
             let input: [u8; VECTOR_BYTES] =
                 std::array::from_fn(|i| (i as u8).wrapping_mul(7).wrapping_add(rot));
-            let v = Lanes::load(&input);
             for b in 0..=255u8 {
                 assert_eq!(
-                    v.eq_mask(b),
+                    eq_mask(&input, b),
                     eq_mask_scalar(&input, b),
-                    "rot {rot}, byte {b:#04x}"
+                    "{name}: rot {rot}, byte {b:#04x}"
                 );
             }
+        }
+        let input: [u8; VECTOR_BYTES] =
+            std::array::from_fn(|i| if i % 3 == 0 { 0xff } else { 0x80 });
+        for b in [0x00, 0x7f, 0x80, 0xff] {
+            assert_eq!(
+                eq_mask(&input, b),
+                eq_mask_scalar(&input, b),
+                "{name}: byte {b:#04x}"
+            );
         }
     }
 
     #[test]
-    fn eq_mask_matches_scalar_on_high_bytes() {
-        // Repeated matches of bytes ≥ 0x80, where signed compares would trip.
-        let input: [u8; VECTOR_BYTES] =
-            std::array::from_fn(|i| if i % 3 == 0 { 0xff } else { 0x80 });
-        let v = Lanes::load(&input);
-        for b in [0x00, 0x7f, 0x80, 0xff] {
-            assert_eq!(v.eq_mask(b), eq_mask_scalar(&input, b), "byte {b:#04x}");
+    fn compile_time_kernel_matches_scalar() {
+        // SAFETY: `CompileTimeLanes` is a kernel the target enables.
+        check_kernel("compile-time", |v, b| unsafe {
+            CompileTimeLanes::load(v).eq_mask(b)
+        });
+    }
+
+    #[cfg(target_arch = "x86_64")]
+    #[test]
+    fn x86_kernels_match_scalar() {
+        // SAFETY: SSE2 is baseline on x86_64.
+        check_kernel("sse2", |v, b| unsafe { Sse2Lanes::load(v).eq_mask(b) });
+        if is_x86_feature_detected!("avx2") {
+            // SAFETY: AVX2 was just detected.
+            check_kernel("avx2", |v, b| unsafe { Avx2Lanes::load(v).eq_mask(b) });
+        }
+        if is_x86_feature_detected!("avx512f") && is_x86_feature_detected!("avx512bw") {
+            // SAFETY: AVX-512F and AVX-512BW were just detected.
+            check_kernel("avx512", |v, b| unsafe { Avx512Lanes::load(v).eq_mask(b) });
         }
     }
 }

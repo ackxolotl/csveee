@@ -255,6 +255,42 @@ impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper<I> {
     where
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
     {
+        let isa = self.isa;
+        isa.vectorize(|| self.step_body(ctx, emit))
+    }
+
+    fn consume(&mut self, n: usize) {
+        self.cell_start = self.cell_start.saturating_sub(n);
+        if let Some((_, _, ref mut pbase)) = self.pending {
+            *pbase = pbase.saturating_sub(n);
+        }
+        for x in &mut self.bounds {
+            debug_assert!(*x >= n, "consumed past a published bound");
+            *x = x.saturating_sub(n);
+        }
+    }
+
+    fn finalize<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> Result<Option<usize>, crate::Error>
+    where
+        E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
+    {
+        let isa = self.isa;
+        isa.vectorize(|| self.finalize_body(ctx, emit))
+    }
+}
+
+/// The trait methods' bodies, run inside [`Isa::vectorize`] so that they
+/// compile for the token's ISA — as far as LLVM inlines them into its
+/// `run`, which `inline(always)` only gets as far as the closure. The index
+/// stepper's `finalize` closure stays out of line and so calls the kernels
+/// out of line too; it runs once per chunk, so that is left as is.
+impl<I: Isa> SimdCursorStepper<I> {
+    #[inline(always)]
+    fn step_body<O, E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> StepResult
+    where
+        O: Output + ?Sized,
+        E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
+    {
         let StepCtx {
             buf,
             scan_start,
@@ -354,19 +390,14 @@ impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper<I> {
         }
     }
 
-    fn consume(&mut self, n: usize) {
-        self.cell_start = self.cell_start.saturating_sub(n);
-        if let Some((_, _, ref mut pbase)) = self.pending {
-            *pbase = pbase.saturating_sub(n);
-        }
-        for x in &mut self.bounds {
-            debug_assert!(*x >= n, "consumed past a published bound");
-            *x = x.saturating_sub(n);
-        }
-    }
-
-    fn finalize<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> Result<Option<usize>, crate::Error>
+    #[inline(always)]
+    fn finalize_body<O, E>(
+        &mut self,
+        ctx: StepCtx<'_>,
+        emit: &mut E,
+    ) -> Result<Option<usize>, crate::Error>
     where
+        O: Output + ?Sized,
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
     {
         let StepCtx {

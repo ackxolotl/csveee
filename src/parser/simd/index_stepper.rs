@@ -16,6 +16,8 @@ use crate::parser::output::Output;
 /// cross-vector [`Scanner`] and assembles records from begin/end indices.
 /// [`super::cursor_stepper::SimdCursorStepper`] is the quote-free one.
 pub(super) struct SimdIndexStepper<I> {
+    /// The ISA token `step` and `finalize` compile for.
+    isa: I,
     /// Dialect bytes handed to the scanner and the error paths.
     scanner_config: ScannerConfig,
     /// The cross-vector bitmask pipeline, with its own lag and carries.
@@ -63,6 +65,7 @@ impl<I: Isa> SimdIndexStepper<I> {
         let field_counter =
             FieldCounter::new(isa, config.field_count.expect("fixed field count") as u32);
         Self {
+            isa,
             scanner_config,
             field_counter,
             scanner: Scanner::new(isa, scanner_config),
@@ -248,6 +251,44 @@ impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdIndexStepper<I> {
     where
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
     {
+        let isa = self.isa;
+        isa.vectorize(|| self.step_body(ctx, emit))
+    }
+
+    fn consume(&mut self, n: usize) {
+        self.record_buf_start = self.record_buf_start.saturating_sub(n);
+        for x in &mut self.b_offs {
+            *x = x.saturating_sub(n);
+        }
+        for x in &mut self.e_offs {
+            *x = x.saturating_sub(n);
+        }
+        for x in &mut self.r_offs {
+            *x = x.saturating_sub(n);
+        }
+    }
+
+    fn finalize<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> Result<Option<usize>, crate::Error>
+    where
+        E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
+    {
+        let isa = self.isa;
+        isa.vectorize(|| self.finalize_body(ctx, emit))
+    }
+}
+
+/// The trait methods' bodies, run inside [`Isa::vectorize`] so that they
+/// compile for the token's ISA — as far as LLVM inlines them into its
+/// `run`, which `inline(always)` only gets as far as the closure. The index
+/// stepper's `finalize` closure stays out of line and so calls the kernels
+/// out of line too; it runs once per chunk, so that is left as is.
+impl<I: Isa> SimdIndexStepper<I> {
+    #[inline(always)]
+    fn step_body<O, E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> StepResult
+    where
+        O: Output + ?Sized,
+        E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
+    {
         let StepCtx {
             buf,
             scan_start,
@@ -377,21 +418,14 @@ impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdIndexStepper<I> {
         }
     }
 
-    fn consume(&mut self, n: usize) {
-        self.record_buf_start = self.record_buf_start.saturating_sub(n);
-        for x in &mut self.b_offs {
-            *x = x.saturating_sub(n);
-        }
-        for x in &mut self.e_offs {
-            *x = x.saturating_sub(n);
-        }
-        for x in &mut self.r_offs {
-            *x = x.saturating_sub(n);
-        }
-    }
-
-    fn finalize<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> Result<Option<usize>, crate::Error>
+    #[inline(always)]
+    fn finalize_body<O, E>(
+        &mut self,
+        ctx: StepCtx<'_>,
+        emit: &mut E,
+    ) -> Result<Option<usize>, crate::Error>
     where
+        O: Output + ?Sized,
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
     {
         let StepCtx {

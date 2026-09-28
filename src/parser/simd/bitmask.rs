@@ -215,33 +215,22 @@ pub(super) fn compute_chars_to_remove(
     ql_remove | qr_remove
 }
 
-/// XOR prefix sum of `q`: bit `i` is the XOR of input bits `0..=i`.
-/// Equivalent to a GF(2) multiply by `~0u64` — one `pclmulqdq` on x86_64,
-/// one `pmull` on aarch64, else a six-step scalar prefix.
+/// XOR prefix sum of `q`: bit `i` is the XOR of input bits `0..=i`, via
+/// the widest carry-less multiply `cfg(target_feature)` enables — one
+/// `pclmulqdq` on x86_64, one `pmull` on aarch64, else a six-step scalar
+/// prefix.
 #[cfg(all(target_arch = "x86_64", target_feature = "pclmulqdq"))]
 #[inline]
 pub(super) fn xor_prefix_sum(q: u64) -> u64 {
-    use std::arch::x86_64::{
-        _mm_clmulepi64_si128, _mm_cvtsi64_si128, _mm_cvtsi128_si64, _mm_set1_epi64x,
-    };
-    // SAFETY: the cfg gate guarantees `pclmulqdq` on this target; the
-    // intrinsics take only register-resident scalars.
-    unsafe {
-        let q_v = _mm_cvtsi64_si128(q as i64);
-        let ones = _mm_set1_epi64x(-1);
-        let result = _mm_clmulepi64_si128(q_v, ones, 0);
-        _mm_cvtsi128_si64(result) as u64
-    }
+    // SAFETY: the cfg gate guarantees `pclmulqdq`.
+    unsafe { xor_prefix_sum_clmul(q) }
 }
 
-/// `pmull` sits in the `aes` feature, which is on by default for
-/// `aarch64-apple-darwin` and any target-cpu with the crypto extensions.
 #[cfg(all(target_arch = "aarch64", target_feature = "aes"))]
 #[inline]
 pub(super) fn xor_prefix_sum(q: u64) -> u64 {
-    // SAFETY: the cfg gate guarantees `aes` on this target; the intrinsic
-    // takes only register-resident scalars.
-    unsafe { std::arch::aarch64::vmull_p64(q, !0) as u64 }
+    // SAFETY: the cfg gate guarantees `aes`.
+    unsafe { xor_prefix_sum_pmull(q) }
 }
 
 #[cfg(not(any(
@@ -251,6 +240,36 @@ pub(super) fn xor_prefix_sum(q: u64) -> u64 {
 #[inline]
 pub(super) fn xor_prefix_sum(q: u64) -> u64 {
     xor_prefix_sum_scalar(q)
+}
+
+/// [`xor_prefix_sum`] as a GF(2) multiply by `~0u64`, on `pclmulqdq`.
+///
+/// # Safety
+/// The CPU must support PCLMULQDQ.
+#[cfg(target_arch = "x86_64")]
+#[target_feature(enable = "pclmulqdq")]
+#[inline]
+pub(super) unsafe fn xor_prefix_sum_clmul(q: u64) -> u64 {
+    use std::arch::x86_64::{
+        _mm_clmulepi64_si128, _mm_cvtsi64_si128, _mm_cvtsi128_si64, _mm_set1_epi64x,
+    };
+    let q_v = _mm_cvtsi64_si128(q as i64);
+    let ones = _mm_set1_epi64x(-1);
+    let result = _mm_clmulepi64_si128(q_v, ones, 0);
+    _mm_cvtsi128_si64(result) as u64
+}
+
+/// [`xor_prefix_sum`] on `pmull`, which sits in the `aes` feature: on by
+/// default for `aarch64-apple-darwin` and any target-cpu with the crypto
+/// extensions, but not for generic aarch64 Linux.
+///
+/// # Safety
+/// The CPU must support the AES extension (and with it `pmull`).
+#[cfg(target_arch = "aarch64")]
+#[target_feature(enable = "aes")]
+#[inline]
+pub(super) unsafe fn xor_prefix_sum_pmull(q: u64) -> u64 {
+    std::arch::aarch64::vmull_p64(q, !0) as u64
 }
 
 /// Scalar fallback: six doubling steps cover all 64 bits.
@@ -434,6 +453,21 @@ mod tests {
     #[test]
     fn dispatched_prefix_sum_matches_brute_force() {
         check_prefix_sum(xor_prefix_sum, "dispatched");
+    }
+
+    /// The hardware variants runtime dispatch can pick, where this CPU has them.
+    #[test]
+    fn hardware_prefix_sums_match_brute_force() {
+        #[cfg(target_arch = "x86_64")]
+        if is_x86_feature_detected!("pclmulqdq") {
+            // SAFETY: PCLMULQDQ was just detected.
+            check_prefix_sum(|q| unsafe { xor_prefix_sum_clmul(q) }, "clmul");
+        }
+        #[cfg(target_arch = "aarch64")]
+        if std::arch::is_aarch64_feature_detected!("aes") {
+            // SAFETY: AES (and with it PMULL) was just detected.
+            check_prefix_sum(|q| unsafe { xor_prefix_sum_pmull(q) }, "pmull");
+        }
     }
 
     // ── compute_in_quotes ─────────────────────────────────────────

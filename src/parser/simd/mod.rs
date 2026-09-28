@@ -11,7 +11,7 @@ mod scan;
 
 use self::cursor_stepper::SimdCursorStepper;
 use self::index_stepper::SimdIndexStepper;
-use self::isa::CompileTime;
+use self::isa::{CompileTime, Isa, Level};
 use super::chunk::{Assumption, ChunkParser, skip_empty_lines};
 use super::driver::ChunkDriver;
 use super::output::Output;
@@ -25,11 +25,37 @@ use crate::io::ChunkReader;
 pub struct SimdChunkParser {
     /// Dialect and mode this parser was built for.
     config: Config,
+    /// The ISA level the steppers run at, detected once per process.
+    level: Level,
 }
 
 impl SimdChunkParser {
     pub fn new(config: Config) -> Self {
-        Self { config }
+        Self {
+            config,
+            level: Level::get(),
+        }
+    }
+
+    /// Parse the chunk at `level`'s token. No quote character means no
+    /// in-quotes masks, so the cheaper single-stream stepper applies.
+    fn run_steppers<I: Isa, S, A, R: ChunkReader, O: Output + ?Sized>(
+        &self,
+        isa: I,
+        reader: &mut R,
+        state: &mut S,
+        base: usize,
+        acc: &A,
+    ) -> crate::Result<Option<usize>>
+    where
+        A: Fn(&mut S, &mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
+    {
+        let driver = ChunkDriver::new(reader, base);
+        if self.config.quote.is_none() {
+            driver.run(&mut SimdCursorStepper::new(isa, &self.config), state, acc)
+        } else {
+            driver.run(&mut SimdIndexStepper::new(isa, &self.config), state, acc)
+        }
     }
 }
 
@@ -101,21 +127,14 @@ impl ChunkParser for SimdChunkParser {
     where
         A: Fn(&mut S, &mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
     {
-        // No quote character means no in-quotes masks, so the cheaper
-        // single-stream stepper applies.
-        let driver = ChunkDriver::new(reader, base);
-        if self.config.quote.is_none() {
-            driver.run(
-                &mut SimdCursorStepper::new(CompileTime, &self.config),
-                state,
-                acc,
-            )
-        } else {
-            driver.run(
-                &mut SimdIndexStepper::new(CompileTime, &self.config),
-                state,
-                acc,
-            )
+        match self.level {
+            Level::CompileTime(isa) => self.run_steppers(isa, reader, state, base, acc),
+            #[cfg(target_arch = "x86_64")]
+            Level::Avx2(isa) => self.run_steppers(isa, reader, state, base, acc),
+            #[cfg(target_arch = "x86_64")]
+            Level::Avx512(isa) => self.run_steppers(isa, reader, state, base, acc),
+            #[cfg(target_arch = "aarch64")]
+            Level::Pmull(isa) => self.run_steppers(isa, reader, state, base, acc),
         }
     }
 }
