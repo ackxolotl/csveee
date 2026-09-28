@@ -41,6 +41,44 @@ impl<I: Isa> FieldCounter<I> {
     /// phase's rotation, masked to `popcnt(d_struct)` bits.
     #[inline]
     pub(super) fn verify(&mut self, d_struct: u64, term: u64) -> bool {
+        if I::FAST_PEXT {
+            self.verify_pext(d_struct, term)
+        } else {
+            self.verify_by_terminators(d_struct, term)
+        }
+    }
+
+    /// [`Self::verify`] without PEXT: walk only the terminators, checking
+    /// each lands on boundary `n - 1 - phase + k·n`. One iteration per
+    /// record rather than per field, for ISAs that emulate PEXT bit by bit.
+    #[inline]
+    fn verify_by_terminators(&mut self, d_struct: u64, term: u64) -> bool {
+        let count = d_struct.count_ones();
+        let mut t = term & d_struct;
+        // Boundary index the next terminator must sit at.
+        let mut expect = self.n - 1 - self.phase;
+        // Boundaries past the last terminator, or `phase + count` without one.
+        let mut phase = self.phase + count;
+        while t != 0 {
+            let below = (t & t.wrapping_neg()) - 1;
+            let idx = (d_struct & below).count_ones();
+            if idx != expect {
+                return false;
+            }
+            expect += self.n;
+            phase = count - idx - 1;
+            t &= t - 1;
+        }
+        // A record reaching `n` boundaries needed a terminator at `n - 1`.
+        if phase >= self.n {
+            return false;
+        }
+        self.phase = phase;
+        true
+    }
+
+    #[inline]
+    fn verify_pext(&mut self, d_struct: u64, term: u64) -> bool {
         let count = d_struct.count_ones();
         if count == 0 {
             return true;
@@ -275,6 +313,38 @@ mod tests {
         let phase_before = fc.phase();
         assert!(fc.verify(0, 0));
         assert_eq!(fc.phase(), phase_before);
+    }
+
+    #[test]
+    fn terminator_walk_matches_pext() {
+        let mut x = 0x9E37_79B9_7F4A_7C15u64;
+        let mut rng = move || {
+            x ^= x << 13;
+            x ^= x >> 7;
+            x ^= x << 17;
+            x
+        };
+        for n in [1u32, 2, 3, 5, 16, 63] {
+            let mut a = FieldCounter::new(CompileTime, n);
+            let mut b = FieldCounter::new(CompileTime, n);
+            for _ in 0..200_000 {
+                // Sparse boundaries, terminators mostly where they belong.
+                let d = rng() & rng() & rng();
+                let term = if rng() % 4 == 0 { rng() } else { rng() & rng() };
+                let ok = a.verify_pext(d, term);
+                assert_eq!(
+                    ok,
+                    b.verify_by_terminators(d, term),
+                    "n {n} d {d:#x} t {term:#x}"
+                );
+                if ok {
+                    assert_eq!(a.phase, b.phase);
+                } else {
+                    a.phase = 0;
+                    b.phase = 0;
+                }
+            }
+        }
     }
 
     // ── locate_bad_record ─────────────────────────────────────────

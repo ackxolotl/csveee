@@ -31,6 +31,10 @@ pub(super) trait Isa: Copy {
     /// into the low bits of the result.
     fn pext(self, src: u64, mask: u64) -> u64;
 
+    /// Whether [`Isa::pext`] is a single instruction rather than a loop
+    /// over the mask's bits.
+    const FAST_PEXT: bool;
+
     /// Run `f` compiled for this ISA. Target features only reach code
     /// inlined into the function that enables them, so `f` should be a
     /// thin closure around an `#[inline(always)]` body.
@@ -45,6 +49,8 @@ pub(super) struct CompileTime;
 
 impl Isa for CompileTime {
     type Lanes = CompileTimeLanes;
+
+    const FAST_PEXT: bool = cfg!(all(target_arch = "x86_64", target_feature = "bmi2"));
 
     #[inline(always)]
     fn load(self, input: &[u8; VECTOR_BYTES]) -> CompileTimeLanes {
@@ -107,6 +113,8 @@ macro_rules! x86_token {
         #[cfg(all(target_arch = "x86_64", not(all($(target_feature = $feature),+))))]
         impl Isa for $name {
             type Lanes = super::lanes::$lanes;
+
+            const FAST_PEXT: bool = true;
 
             #[inline(always)]
             fn load(self, input: &[u8; VECTOR_BYTES]) -> Self::Lanes {
@@ -199,6 +207,8 @@ fn detect_pmull() -> Option<Pmull> {
 #[cfg(all(target_arch = "aarch64", not(target_feature = "aes")))]
 impl Isa for Pmull {
     type Lanes = CompileTimeLanes;
+
+    const FAST_PEXT: bool = false;
 
     #[inline(always)]
     fn load(self, input: &[u8; VECTOR_BYTES]) -> CompileTimeLanes {
