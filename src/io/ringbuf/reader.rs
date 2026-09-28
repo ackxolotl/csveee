@@ -114,7 +114,9 @@ mod tests {
     fn io_for(bytes: &[u8]) -> (tempfile::NamedTempFile, RingBufIo) {
         let mut tmp = tempfile::NamedTempFile::new().unwrap();
         tmp.write_all(bytes).unwrap();
-        let settings = RingBufSettings::default().buffer_limit(None);
+        let settings = RingBufSettings::default()
+            .buffer_size(4096)
+            .buffer_limit(None);
         let io = RingBufIo::new(tmp.path(), bytes.len(), settings).unwrap();
         (tmp, io)
     }

@@ -1319,10 +1319,10 @@ mod tests {
 
     #[test]
     fn stream_growing_record() {
-        // A single record longer than the default io_buffer_size (16 KiB)
+        // A single record longer than the resolved stream buffer (256 KiB)
         // forces RingBuf::grow during streaming.
         let mut field = String::new();
-        for i in 0..10000 {
+        for i in 0..100000 {
             if i > 0 {
                 field.push(',');
             }
@@ -1332,7 +1332,7 @@ mod tests {
         csv.push('\n');
         let records = stream_parse(no_headers_config(), csv.as_bytes()).unwrap();
         assert_eq!(records.len(), 1);
-        assert_eq!(records[0].len(), 10000);
+        assert_eq!(records[0].len(), 100000);
     }
 
     #[test]

@@ -99,12 +99,8 @@ impl Config {
     #[inline]
     pub(crate) fn validate(&self) -> crate::Result<()> {
         if let IoBackend::RingBuf(ring) = self.io_backend {
-            if ring.buffer_size == 0 {
-                return Err(crate::Error::InvalidConfig(
-                    "ring buffer buffer_size must be at least 1",
-                ));
-            }
-            // Some(0) is the auto sentinel
+            // `buffer_size == 0` and `Some(0)` are auto sentinels; the
+            // resolved size is kept within the limits by construction.
             if let Some(limit) = ring.buffer_limit
                 && limit != 0
                 && ring.buffer_size > limit
@@ -309,13 +305,6 @@ mod tests {
                 .buffer_size(64 * 1024)
                 .buffer_limit(Some(32 * 1024)),
         );
-        assert!(c.validate().is_err());
-    }
-
-    #[test]
-    fn rejects_zero_buffer_size() {
-        let mut c = Config::default();
-        c.io_backend = IoBackend::RingBuf(RingBufSettings::default().buffer_size(0));
         assert!(c.validate().is_err());
     }
 

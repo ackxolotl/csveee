@@ -10,14 +10,18 @@ pub struct RingBufSettings {
 impl Default for RingBufSettings {
     fn default() -> Self {
         Self {
-            buffer_size: 16 * 1024,
+            buffer_size: 0,
             buffer_limit: Some(0),
         }
     }
 }
 
 impl RingBufSettings {
-    /// Initial capacity of one thread's buffer (default: 16 KiB).
+    /// Initial capacity of one thread's buffer, and how much one read
+    /// syscall asks for.
+    ///
+    /// `0` (the default) is the auto sentinel and will get resolved by the
+    /// scheduler from the platform and thread count.
     pub fn buffer_size(mut self, size: usize) -> Self {
         self.buffer_size = size;
         self
