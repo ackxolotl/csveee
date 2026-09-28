@@ -7,6 +7,7 @@ use super::bitmask::{
     compute_field_ends, compute_in_quotes, match_structural, terminator_run_ends,
     terminator_run_starts,
 };
+use super::isa::Isa;
 
 /// Bit 0 of the next vector's `B` — the `next_b_lsb` that `R` needs.
 /// Only `qb_msb` can reach an output bit (`d_struct_msb` rules out a quote
@@ -50,7 +51,9 @@ pub(super) struct VectorOutput {
 /// Stateful scanner: stream 64-byte input vectors in via [`Scanner::step`];
 /// stream completed [`VectorOutput`]s out, lagging by one vector. End
 /// the stream with [`Scanner::finalize`] to flush the pending vector.
-pub(super) struct Scanner {
+pub(super) struct Scanner<I> {
+    /// The ISA token the per-vector masks go through.
+    isa: I,
     /// Dialect bytes the per-vector masks are built from.
     config: ScannerConfig,
     /// `M`-MSB of the last vector stepped in.
@@ -88,9 +91,10 @@ struct Lookahead {
     quote: u64,
 }
 
-impl Scanner {
-    pub(super) fn new(config: ScannerConfig) -> Self {
+impl<I: Isa> Scanner<I> {
+    pub(super) fn new(isa: I, config: ScannerConfig) -> Self {
         Self {
+            isa,
             config,
             in_quotes_carry: false,
             begins_carry: BeginsCarry::default(),
@@ -108,8 +112,8 @@ impl Scanner {
     #[inline]
     pub(super) fn step(&mut self, input: &[u8; VECTOR_BYTES]) -> Option<VectorOutput> {
         let cfg = self.config;
-        let s = match_structural(input, cfg.delim, cfg.term, cfg.term_b, cfg.quote);
-        let (m, in_quotes_carry_out) = compute_in_quotes(s.quote, self.in_quotes_carry);
+        let s = match_structural(self.isa, input, cfg.delim, cfg.term, cfg.term_b, cfg.quote);
+        let (m, in_quotes_carry_out) = compute_in_quotes(self.isa, s.quote, self.in_quotes_carry);
         // The lookahead the pending (previous) vector needs to finalize.
         let next = Lookahead {
             delim_ooq: s.delim & !m,
@@ -241,6 +245,7 @@ impl Scanner {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::parser::simd::isa::CompileTime;
 
     /// Default CSV semantics (`,`, `\n`, `"`) with doubled-quote escapes.
     const DEFAULT: ScannerConfig = ScannerConfig {
@@ -271,7 +276,7 @@ mod tests {
     /// Drive the scanner over `inputs`, collecting every output
     /// (including the one from `finalize`).
     fn run(inputs: &[[u8; VECTOR_BYTES]]) -> Vec<VectorOutput> {
-        let mut s = Scanner::new(DEFAULT);
+        let mut s = Scanner::new(CompileTime, DEFAULT);
         let mut out = Vec::new();
         for v in inputs {
             if let Some(o) = s.step(v) {
@@ -288,7 +293,7 @@ mod tests {
 
     #[test]
     fn first_step_emits_nothing() {
-        let mut s = Scanner::new(DEFAULT);
+        let mut s = Scanner::new(CompileTime, DEFAULT);
         let v = pad64(b"a,b,c\n", b'.');
         assert!(s.step(&v).is_none());
     }
@@ -388,7 +393,7 @@ mod tests {
 
     #[test]
     fn empty_scanner_finalize_emits_nothing() {
-        let mut s = Scanner::new(DEFAULT);
+        let mut s = Scanner::new(CompileTime, DEFAULT);
         assert!(s.finalize().is_none());
     }
 
@@ -401,7 +406,7 @@ mod tests {
             quote: None,
             doubled_quotes: false,
         };
-        let mut s = Scanner::new(cfg);
+        let mut s = Scanner::new(CompileTime, cfg);
         let v = pad64(b"a,\"b\",c\n", b'.');
         assert!(s.step(&v).is_none());
         let o = s.finalize().unwrap();

@@ -2,11 +2,13 @@
 //! `P` (0 delimiter, 1 terminator) and compare it against a pre-built
 //! rotation table for the running phase.
 
-use super::bitops::pext;
+use super::isa::Isa;
 
 /// Field-count verifier, one per chunk parse. Supports `1 ≤ N < 64`;
 /// wider records route to the DFA backend.
-pub(super) struct FieldCounter {
+pub(super) struct FieldCounter<I> {
+    /// The ISA token `pext` goes through.
+    isa: I,
     /// Fields per record.
     n: u32,
     /// Expected `P` pattern per starting phase; `& 63` keeps the load unchecked.
@@ -15,9 +17,9 @@ pub(super) struct FieldCounter {
     phase: u32,
 }
 
-impl FieldCounter {
+impl<I: Isa> FieldCounter<I> {
     /// Build a verifier for records with exactly `n` fields.
-    pub(super) fn new(n: u32) -> Self {
+    pub(super) fn new(isa: I, n: u32) -> Self {
         assert!(
             (1..64).contains(&n),
             "FieldCounter currently supports only 1 ≤ N < 64 (got {n})",
@@ -27,6 +29,7 @@ impl FieldCounter {
             rotations[p as usize] = expected_pattern(n, p);
         }
         Self {
+            isa,
             n,
             rotations,
             phase: 0,
@@ -42,7 +45,7 @@ impl FieldCounter {
         if count == 0 {
             return true;
         }
-        let p = pext(term, d_struct);
+        let p = self.isa.pext(term, d_struct);
         let expected = self.rotations[(self.phase & 63) as usize];
         let mask = if count == 64 {
             !0u64
@@ -142,6 +145,7 @@ fn expected_pattern(n: u32, phase: u32) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::parser::simd::isa::CompileTime;
 
     /// Build a u64 from a list of set-bit positions.
     fn bits(positions: &[u32]) -> u64 {
@@ -190,7 +194,7 @@ mod tests {
     #[test]
     fn verify_n1_all_term_passes() {
         // N=1 means every boundary is a terminator. D=term must hold.
-        let mut fc = FieldCounter::new(1);
+        let mut fc = FieldCounter::new(CompileTime, 1);
         let d = bits(&[2, 5, 8]);
         let term = d;
         assert!(fc.verify(d, term));
@@ -199,7 +203,7 @@ mod tests {
     #[test]
     fn verify_n3_clean_record_passes() {
         // `a,b,c\nd,e,f\n`: boundaries {1, 3, 5, 7, 9, 11}, terms {5, 11}.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
         let d = bits(&[1, 3, 5, 7, 9, 11]);
         let term = bits(&[5, 11]);
         assert!(fc.verify(d, term));
@@ -210,7 +214,7 @@ mod tests {
     #[test]
     fn verify_n3_partial_record_advances_phase() {
         // One full record + one delim of the next: phase ends at 1.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
         let d = bits(&[1, 3, 5, 7]);
         let term = bits(&[5]);
         assert!(fc.verify(d, term));
@@ -220,7 +224,7 @@ mod tests {
     #[test]
     fn verify_phase_threads_across_vectors() {
         // V1 = `a,b,` leaves phase 2; V2 = `c\n` brings the awaited term.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
 
         // V1: boundaries {1, 3}, no terminator → P = 0b00.
         let d1 = bits(&[1, 3]);
@@ -238,7 +242,7 @@ mod tests {
     #[test]
     fn verify_missing_terminator_fails() {
         // N=3 expects a terminator at boundary 2, but we give all delims.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
         let d = bits(&[1, 3, 5]);
         let term = 0;
         assert!(!fc.verify(d, term));
@@ -247,7 +251,7 @@ mod tests {
     #[test]
     fn verify_misplaced_terminator_fails() {
         // N=3 expects the term at boundary 2, not boundary 0.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
         let d = bits(&[1, 3, 5]);
         let term = bits(&[1]);
         assert!(!fc.verify(d, term));
@@ -256,7 +260,7 @@ mod tests {
     #[test]
     fn verify_extra_terminator_fails() {
         // Two terminators where only one is expected.
-        let mut fc = FieldCounter::new(3);
+        let mut fc = FieldCounter::new(CompileTime, 3);
         let d = bits(&[1, 3, 5]);
         let term = bits(&[3, 5]);
         assert!(!fc.verify(d, term));
@@ -265,7 +269,7 @@ mod tests {
     #[test]
     fn verify_empty_vector_is_a_noop() {
         // No boundaries → no work, phase unchanged.
-        let mut fc = FieldCounter::new(5);
+        let mut fc = FieldCounter::new(CompileTime, 5);
         // Bring phase to a non-zero value first.
         let _ = fc.verify(bits(&[1, 3]), 0);
         let phase_before = fc.phase();
@@ -344,12 +348,12 @@ mod tests {
     #[test]
     #[should_panic(expected = "1 ≤ N < 64")]
     fn ctor_rejects_n_zero() {
-        let _ = FieldCounter::new(0);
+        let _ = FieldCounter::new(CompileTime, 0);
     }
 
     #[test]
     #[should_panic(expected = "1 ≤ N < 64")]
     fn ctor_rejects_n_64() {
-        let _ = FieldCounter::new(64);
+        let _ = FieldCounter::new(CompileTime, 64);
     }
 }

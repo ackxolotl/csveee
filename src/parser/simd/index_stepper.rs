@@ -6,6 +6,7 @@ use super::bitmask::{Prologue, VECTOR_BYTES, head_padded_prologue, neutral_pad};
 use super::fieldcount::{FieldCounter, locate_bad_record};
 use super::handoff;
 use super::index::{FIXED_MAX_ARITY, assemble_records_fixed, extend_offsets};
+use super::isa::Isa;
 use super::scan::{Scanner, ScannerConfig};
 use crate::config::Config;
 use crate::parser::driver::{ChunkStepper, StepCtx, StepResult};
@@ -14,14 +15,14 @@ use crate::parser::output::Output;
 /// SIMD chunk stepper for the general / quoted path: drives the full
 /// cross-vector [`Scanner`] and assembles records from begin/end indices.
 /// [`super::cursor_stepper::SimdCursorStepper`] is the quote-free one.
-pub(super) struct SimdIndexStepper {
+pub(super) struct SimdIndexStepper<I> {
     /// Dialect bytes handed to the scanner and the error paths.
     scanner_config: ScannerConfig,
     /// The cross-vector bitmask pipeline, with its own lag and carries.
-    scanner: Scanner,
+    scanner: Scanner<I>,
 
     /// Per-vector field-count verifier.
-    field_counter: FieldCounter,
+    field_counter: FieldCounter<I>,
 
     /// True until [`head_padded_prologue`] has run, or been given up on.
     needs_align_prologue: bool,
@@ -43,8 +44,8 @@ pub(super) struct SimdIndexStepper {
     refs_scratch: [(*mut u8, usize); FIXED_MAX_ARITY],
 }
 
-impl SimdIndexStepper {
-    pub(super) fn new(config: &Config) -> Self {
+impl<I: Isa> SimdIndexStepper<I> {
+    pub(super) fn new(isa: I, config: &Config) -> Self {
         // A run over `{term, term_b}` collapses to one record boundary.
         let (term, term_b) = config.terminator.bytes();
         let doubled_quotes = matches!(
@@ -60,11 +61,11 @@ impl SimdIndexStepper {
         };
         // `SimdChunkParser::supports` gates the arity; `new` rechecks the range.
         let field_counter =
-            FieldCounter::new(config.field_count.expect("fixed field count") as u32);
+            FieldCounter::new(isa, config.field_count.expect("fixed field count") as u32);
         Self {
             scanner_config,
             field_counter,
-            scanner: Scanner::new(scanner_config),
+            scanner: Scanner::new(isa, scanner_config),
             needs_align_prologue: true,
             needs_chunk_start_b: true,
             b_offs: Vec::with_capacity(64),
@@ -122,7 +123,9 @@ impl SimdIndexStepper {
     }
 
     /// Drop the emitted prefix; only the live suffix moves, so the cost is
-    /// independent of the prefix length.
+    /// independent of the prefix length. Kept out of line: it runs once per
+    /// step at most, and inlined its drains bloat the hot `step` body.
+    #[inline(never)]
     fn drop_emitted_prefix(&mut self, fields: usize, removals: usize) {
         self.b_offs.drain(..fields);
         self.e_offs.drain(..fields);
@@ -240,7 +243,7 @@ impl SimdIndexStepper {
     }
 }
 
-impl<O: Output + ?Sized> ChunkStepper<O> for SimdIndexStepper {
+impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdIndexStepper<I> {
     fn step<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> StepResult
     where
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
@@ -522,6 +525,7 @@ impl<O: Output + ?Sized> ChunkStepper<O> for SimdIndexStepper {
 mod tests {
     use super::*;
     use crate::config::RecordTerminator;
+    use crate::parser::simd::isa::CompileTime;
 
     fn lf_config(columns: usize) -> Config {
         let mut c = Config::default();
@@ -532,7 +536,7 @@ mod tests {
 
     /// Run one `step` over `buf[..scan_end]`, returning `resume_at`.
     fn step_to(
-        stepper: &mut SimdIndexStepper,
+        stepper: &mut SimdIndexStepper<CompileTime>,
         buf: &mut [u8],
         at: usize,
         scan_end: usize,
@@ -549,7 +553,7 @@ mod tests {
             remaining_in_chunk: len,
             total_consumed: 0,
         };
-        match <SimdIndexStepper as ChunkStepper<[u8]>>::step(stepper, ctx, &mut emit) {
+        match <SimdIndexStepper<CompileTime> as ChunkStepper<[u8]>>::step(stepper, ctx, &mut emit) {
             StepResult::Suspended { resume_at, .. } => resume_at,
             _ => panic!("expected Suspended"),
         }
@@ -573,7 +577,7 @@ mod tests {
 
             // Under a vector: nothing scanned, so the prologue stays live
             // and the retry lands every later load on 64 bytes.
-            let mut stepper = SimdIndexStepper::new(&config);
+            let mut stepper = SimdIndexStepper::new(CompileTime, &config);
             let resume = step_to(&mut stepper, buf, 0, VECTOR_BYTES - 1);
             assert_eq!(resume, 0);
             assert!(stepper.needs_align_prologue, "misalign={misalign}");
@@ -583,7 +587,7 @@ mod tests {
 
             // A whole vector, but still short of `skip + 64`: the loop
             // scans it unaligned, so the prologue is given up on.
-            let mut stepper = SimdIndexStepper::new(&config);
+            let mut stepper = SimdIndexStepper::new(CompileTime, &config);
             step_to(&mut stepper, buf, 0, VECTOR_BYTES);
             assert!(!stepper.needs_align_prologue, "misalign={misalign}");
         }

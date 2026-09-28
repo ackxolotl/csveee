@@ -9,11 +9,14 @@ use super::bitmask::{
 use super::fieldcount::{FieldCounter, locate_bad_record};
 use super::handoff;
 use super::index::{FIXED_MAX_ARITY, extend_offsets};
+use super::isa::Isa;
 use crate::config::Config;
 use crate::parser::driver::{ChunkStepper, StepCtx, StepResult};
 use crate::parser::output::Output;
 
-pub(super) struct SimdCursorStepper {
+pub(super) struct SimdCursorStepper<I> {
+    /// The ISA token the bitmask primitives go through.
+    isa: I,
     /// Field delimiter byte.
     delim: u8,
     /// Primary terminator byte; a maximal run over both is one boundary.
@@ -21,7 +24,7 @@ pub(super) struct SimdCursorStepper {
     /// Second terminator byte (the `\r` of a CRLF dialect), if any.
     term_b: Option<u8>,
     /// Per-vector field-count verifier.
-    field_counter: FieldCounter,
+    field_counter: FieldCounter<I>,
     /// True until [`head_padded_prologue`] has run, or been given up on.
     needs_align_prologue: bool,
     /// The held vector, resolved against the next one's terminator LSB.
@@ -38,8 +41,8 @@ pub(super) struct SimdCursorStepper {
     refs_scratch: [(*mut u8, usize); FIXED_MAX_ARITY],
 }
 
-impl SimdCursorStepper {
-    pub(super) fn new(config: &Config) -> Self {
+impl<I: Isa> SimdCursorStepper<I> {
+    pub(super) fn new(isa: I, config: &Config) -> Self {
         let (term_a, term_b) = config.terminator.bytes();
         debug_assert!(
             config.quote.is_none(),
@@ -47,8 +50,9 @@ impl SimdCursorStepper {
         );
         // `SimdChunkParser::supports` gates the arity; `new` rechecks the range.
         let field_counter =
-            FieldCounter::new(config.field_count.expect("fixed field count") as u32);
+            FieldCounter::new(isa, config.field_count.expect("fixed field count") as u32);
         Self {
+            isa,
             delim: config.delimiter,
             term_a,
             term_b,
@@ -241,12 +245,12 @@ impl SimdCursorStepper {
         let v: &[u8; VECTOR_BYTES] = (&buf[at..at + VECTOR_BYTES])
             .try_into()
             .expect("64-byte slice");
-        let s = match_structural(v, self.delim, self.term_a, self.term_b, None);
+        let s = match_structural(self.isa, v, self.delim, self.term_a, self.term_b, None);
         (s.delim, s.term)
     }
 }
 
-impl<O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper {
+impl<I: Isa, O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper<I> {
     fn step<E>(&mut self, ctx: StepCtx<'_>, emit: &mut E) -> StepResult
     where
         E: FnMut(&mut [&mut O]) -> Result<(), Box<dyn std::error::Error + Send + Sync>>,
@@ -267,7 +271,8 @@ impl<O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper {
             let pad = neutral_pad(self.delim, self.term_a, self.term_b, None);
             match head_padded_prologue(buf, scan_end, pad) {
                 Prologue::Vector(v, misalign) => {
-                    let s = match_structural(&v, self.delim, self.term_a, self.term_b, None);
+                    let s =
+                        match_structural(self.isa, &v, self.delim, self.term_a, self.term_b, None);
                     // Wrapped-negative base: bit `i` is offset `i - misalign`.
                     // The first loop iteration is guaranteed to run, so this
                     // never survives to a suspension.
@@ -389,7 +394,7 @@ impl<O: Output + ?Sized> ChunkStepper<O> for SimdCursorStepper {
             if needs_virtual_term {
                 v[real_tail_len] = self.term_a;
             }
-            let s = match_structural(&v, self.delim, self.term_a, self.term_b, None);
+            let s = match_structural(self.isa, &v, self.delim, self.term_a, self.term_b, None);
             Some((s.delim, s.term, cursor))
         } else {
             None

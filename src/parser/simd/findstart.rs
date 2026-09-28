@@ -3,6 +3,7 @@
 //! rejects a quote that contradicts it — see [`StrictProbe`].
 
 use super::bitmask::{Structural, VECTOR_BYTES, compute_in_quotes, match_structural, neutral_pad};
+use super::isa::Isa;
 use crate::config::Config;
 use crate::io::ChunkReader;
 use crate::parser::chunk::Assumption;
@@ -21,7 +22,8 @@ fn initial_carry(config: &Config, assumption: Assumption) -> bool {
 /// Scan forward under `assumption` for the first out-of-quotes record
 /// terminator, consuming the bytes before it and returning its offset,
 /// relative to the reader's position. `None` if the chunk has none.
-pub(super) fn find_record_start<R: ChunkReader>(
+pub(super) fn find_record_start<R: ChunkReader, I: Isa>(
+    isa: I,
     reader: &mut R,
     config: &Config,
     assumption: Assumption,
@@ -64,8 +66,8 @@ pub(super) fn find_record_start<R: ChunkReader>(
             padded
         };
 
-        let s = match_structural(&v, delim, term, term_b, quote);
-        let (m, new_carry) = compute_in_quotes(s.quote, carry);
+        let s = match_structural(isa, &v, delim, term, term_b, quote);
+        let (m, new_carry) = compute_in_quotes(isa, s.quote, carry);
         let d_struct = s.structural_delims(m);
         let structural_term = s.term & d_struct;
 
@@ -189,6 +191,7 @@ impl StrictProbe {
 mod tests {
     use super::*;
     use crate::config::{Config, RecordTerminator};
+    use crate::parser::simd::isa::CompileTime;
 
     /// In-memory `ChunkReader` for tests.
     struct VecReader {
@@ -239,8 +242,14 @@ mod tests {
         // "field_a,field_b\nrecord2\n" — first \n at byte 15.
         let data = b"field_a,field_b\nrecord2\n";
         let mut r = VecReader::new(data, data.len());
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(15));
     }
 
@@ -250,7 +259,14 @@ mod tests {
         // out-of-quotes \n is at 13.
         let data = b"inside\",field\nrec2\n";
         let mut r = VecReader::new(data, data.len());
-        let start = find_record_start(&mut r, &lf_config(), Assumption::InQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::InQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(13));
     }
 
@@ -259,7 +275,14 @@ mod tests {
         // The `\n` at byte 6 is inside the quoted field.
         let data = b"inside\nstill\",x\nrec2\n";
         let mut r = VecReader::new(data, data.len());
-        let start = find_record_start(&mut r, &lf_config(), Assumption::InQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::InQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(15));
     }
 
@@ -268,8 +291,14 @@ mod tests {
         // No \n at all → None.
         let data = b"a,b,c";
         let mut r = VecReader::new(data, data.len());
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, None);
     }
 
@@ -280,8 +309,14 @@ mod tests {
         data.push(b'\n');
         data.extend_from_slice(b"rec2\n");
         let mut r = VecReader::new(&data, 20);
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, None);
         // The reader must not have consumed past the chunk end.
         assert!(r.pos <= 20);
@@ -294,8 +329,14 @@ mod tests {
         data.push(b'\n');
         data.extend_from_slice(b"rec\n");
         let mut r = VecReader::new(&data, data.len());
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(70));
     }
 
@@ -306,8 +347,14 @@ mod tests {
         data.push(b'\n');
         data.extend_from_slice(b"rec\n");
         let mut r = VecReader::new(&data, data.len());
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(63));
     }
 
@@ -317,8 +364,14 @@ mod tests {
         // structural.
         let data = b"\"a\nb\",x\ny";
         let mut r = VecReader::new(data, data.len());
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(7));
     }
 
@@ -328,16 +381,28 @@ mod tests {
         // back inside quotes and the first out-of-quotes `\n` is at 8.
         let data = b"\"more\",x\n";
         let mut r = VecReader::new(data, data.len());
-        let start = find_record_start(&mut r, &lf_config(), Assumption::InQuotesAfterEscape, false)
-            .unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::InQuotesAfterEscape,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, Some(8));
     }
 
     #[test]
     fn empty_input_returns_none() {
         let mut r = VecReader::new(b"", 0);
-        let start =
-            find_record_start(&mut r, &lf_config(), Assumption::OutOfQuotes, false).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &lf_config(),
+            Assumption::OutOfQuotes,
+            false,
+        )
+        .unwrap();
         assert_eq!(start, None);
     }
 
@@ -348,7 +413,8 @@ mod tests {
         c.delimiter = b';';
         let data = b"a;b;c\nrec2\n";
         let mut r = VecReader::new(data, data.len());
-        let start = find_record_start(&mut r, &c, Assumption::OutOfQuotes, false).unwrap();
+        let start =
+            find_record_start(CompileTime, &mut r, &c, Assumption::OutOfQuotes, false).unwrap();
         assert_eq!(start, Some(5));
     }
 
@@ -367,7 +433,13 @@ mod tests {
         // the closer looks like an opener preceded by content (`l"`).
         let data = b"g-gu, Seoul\",37\nnext,rec\n";
         let mut r = VecReader::new(data, data.len());
-        let err = find_record_start(&mut r, &quoted_lf_config(), Assumption::OutOfQuotes, true);
+        let err = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::OutOfQuotes,
+            true,
+        );
         assert!(
             matches!(err, Err(crate::Error::InvalidQuote { .. })),
             "got {err:?}"
@@ -379,8 +451,14 @@ mod tests {
         // Correct assumption: the `"` is a closer followed by `,`.
         let data = b"g-gu, Seoul\",37\nnext,rec\n";
         let mut r = VecReader::new(data, data.len());
-        let start =
-            find_record_start(&mut r, &quoted_lf_config(), Assumption::InQuotes, true).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::InQuotes,
+            true,
+        )
+        .unwrap();
         assert_eq!(start, Some(15));
     }
 
@@ -389,8 +467,14 @@ mod tests {
         // A properly-quoted middle field: opener after `,`, closer before.
         let data = b"a,\"b,c\",d\nrec2\n";
         let mut r = VecReader::new(data, data.len());
-        let start =
-            find_record_start(&mut r, &quoted_lf_config(), Assumption::OutOfQuotes, true).unwrap();
+        let start = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::OutOfQuotes,
+            true,
+        )
+        .unwrap();
         assert_eq!(start, Some(9));
     }
 
@@ -401,7 +485,8 @@ mod tests {
         let mut r = VecReader::new(data, data.len());
         let mut c = quoted_lf_config();
         c.escape = Some(b'"');
-        let start = find_record_start(&mut r, &c, Assumption::OutOfQuotes, true).unwrap();
+        let start =
+            find_record_start(CompileTime, &mut r, &c, Assumption::OutOfQuotes, true).unwrap();
         assert_eq!(start, Some(10));
     }
 
@@ -412,7 +497,13 @@ mod tests {
         // Under `InQuotes` the `"` at 3 closes, but `d` is no boundary.
         let data = b"abc\"def,x\n";
         let mut r = VecReader::new(data, data.len());
-        let err = find_record_start(&mut r, &quoted_lf_config(), Assumption::InQuotes, true);
+        let err = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::InQuotes,
+            true,
+        );
         assert!(
             matches!(
                 err,
@@ -429,7 +520,13 @@ mod tests {
         // Under `OutOfQuotes` the `"` at 11 opens, but `l` is no boundary.
         let data = b"g-gu, Seoul\",37\nnext,rec\n";
         let mut r = VecReader::new(data, data.len());
-        let err = find_record_start(&mut r, &quoted_lf_config(), Assumption::OutOfQuotes, true);
+        let err = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::OutOfQuotes,
+            true,
+        );
         assert!(
             matches!(
                 err,
@@ -449,7 +546,13 @@ mod tests {
         data.push(b'"');
         data.extend_from_slice(b"x,y\n");
         let mut r = VecReader::new(&data, data.len());
-        let err = find_record_start(&mut r, &quoted_lf_config(), Assumption::InQuotes, true);
+        let err = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::InQuotes,
+            true,
+        );
         assert!(
             matches!(
                 err,
@@ -467,7 +570,13 @@ mod tests {
         let mut data = vec![b'a'; 70];
         data.extend_from_slice(b" text\",99\nnext\n");
         let mut r = VecReader::new(&data, data.len());
-        let err = find_record_start(&mut r, &quoted_lf_config(), Assumption::OutOfQuotes, true);
+        let err = find_record_start(
+            CompileTime,
+            &mut r,
+            &quoted_lf_config(),
+            Assumption::OutOfQuotes,
+            true,
+        );
         assert!(
             matches!(err, Err(crate::Error::InvalidQuote { .. })),
             "got {err:?}"

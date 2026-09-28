@@ -2,7 +2,7 @@
 //! `i` per byte `i`. See the paper's §Vectorization for the math and
 //! [`super::scan`] for how the outputs become B/E/R indices.
 
-use super::lanes::Lanes;
+use super::isa::Isa;
 
 /// Vector width in bytes — one cacheline.
 pub(super) const VECTOR_BYTES: usize = 64;
@@ -37,21 +37,22 @@ impl Structural {
 /// `(C, N, Q)` masks (`Q = 0` without quoting). `term2` — the `\r` of a
 /// CRLF dialect — folds into `term`.
 #[inline]
-pub(super) fn match_structural(
+pub(super) fn match_structural<I: Isa>(
+    isa: I,
     input: &[u8; VECTOR_BYTES],
     delim: u8,
     term: u8,
     term2: Option<u8>,
     quote: Option<u8>,
 ) -> Structural {
-    let v = Lanes::load(input);
-    let delim_mask = v.eq_mask(delim);
-    let mut term_mask = v.eq_mask(term);
+    let v = isa.load(input);
+    let delim_mask = isa.eq_mask(v, delim);
+    let mut term_mask = isa.eq_mask(v, term);
     if let Some(t2) = term2 {
-        term_mask |= v.eq_mask(t2);
+        term_mask |= isa.eq_mask(v, t2);
     }
     let quote_mask = match quote {
-        Some(q) => v.eq_mask(q),
+        Some(q) => isa.eq_mask(v, q),
         None => 0,
     };
     Structural {
@@ -123,13 +124,13 @@ pub(super) fn terminator_run_ends(t: u64, next_term_lsb: bool) -> u64 {
 /// the byte is inside a quoted field, opener included, closer excluded.
 /// `carry_in` / `carry_out` are the previous / this vector's `M`-MSB.
 #[inline]
-pub(super) fn compute_in_quotes(quote: u64, carry_in: bool) -> (u64, bool) {
+pub(super) fn compute_in_quotes<I: Isa>(isa: I, quote: u64, carry_in: bool) -> (u64, bool) {
     // No quote bytes: `M` is the carry broadcast, skipping the pclmulqdq.
     if quote == 0 {
         let m = (carry_in as u64).wrapping_neg();
         return (m, carry_in);
     }
-    let prefix = xor_prefix_sum(quote);
+    let prefix = isa.xor_prefix_sum(quote);
     // Branchless: false → 0, true → !0 (broadcast bit to whole word).
     let carry_mask = (carry_in as u64).wrapping_neg();
     let m = prefix ^ carry_mask;
@@ -219,7 +220,7 @@ pub(super) fn compute_chars_to_remove(
 /// one `pmull` on aarch64, else a six-step scalar prefix.
 #[cfg(all(target_arch = "x86_64", target_feature = "pclmulqdq"))]
 #[inline]
-fn xor_prefix_sum(q: u64) -> u64 {
+pub(super) fn xor_prefix_sum(q: u64) -> u64 {
     use std::arch::x86_64::{
         _mm_clmulepi64_si128, _mm_cvtsi64_si128, _mm_cvtsi128_si64, _mm_set1_epi64x,
     };
@@ -237,7 +238,7 @@ fn xor_prefix_sum(q: u64) -> u64 {
 /// `aarch64-apple-darwin` and any target-cpu with the crypto extensions.
 #[cfg(all(target_arch = "aarch64", target_feature = "aes"))]
 #[inline]
-fn xor_prefix_sum(q: u64) -> u64 {
+pub(super) fn xor_prefix_sum(q: u64) -> u64 {
     // SAFETY: the cfg gate guarantees `aes` on this target; the intrinsic
     // takes only register-resident scalars.
     unsafe { std::arch::aarch64::vmull_p64(q, !0) as u64 }
@@ -248,7 +249,7 @@ fn xor_prefix_sum(q: u64) -> u64 {
     all(target_arch = "aarch64", target_feature = "aes"),
 )))]
 #[inline]
-fn xor_prefix_sum(q: u64) -> u64 {
+pub(super) fn xor_prefix_sum(q: u64) -> u64 {
     xor_prefix_sum_scalar(q)
 }
 
@@ -268,6 +269,7 @@ fn xor_prefix_sum_scalar(mut q: u64) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::parser::simd::isa::CompileTime;
 
     /// Build a 64-byte input from a shorter slice, padding with `pad`.
     fn pad64(prefix: &[u8], pad: u8) -> [u8; VECTOR_BYTES] {
@@ -302,7 +304,7 @@ mod tests {
     fn empty_input_zero_masks() {
         // All-`x` input has no structurals.
         let input = [b'x'; VECTOR_BYTES];
-        let s = match_structural(&input, b',', b'\n', None, Some(b'"'));
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, Some(b'"'));
         assert_eq!(s.delim, 0);
         assert_eq!(s.term, 0);
         assert_eq!(s.quote, 0);
@@ -312,7 +314,7 @@ mod tests {
     fn single_delimiter_at_byte_zero() {
         // Lane-0 → bit-0 ordering check.
         let input = pad64(b",xxx", b'x');
-        let s = match_structural(&input, b',', b'\n', None, Some(b'"'));
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, Some(b'"'));
         assert_eq!(s.delim, 1);
         assert_eq!(s.term, 0);
         assert_eq!(s.quote, 0);
@@ -321,7 +323,7 @@ mod tests {
     #[test]
     fn delimiters_at_arbitrary_positions() {
         let input = pad64(b"a,b,c,d", b'.');
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         assert_eq!(s.delim, bits(&[1, 3, 5]));
         assert_eq!(s.term, 0);
         assert_eq!(s.quote, 0);
@@ -330,7 +332,7 @@ mod tests {
     #[test]
     fn terminator_byte_separately_classified() {
         let input = pad64(b"a,b\nc", b'.');
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         assert_eq!(s.delim, bits(&[1]));
         assert_eq!(s.term, bits(&[3]));
     }
@@ -338,7 +340,7 @@ mod tests {
     #[test]
     fn quote_byte_classified_when_enabled() {
         let input = pad64(b"\"a\",b", b'.');
-        let s = match_structural(&input, b',', b'\n', None, Some(b'"'));
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, Some(b'"'));
         assert_eq!(s.quote, bits(&[0, 2]));
         assert_eq!(s.delim, bits(&[3]));
     }
@@ -347,7 +349,7 @@ mod tests {
     fn quote_byte_ignored_when_disabled() {
         // Even though `"` is in the input, no quote config means Q = 0.
         let input = pad64(b"\"hello\"", b'.');
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         assert_eq!(s.quote, 0);
     }
 
@@ -356,14 +358,14 @@ mod tests {
         // Bit 63 must be set — boundary for `to_bitmask` width.
         let mut input = [b'.'; VECTOR_BYTES];
         input[63] = b',';
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         assert_eq!(s.delim, 1u64 << 63);
     }
 
     #[test]
     fn full_vector_of_delimiters() {
         let input = [b','; VECTOR_BYTES];
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         assert_eq!(s.delim, !0u64);
         assert_eq!(s.term, 0);
     }
@@ -374,7 +376,7 @@ mod tests {
         // Length 28; pad rest with '.'.
         let raw = b"Tom,\"5'11\"\", Chicago\",28\nAmy";
         let input = pad64(raw, b'.');
-        let s = match_structural(&input, b',', b'\n', None, Some(b'"'));
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, Some(b'"'));
         // Commas at offsets 3, 11, 21.
         assert_eq!(s.delim, bits(&[3, 11, 21]));
         // Newline at offset 24.
@@ -386,7 +388,7 @@ mod tests {
     #[test]
     fn delim_or_term_combines_masks() {
         let input = pad64(b"a,b\nc,d", b'.');
-        let s = match_structural(&input, b',', b'\n', None, None);
+        let s = match_structural(CompileTime, &input, b',', b'\n', None, None);
         // Commas at 1, 5; newline at 3.
         assert_eq!(s.delim_or_term(), bits(&[1, 3, 5]));
     }
@@ -438,7 +440,7 @@ mod tests {
 
     #[test]
     fn no_quotes_no_carry_zero_mask() {
-        let (m, carry) = compute_in_quotes(0, false);
+        let (m, carry) = compute_in_quotes(CompileTime, 0, false);
         assert_eq!(m, 0);
         assert!(!carry);
     }
@@ -446,7 +448,7 @@ mod tests {
     #[test]
     fn carry_in_with_no_quotes_flips_to_all_ones() {
         // Previous vector ended in-quotes, no quotes here → all in-quotes.
-        let (m, carry) = compute_in_quotes(0, true);
+        let (m, carry) = compute_in_quotes(CompileTime, 0, true);
         assert_eq!(m, !0u64);
         assert!(carry);
     }
@@ -454,7 +456,7 @@ mod tests {
     #[test]
     fn opening_quote_only_extends_to_msb() {
         // Single open quote at position 0, nothing else.
-        let (m, carry) = compute_in_quotes(1u64, false);
+        let (m, carry) = compute_in_quotes(CompileTime, 1u64, false);
         assert_eq!(m, !0u64);
         assert!(carry);
     }
@@ -463,7 +465,7 @@ mod tests {
     fn open_close_pair_marks_interior_only() {
         // Open at 0, close at 5: M includes the opener, excludes the closer.
         let q = bits(&[0, 5]);
-        let (m, carry) = compute_in_quotes(q, false);
+        let (m, carry) = compute_in_quotes(CompileTime, q, false);
         assert_eq!(m, bits(&[0, 1, 2, 3, 4]));
         assert!(!carry);
     }
@@ -471,7 +473,7 @@ mod tests {
     #[test]
     fn quote_at_msb_with_open_state_carries_out() {
         // Open at 0, no close → we exit the vector still in-quotes.
-        let (_m, carry) = compute_in_quotes(1u64, false);
+        let (_m, carry) = compute_in_quotes(CompileTime, 1u64, false);
         assert!(carry);
     }
 
@@ -479,7 +481,7 @@ mod tests {
     fn carry_in_with_closing_quote_clears_to_zero() {
         // Continues a quoted field, closing at 5 → bits 0..=4 in-quotes.
         let q = 1u64 << 5;
-        let (m, carry) = compute_in_quotes(q, true);
+        let (m, carry) = compute_in_quotes(CompileTime, q, true);
         assert_eq!(m, bits(&[0, 1, 2, 3, 4]));
         assert!(!carry);
     }
@@ -488,7 +490,7 @@ mod tests {
     fn design_example_in_quotes_mask() {
         // Running example: quotes at 4, 9, 10, 20 → runs [4..=8], [10..=19].
         let q = bits(&[4, 9, 10, 20]);
-        let (m, carry) = compute_in_quotes(q, false);
+        let (m, carry) = compute_in_quotes(CompileTime, q, false);
         let expected = bits(&[4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
         assert_eq!(m, expected);
         assert!(!carry);
@@ -498,13 +500,13 @@ mod tests {
     fn carry_round_trip_across_two_vectors() {
         // V1 opens at 60 with no close; V2 closes at 5.
         let q1 = 1u64 << 60;
-        let (m1, carry1) = compute_in_quotes(q1, false);
+        let (m1, carry1) = compute_in_quotes(CompileTime, q1, false);
         // V1: bits 60..=63 in-quotes.
         assert_eq!(m1, bits(&[60, 61, 62, 63]));
         assert!(carry1);
 
         let q2 = 1u64 << 5;
-        let (m2, carry2) = compute_in_quotes(q2, carry1);
+        let (m2, carry2) = compute_in_quotes(CompileTime, q2, carry1);
         // V2: bits 0..=4 in-quotes, 5..=63 out.
         assert_eq!(m2, bits(&[0, 1, 2, 3, 4]));
         assert!(!carry2);
@@ -520,7 +522,7 @@ mod tests {
             term: bits(&[15]),
             quote: bits(&[4, 9]),
         };
-        let (m, _) = compute_in_quotes(s.quote, false);
+        let (m, _) = compute_in_quotes(CompileTime, s.quote, false);
         // M covers 4..=8.
         assert_eq!(s.structural_delims(m), bits(&[1, 12, 15]));
     }
@@ -575,7 +577,7 @@ mod tests {
         // Running example: Q at {4, 9, 10, 20}, (C|N) at {3, 11, 21, 24}.
         let q = bits(&[4, 9, 10, 20]);
         let cn = bits(&[3, 11, 21, 24]);
-        let (m, _) = compute_in_quotes(q, false);
+        let (m, _) = compute_in_quotes(CompileTime, q, false);
         // Bit 11 falls inside the run [10..=19], so D_struct strips it.
         let d_struct = cn & !m;
         assert_eq!(d_struct, bits(&[3, 21, 24]));
@@ -650,7 +652,7 @@ mod tests {
         // Running example: (C|N) at {3, 11, 21, 24}, Q at {4, 9, 10, 20}.
         let q = bits(&[4, 9, 10, 20]);
         let cn = bits(&[3, 11, 21, 24]);
-        let (m, _) = compute_in_quotes(q, false);
+        let (m, _) = compute_in_quotes(CompileTime, q, false);
         let d_struct = cn & !m;
         let (b, _) = compute_field_begins(d_struct, q, BeginsCarry::default());
         // Design table B = {0, 5, 22, 25}; bit 0 is the prologue's.
@@ -694,7 +696,7 @@ mod tests {
     fn remove_doubled_quote_escape_drops_second_only() {
         // `,"a""b",`: 0=',', 1='"', 2='a', 3='"', 4='"', 5='b', 6='"', 7=','.
         let q = bits(&[1, 3, 4, 6]);
-        let (m, _) = compute_in_quotes(q, false);
+        let (m, _) = compute_in_quotes(CompileTime, q, false);
         assert_eq!(m, bits(&[1, 2, 4, 5]), "M setup sanity check");
 
         // QL = {1, 4}, QR = {3, 6}; the field is [2, 6).
@@ -736,7 +738,7 @@ mod tests {
         // pair's second quote, at 10, is removed.
         let q = bits(&[4, 9, 10, 20]);
         let cn = bits(&[3, 11, 21, 24]);
-        let (m, _) = compute_in_quotes(q, false);
+        let (m, _) = compute_in_quotes(CompileTime, q, false);
         let d_struct = cn & !m;
         let (b, _) = compute_field_begins(d_struct, q, BeginsCarry::default());
         let (e, _) = compute_field_ends(d_struct, q, m, false, false);
@@ -751,7 +753,7 @@ mod tests {
         // The same `,"a""b",` layout under pure Toggle: every quote is
         // structural, so both bytes of the pair go.
         let q = bits(&[1, 3, 4, 6]);
-        let (m, _) = compute_in_quotes(q, false);
+        let (m, _) = compute_in_quotes(CompileTime, q, false);
         assert_eq!(m, bits(&[1, 2, 4, 5]), "M setup sanity check");
         let b = bits(&[2]);
         let e = bits(&[6]);

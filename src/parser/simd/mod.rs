@@ -5,11 +5,13 @@ mod fieldcount;
 mod findstart;
 mod index;
 mod index_stepper;
+mod isa;
 mod lanes;
 mod scan;
 
 use self::cursor_stepper::SimdCursorStepper;
 use self::index_stepper::SimdIndexStepper;
+use self::isa::CompileTime;
 use super::chunk::{Assumption, ChunkParser, skip_empty_lines};
 use super::driver::ChunkDriver;
 use super::output::Output;
@@ -73,14 +75,19 @@ impl ChunkParser for SimdChunkParser {
         assumption: Assumption,
         strict_probe: bool,
     ) -> crate::Result<Option<usize>> {
-        findstart::find_record_start(reader, &self.config, assumption, strict_probe)
+        findstart::find_record_start(CompileTime, reader, &self.config, assumption, strict_probe)
     }
 
     /// Blank lines go first, or the header row is never found.
     fn scan_header_end<R: ChunkReader>(&self, reader: &mut R) -> crate::Result<Option<usize>> {
         let (leading, _) = skip_empty_lines(reader, &self.config)?;
-        let end =
-            findstart::find_record_start(reader, &self.config, Assumption::OutOfQuotes, false)?;
+        let end = findstart::find_record_start(
+            CompileTime,
+            reader,
+            &self.config,
+            Assumption::OutOfQuotes,
+            false,
+        )?;
         Ok(end.map(|off| leading + off))
     }
 
@@ -98,9 +105,17 @@ impl ChunkParser for SimdChunkParser {
         // single-stream stepper applies.
         let driver = ChunkDriver::new(reader, base);
         if self.config.quote.is_none() {
-            driver.run(&mut SimdCursorStepper::new(&self.config), state, acc)
+            driver.run(
+                &mut SimdCursorStepper::new(CompileTime, &self.config),
+                state,
+                acc,
+            )
         } else {
-            driver.run(&mut SimdIndexStepper::new(&self.config), state, acc)
+            driver.run(
+                &mut SimdIndexStepper::new(CompileTime, &self.config),
+                state,
+                acc,
+            )
         }
     }
 }
