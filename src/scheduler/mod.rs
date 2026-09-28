@@ -17,7 +17,6 @@ use crate::io::mmap::MmapIo;
 use crate::io::ringbuf::{RingBuf, RingBufChunkReader, RingBufIo};
 use crate::io::slice::SliceIo;
 use crate::parser::dfa::DfaChunkParser;
-#[cfg(feature = "simd")]
 use crate::parser::simd::SimdChunkParser;
 use crate::parser::{Assumption, ChunkParser, FindRecordStart, Output, assumptions_for_config};
 
@@ -116,13 +115,10 @@ impl Scheduler {
                 let parser = DfaChunkParser::new(resolved.config.clone());
                 self.dispatch_io::<S, I, A, M, R, _, O>(resolved, file, &parser, init, acc, merge)
             }
-            #[cfg(feature = "simd")]
             ParserBackend::Simd => {
                 let parser = SimdChunkParser::new(resolved.config.clone());
                 self.dispatch_io::<S, I, A, M, R, _, O>(resolved, file, &parser, init, acc, merge)
             }
-            #[cfg(not(feature = "simd"))]
-            ParserBackend::Simd => unreachable!("SIMD backend not compiled in"),
             ParserBackend::Auto => unreachable!("resolved by Scheduler::resolve"),
         }
     }
@@ -222,15 +218,12 @@ impl Scheduler {
                     &resolved, None, &parser, make_ctx, init, acc, merge,
                 )
             }
-            #[cfg(feature = "simd")]
             ParserBackend::Simd => {
                 let parser = SimdChunkParser::new(resolved.config.clone());
                 self.run_with::<S, I, A, M, R, _, _, O>(
                     &resolved, None, &parser, make_ctx, init, acc, merge,
                 )
             }
-            #[cfg(not(feature = "simd"))]
-            ParserBackend::Simd => unreachable!("SIMD backend not compiled in"),
             ParserBackend::Auto => unreachable!("resolved by Scheduler::resolve_slice"),
         }
     }
@@ -259,13 +252,10 @@ impl Scheduler {
                 let parser = DfaChunkParser::new(self.config.clone());
                 run_stream_inner(&parser, &self.config, src, init, acc, merge)
             }
-            #[cfg(feature = "simd")]
             ParserBackend::Simd => {
                 let parser = SimdChunkParser::new(self.config.clone());
                 run_stream_inner(&parser, &self.config, src, init, acc, merge)
             }
-            #[cfg(not(feature = "simd"))]
-            ParserBackend::Simd => unreachable!("SIMD backend not compiled in"),
             ParserBackend::Auto => unreachable!("resolved by resolve_parser_backend"),
         }
     }
@@ -643,7 +633,6 @@ mod tests {
     use std::io::Write;
 
     use super::*;
-    #[cfg(feature = "simd")]
     use crate::RecordTerminator;
     use crate::config::QuoteHandling;
     use crate::io::ringbuf::RingBufSettings;
@@ -769,7 +758,6 @@ mod tests {
 
     /// `run_matrix` only varies the DFA, and SIMD needs a fixed field
     /// count, so the run cases get their own sweep.
-    #[cfg(feature = "simd")]
     #[test]
     fn terminator_runs_match_across_backends_and_chunk_sizes() {
         const RUN_CASES: &[&[u8]] = &[
@@ -1062,7 +1050,6 @@ mod tests {
     /// single chunk, so chunk-boundary speculation never runs. Force a tiny
     /// `chunk_size` so the boundary lands inside the first record's quoted
     /// field (byte 0 of chunk 1 is the previous field's closing quote).
-    #[cfg(feature = "simd")]
     #[test]
     fn simd_clean_no_boundary_does_not_drop_empty_quoted_record() {
         for (term, data) in [

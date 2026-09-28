@@ -3,7 +3,6 @@ use std::marker::PhantomData;
 use crate::config::{Config, IoBackend, ParserBackend, QuoteHandling, RecordTerminator};
 use crate::parser::ChunkParser;
 use crate::parser::dfa::DfaChunkParser;
-#[cfg(feature = "simd")]
 use crate::parser::simd::SimdChunkParser;
 use crate::{Arity, Bytes, Parser, Text, Variadic};
 
@@ -254,17 +253,10 @@ impl<Mode, Encoding: ?Sized> ParserBuilder<Mode, Encoding> {
             ParserBackend::Auto => Ok(()),
             ParserBackend::Dfa => DfaChunkParser::supports(&self.config),
             ParserBackend::Simd => {
-                #[cfg(feature = "simd")]
-                {
-                    // `field_count` is only known at `parse::<N>` time
-                    let mut probe = self.config.clone();
-                    probe.field_count.get_or_insert(1);
-                    SimdChunkParser::supports(&probe)
-                }
-                #[cfg(not(feature = "simd"))]
-                {
-                    Err("SIMD parser not compiled in (build with `--features simd` on nightly)")
-                }
+                // `field_count` is only known at `parse::<N>` time
+                let mut probe = self.config.clone();
+                probe.field_count.get_or_insert(1);
+                SimdChunkParser::supports(&probe)
             }
         }
     }

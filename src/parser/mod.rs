@@ -3,7 +3,6 @@ pub mod chunk;
 pub mod dfa;
 mod driver;
 mod output;
-#[cfg(feature = "simd")]
 pub mod simd;
 
 pub(crate) use self::api::try_from_config;

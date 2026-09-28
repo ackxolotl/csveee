@@ -68,10 +68,9 @@ pub enum ParserBackend {
     Auto,
     /// Force the DFA-based parser. Works with any configuration.
     Dfa,
-    /// Force the SIMD-vectorized parser. Requires the crate's `simd`
-    /// feature (nightly-only); without it, selecting `Simd` errors at
-    /// parse time. Also errors if the config is unsupported (e.g.
-    /// trimming, flexible field counts, certain escape modes).
+    /// Force the SIMD-vectorized parser. Errors at parse time if the
+    /// config is unsupported (e.g. trimming, flexible field counts,
+    /// certain escape modes).
     Simd,
 }
 

@@ -39,12 +39,10 @@ jobs:
       run: |
         cat > legs.json <<'JSON'
         [
-          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "stable",  "features": ""},
-          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "nightly", "features": "--features simd"},
-          {"tier": "full", "os": "macos-latest",   "toolchain": "stable",  "features": ""},
-          {"tier": "full", "os": "macos-latest",   "toolchain": "nightly", "features": "--features simd"},
-          {"tier": "full", "os": "windows-latest", "toolchain": "stable",  "features": ""},
-          {"tier": "full", "os": "windows-latest", "toolchain": "nightly", "features": "--features simd"}
+          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "stable", "cpu": ""},
+          {"tier": "lean", "os": "ubuntu-latest",  "toolchain": "stable", "cpu": "x86-64-v3"},
+          {"tier": "full", "os": "macos-latest",   "toolchain": "stable", "cpu": ""},
+          {"tier": "full", "os": "windows-latest", "toolchain": "stable", "cpu": ""}
         ]
         JSON
         if [ "${{ github.ref }}" = "refs/heads/main" ] \
@@ -66,6 +64,7 @@ jobs:
     # stable leg actually runs on stable (RUSTUP_TOOLCHAIN > rust-toolchain.toml).
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
+      RUSTFLAGS: ${{ matrix.cpu && format('-C target-cpu={0}', matrix.cpu) || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -78,29 +77,29 @@ jobs:
         toolchain: ${{ matrix.toolchain }}
     - uses: Swatinem/rust-cache@v2
       with:
-        shared-key: build-${{ matrix.toolchain }}
+        shared-key: build-${{ matrix.toolchain }}-${{ matrix.cpu || 'baseline' }}
     - name: Build
-      run: cargo build --locked --all-targets ${{ matrix.features }}
+      run: cargo build --locked --all-targets
     - name: Run unit tests
-      run: cargo test --lib ${{ matrix.features }}
+      run: cargo test --lib
     - name: Run examples
       run: |
         set -euo pipefail
         for ex in advanced builder inputs outputs simple; do
-          cargo run --example "$ex" ${{ matrix.features }}
+          cargo run --example "$ex"
         done
     - name: Run integration tests
-      run: cargo test --test integration ${{ matrix.features }}
+      run: cargo test --test integration
     - name: Check benches compile
       if: runner.os == 'Linux'
-      run: cargo build --benches ${{ matrix.features }} --features bench
+      run: cargo build --benches --features bench
     - name: Build and test with instrumentation
       if: runner.os == 'Linux'
       run: |
         set -euo pipefail
-        cargo build --all-targets ${{ matrix.features }} --features trace
-        cargo test --lib ${{ matrix.features }} --features trace
-        cargo run --example trace ${{ matrix.features }} --features trace-example
+        cargo build --all-targets --features trace
+        cargo test --lib --features trace
+        cargo run --example trace --features trace-example
 
   msrv:
     runs-on: ubuntu-latest
@@ -140,4 +139,4 @@ jobs:
     - name: Check formatting
       run: cargo fmt --all -- --check
     - name: Run clippy
-      run: cargo clippy --locked --all-targets --features simd,trace -- -D warnings
+      run: cargo clippy --locked --all-targets --features trace -- -D warnings

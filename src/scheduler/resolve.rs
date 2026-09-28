@@ -8,7 +8,6 @@
 use crate::config::{Config, IoBackend, ParserBackend};
 use crate::io::ringbuf::RingBufSettings;
 use crate::parser::dfa::DfaChunkParser;
-#[cfg(feature = "simd")]
 use crate::parser::simd::SimdChunkParser;
 use crate::parser::{ChunkParser, FindRecordStart};
 
@@ -170,10 +169,7 @@ fn resolve_chunk_size(config: &Config, parser_backend: ParserBackend) -> usize {
     }
     match parser_backend {
         ParserBackend::Dfa => 256 * 1024,
-        #[cfg(feature = "simd")]
         ParserBackend::Simd => 1024 * 1024,
-        #[cfg(not(feature = "simd"))]
-        ParserBackend::Simd => unreachable!("SIMD backend not compiled in"),
         ParserBackend::Auto => unreachable!("called after resolve_parser_backend"),
     }
 }
@@ -206,7 +202,6 @@ fn per_thread_share(io_buffer_limit: Option<usize>, thread_count: usize) -> Opti
 pub(super) fn resolve_parser_backend(config: &Config) -> crate::Result<ParserBackend> {
     match config.parser_backend {
         ParserBackend::Auto => {
-            #[cfg(feature = "simd")]
             if SimdChunkParser::supports(config).is_ok() {
                 return Ok(ParserBackend::Simd);
             }
@@ -218,17 +213,8 @@ pub(super) fn resolve_parser_backend(config: &Config) -> crate::Result<ParserBac
             Ok(ParserBackend::Dfa)
         }
         ParserBackend::Simd => {
-            #[cfg(feature = "simd")]
-            {
-                SimdChunkParser::supports(config).map_err(crate::Error::InvalidConfig)?;
-                Ok(ParserBackend::Simd)
-            }
-            #[cfg(not(feature = "simd"))]
-            {
-                Err(crate::Error::InvalidConfig(
-                    "SIMD parser not compiled in (build with `--features simd` on nightly)",
-                ))
-            }
+            SimdChunkParser::supports(config).map_err(crate::Error::InvalidConfig)?;
+            Ok(ParserBackend::Simd)
         }
     }
 }
