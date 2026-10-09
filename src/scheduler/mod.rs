@@ -321,13 +321,32 @@ impl Scheduler {
         } else {
             let next_chunk = &next_chunk;
             let errors: Vec<crate::Error> = std::thread::scope(|scope| {
-                let handles: Vec<_> = (1..thread_count)
-                    .map(|t| scope.spawn(move || work_loop(t, next_chunk)))
-                    .collect();
-
                 let mut errors = Vec::new();
+                let mut handles = Vec::with_capacity(thread_count - 1);
+                for t in 1..thread_count {
+                    let spawned = std::thread::Builder::new()
+                        .spawn_scoped(scope, move || work_loop(t, next_chunk));
+                    match spawned {
+                        Ok(handle) => handles.push(handle),
+                        Err(e) => {
+                            // The target has no threads (e.g. wasm), or the OS
+                            // refused one. Chunk `t` would never be parsed, so
+                            // the run fails: stop the running workers after
+                            // their current chunk.
+                            next_chunk.store(chunk_count, Ordering::Relaxed);
+                            errors.push(crate::Error::IO(std::io::Error::new(
+                                e.kind(),
+                                format!("failed to spawn worker thread {t} of {thread_count}: {e}"),
+                            )));
+                            break;
+                        }
+                    }
+                }
+
                 let mut panic_payload = None;
-                if let Err(e) = work_loop(0, next_chunk) {
+                if errors.is_empty()
+                    && let Err(e) = work_loop(0, next_chunk)
+                {
                     errors.push(e);
                 }
                 for handle in handles {

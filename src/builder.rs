@@ -267,6 +267,11 @@ impl<Mode, Encoding: ?Sized> ParserBuilder<Mode, Encoding> {
     /// Upper bound on worker threads (default: auto).
     ///
     /// `0` means auto-detect from available parallelism at parse time.
+    ///
+    /// On targets without threads, such as `wasm32-unknown-unknown`, a parse
+    /// that would use more than one thread fails with an
+    /// [`Error::IO`](crate::Error::IO) of kind `Unsupported`; keep the
+    /// default there.
     pub fn concurrency(mut self, concurrency: usize) -> Self {
         self.config.concurrency = concurrency;
         self
