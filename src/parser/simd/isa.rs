@@ -273,16 +273,18 @@ impl Level {
     /// Every level this CPU and build support beyond [`CompileTime`], best
     /// first, then [`Level::CompileTime`] itself.
     fn available() -> Vec<Self> {
-        let mut levels = Vec::new();
-        #[cfg(target_arch = "x86_64")]
-        {
-            levels.extend(detect_avx512().map(Level::Avx512));
-            levels.extend(detect_avx2().map(Level::Avx2));
-        }
-        #[cfg(target_arch = "aarch64")]
-        levels.extend(detect_pmull().map(Level::Pmull));
-        levels.push(Level::CompileTime(CompileTime));
-        levels
+        [
+            #[cfg(target_arch = "x86_64")]
+            detect_avx512().map(Level::Avx512),
+            #[cfg(target_arch = "x86_64")]
+            detect_avx2().map(Level::Avx2),
+            #[cfg(target_arch = "aarch64")]
+            detect_pmull().map(Level::Pmull),
+            Some(Level::CompileTime(CompileTime)),
+        ]
+        .into_iter()
+        .flatten()
+        .collect()
     }
 
     /// The level's `CSVEEE_SIMD_LEVEL` name.

@@ -100,7 +100,7 @@ impl MirroredBuf {
             PAGE_READWRITE, UnmapViewOfFile, VirtualAlloc2, VirtualFree,
         };
 
-        let handle = file.handle.as_raw_handle() as *mut core::ffi::c_void;
+        let handle = file.handle.as_raw_handle();
 
         // Reserve 2x capacity as a placeholder so we can split it and
         // map two views adjacently — the Windows analogue of

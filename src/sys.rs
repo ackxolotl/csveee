@@ -1,6 +1,7 @@
 use std::sync::LazyLock;
 
 /// CPU page size in bytes (typically 4 KiB, 16 KiB on Apple Silicon).
+#[cfg(unix)]
 pub fn page_size() -> usize {
     static PAGE_SIZE: LazyLock<usize> = LazyLock::new(imp::page_size);
     *PAGE_SIZE
@@ -9,7 +10,8 @@ pub fn page_size() -> usize {
 /// Alignment unit required for memory mappings.
 ///
 /// On Unix this equals the page size. On Windows this is
-/// `dwAllocationGranularity` (typically 64 KiB).
+/// `dwAllocationGranularity` (typically 64 KiB). Elsewhere nothing is
+/// mapped, and it is only the smallest buffer size.
 pub fn allocation_granularity() -> usize {
     static GRANULARITY: LazyLock<usize> = LazyLock::new(imp::allocation_granularity);
     *GRANULARITY
@@ -30,8 +32,8 @@ pub fn available_parallelism() -> usize {
 /// Total physical RAM in bytes, as reported by the kernel.
 ///
 /// Does not account for cgroup / container memory limits, which can be
-/// tighter than physical RAM on shared hosts. Returns `None` if the OS
-/// cannot determine the value.
+/// tighter than physical RAM on shared hosts. Returns `None` if the
+/// value cannot be determined.
 pub fn total_ram() -> Option<usize> {
     static TOTAL_RAM: LazyLock<Option<usize>> = LazyLock::new(imp::total_ram);
     *TOTAL_RAM
@@ -70,10 +72,6 @@ mod imp {
         info
     }
 
-    pub(super) fn page_size() -> usize {
-        system_info().dwPageSize as usize
-    }
-
     pub(super) fn allocation_granularity() -> usize {
         system_info().dwAllocationGranularity as usize
     }
@@ -85,5 +83,18 @@ mod imp {
             return None;
         }
         Some(status.ullTotalPhys as usize)
+    }
+}
+
+/// Fallbacks for targets without these queries, e.g. WebAssembly.
+#[cfg(not(any(unix, windows)))]
+mod imp {
+    pub(super) fn allocation_granularity() -> usize {
+        // just a reasonable small default
+        4096
+    }
+
+    pub(super) fn total_ram() -> Option<usize> {
+        None
     }
 }
