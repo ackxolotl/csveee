@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.1 - 2026-10-09
+
+### Fixed
+
+- Builds on targets other than Linux, macOS and Windows, such as
+  WebAssembly and FreeBSD. There the ring-buffer backend copies instead
+  of mapping its memory twice. On `wasm32-unknown-unknown`, use
+  `parse_slice` or `parse_stream`, since there is no file system.
+- A worker thread that cannot be spawned now makes the parse return an
+  error instead of panicking. On targets without threads, keep the
+  default `concurrency`.
+
 ## 0.2.0 - 2026-09-29
 
 ### Breaking
