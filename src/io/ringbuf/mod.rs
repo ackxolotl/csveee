@@ -1,5 +1,4 @@
 mod buf;
-mod file;
 mod reader;
 mod settings;
 

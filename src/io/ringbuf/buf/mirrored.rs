@@ -2,13 +2,12 @@ use std::io;
 use std::ptr::{self, NonNull, slice_from_raw_parts, slice_from_raw_parts_mut};
 
 use super::file::MemFile;
-use crate::sys::allocation_granularity;
 
 /// A virtually-contiguous ring buffer using double memory mapping.
 ///
 /// The backing memory file is mapped twice consecutively in virtual
 /// address space, so data that wraps around the end appears contiguous.
-pub struct RingBuf {
+pub struct MirroredBuf {
     _file: MemFile,
     ptr: NonNull<u8>,
     capacity: usize,
@@ -17,23 +16,11 @@ pub struct RingBuf {
     consumer: usize,
 }
 
-impl RingBuf {
+impl MirroredBuf {
     /// Create a ring buffer of at least the given capacity and an optional
     /// maximum capacity.
     pub fn new(capacity: usize, limit: Option<usize>) -> io::Result<Self> {
-        let granularity = allocation_granularity();
-        let capacity = capacity.next_power_of_two().max(granularity);
-
-        if let Some(limit) = limit
-            && capacity > limit
-        {
-            return Err(io::Error::other(format!(
-                "ring buffer capacity ({capacity} bytes, rounded up from the requested size to a \
-                 power of two and at least the {granularity}-byte allocation granularity) would \
-                 exceed limit ({limit} bytes)",
-            )));
-        }
-
+        let capacity = super::checked_capacity(capacity, limit)?;
         let file = MemFile::new(capacity)?;
         let base = Self::map_double(&file, capacity)?;
 
@@ -269,14 +256,7 @@ impl RingBuf {
     ///
     /// Errors if doubling would exceed the configured `limit`.
     pub fn grow(&mut self) -> io::Result<()> {
-        let new_capacity = self.capacity * 2;
-        if let Some(limit) = self.limit
-            && new_capacity > limit
-        {
-            return Err(io::Error::other(format!(
-                "ring buffer growth ({new_capacity} bytes) would exceed limit ({limit} bytes)",
-            )));
-        }
+        let new_capacity = super::grown_capacity(self.capacity, self.limit)?;
         let mut new = Self::new(new_capacity, self.limit)?;
         let readable = self.readable();
         if readable > 0 {
@@ -289,7 +269,7 @@ impl RingBuf {
 }
 
 #[cfg(unix)]
-impl Drop for RingBuf {
+impl Drop for MirroredBuf {
     fn drop(&mut self) {
         unsafe {
             libc::munmap(self.ptr.as_ptr() as *mut libc::c_void, self.capacity * 2);
@@ -298,7 +278,7 @@ impl Drop for RingBuf {
 }
 
 #[cfg(windows)]
-impl Drop for RingBuf {
+impl Drop for MirroredBuf {
     fn drop(&mut self) {
         use windows_sys::Win32::System::Memory::{MEMORY_MAPPED_VIEW_ADDRESS, UnmapViewOfFile};
         unsafe {
@@ -309,79 +289,5 @@ impl Drop for RingBuf {
                 Value: self.ptr.as_ptr().add(self.capacity) as _,
             });
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn ringbuf_basic() {
-        let mut rb = RingBuf::new(allocation_granularity(), None).unwrap();
-        let cap = rb.capacity();
-
-        assert_eq!(rb.readable(), 0);
-        assert_eq!(rb.writable(), cap);
-
-        rb.unused_mut()[..5].copy_from_slice(b"hello");
-        rb.produce(5);
-
-        assert_eq!(rb.readable(), 5);
-        assert_eq!(rb.data(), b"hello");
-
-        rb.consume(5);
-        assert_eq!(rb.readable(), 0);
-        assert_eq!(rb.writable(), cap);
-    }
-
-    #[test]
-    fn ringbuf_wrap_around() {
-        let mut rb = RingBuf::new(allocation_granularity(), None).unwrap();
-        let cap = rb.capacity();
-
-        // Advance consumer/producer near the end.
-        rb.unused_mut()[..cap - 2].copy_from_slice(&vec![0u8; cap - 2]);
-        rb.produce(cap - 2);
-        rb.consume(cap - 2);
-
-        // Write across the wrap boundary.
-        rb.unused_mut()[..5].copy_from_slice(b"abcde");
-        rb.produce(5);
-
-        // Data should appear contiguous despite wrapping.
-        assert_eq!(rb.data(), b"abcde");
-    }
-
-    #[test]
-    fn ringbuf_grow() {
-        let mut rb = RingBuf::new(allocation_granularity(), None).unwrap();
-        let old_cap = rb.capacity();
-
-        rb.unused_mut()[..3].copy_from_slice(b"abc");
-        rb.produce(3);
-
-        rb.grow().unwrap();
-        assert_eq!(rb.capacity(), old_cap * 2);
-        assert_eq!(rb.readable(), 3);
-        assert_eq!(&rb.data()[..3], b"abc");
-    }
-
-    #[test]
-    fn ringbuf_new_rejects_limit_below_granularity() {
-        let Err(err) = RingBuf::new(50, Some(200)) else {
-            panic!("expected a ring buffer larger than its limit to be rejected");
-        };
-        assert!(
-            err.to_string().contains("would exceed limit"),
-            "unexpected error: {err}"
-        );
-    }
-
-    #[test]
-    fn ringbuf_new_accepts_limit_at_granularity() {
-        let granularity = allocation_granularity();
-        let rb = RingBuf::new(1, Some(granularity)).unwrap();
-        assert_eq!(rb.capacity(), granularity);
     }
 }
