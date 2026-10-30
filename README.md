@@ -6,7 +6,7 @@ A very fast, parallel CSV parser.
 inverts the usual interface: instead of the parser handing records to your
 code, you hand your code to the parser. That buys what an iterator cannot —
 parsing that stays lazy *and* runs in parallel. Your code runs inside the
-parse. Speculatively, before a chunk's true record boundaries are known
+parse, speculatively, before a chunk's record boundaries are known
 ([how it works](#how-it-works)).
 
 It does all this without giving up on the messy files the real world is full
@@ -15,7 +15,8 @@ of, and it is quick about it: across 1,000 CSV files `csveee` is around
 
 The parsing scheme and the fused programming model come from
 [*One Pass to Parse Them All: Fused Parallel CSV Processing*](https://db.in.tum.de/~ellmann/papers/csveee.pdf) (VLDB '26); the
-crate has grown past the paper since.
+crate has grown past the paper since, with the DFA parser, broader dialect
+coverage, and more I/O backends.
 
 ## Features
 
@@ -51,18 +52,17 @@ let cities = parser.parse(
 )?;
 ```
 
-The three callbacks form a user-defined aggregate: `init` creates a state, `acc`
-fills it, and `merge` combines the per-chunk states. The `[_name, _age, city]`
-pattern declares the record arity — a record with a different number of fields
-is rejected, just as when the accumulator returns an error. Fields are
-`&mut str` into the parser's buffer, valid for the call only. `init` and `acc`
-are `Fn` and `Sync` — they run on all the threads in parallel, `init` once per
-chunk, in fact once per speculative pass.
+The three callbacks form a user-defined aggregate: `init` creates a state per
+chunk, `acc` folds each record into it, and `merge` combines the states. The
+`[_name, _age, city]` pattern declares the record arity. Fields are `&mut str`
+into the parser's buffer, valid for the call only.
 
-The accumulator does double duty: it folds records into the state, and its
-rejections refute the parse state assumed for a chunk, which is then parsed
-again under the next one. So `acc` may see the same bytes twice, cut into
-different records each time.
+A chunk is parsed under an assumption about its starting state — inside a
+quoted field or not. A record of the wrong arity or an error from `acc` (e.g.,
+a failed type conversion) refutes it, and the chunk is parsed again under the
+next assumption, from a fresh `init` state. So `acc` may see the same bytes
+twice, cut into different records each time. `init` and `acc` are `Fn` and
+`Sync`: they run on all the threads in parallel.
 
 `merge` is `FnOnce`: it folds the surviving states, in file order, sequentially.
 
@@ -138,30 +138,58 @@ $ cargo bench --features bench
 
 ## How it works
 
-A chunk boundary can land anywhere, including in the middle of a quoted field,
-so a worker cannot know the state its chunk starts in. Rather than scanning the
-file first to find out, each chunk is parsed **speculatively**: one pass per
-possible starting state, each from a fresh initial state, until one holds up.
-Every pass is kept, not just the one that turns out to be right: on a genuinely
+### Why parallel parsing is hard
+
+A chunk boundary can land anywhere, including inside a quoted field, where a
+newline does not end a record. So a worker cannot just skip ahead to the next
+one: it does not know the state its chunk starts in. Known workarounds each
+have a cost: counting quotes first takes an extra pass over the file, running
+one state machine per possible starting state costs more still, and heuristics
+for where quoted fields start and end break on real world files that do not
+necessarily follow the CSV standard.
+
+If the parser knows the shape of the records — the number of fields, say, or
+their types — there is a cheaper way: parse each chunk **speculatively**, under
+one possible starting state after another, until the records come out in the
+expected shape. DuckDB's parser speculates the same way.
+
+### Why not an iterator
+
+Most CSV parsers hand out records through an iterator, as in
+`for record in reader.records() { … }`. A parallel parser can take the record
+shape as an argument and speculate behind that interface, but parsing stays a
+speculation until every byte is processed: however unlikely, the inside of a
+quoted field can look just like records of the expected shape. An iterator
+cannot hand out speculative records, as it has no way to take them back if the
+speculation turns out wrong. So with an iterator, parsing has to finish before
+the first record is handed out, and parsing and processing take two passes over
+the data — which caps throughput at half the memory bandwidth once a file
+outgrows the CPU caches. A single-threaded parser does not have this problem:
+its parse state is always known, so it can parse a record, hand it out, and
+move on, in one pass — but on one core.
+
+### Turning the parser inside out
+
+`csveee` takes your code as arguments instead (see [Usage](#usage)), and with
+it everything speculation needs. The record shape is the declared arity plus
+whatever `acc` checks; the more these checks reject, the sooner a wrong guess
+dies. Records go into per-chunk states as they are parsed, so a pass under a
+wrong guess costs only the wasted work: its state is simply never merged. Every
+pass is kept, not just the one that turns out to be right: on a genuinely
 broken file they all end in an error, and the merge needs them all to report
 the real one.
 
-The merge phase then walks the chunks in order, aligning record boundaries: the
-pass whose first record starts where its predecessor's last record ended is the
-correct one. The surviving states are folded with your `merge` callback (see
-[Usage](#usage)). The cost of the speculation is a constant factor of extra
-parsing work per chunk, and it buys a parser that never has to look at the
-file twice.
+Once every chunk is parsed, the merge phase walks them in order: the pass whose
+first record starts where its predecessor's last record ended is the correct
+one. If none lines up, the chunk is reparsed sequentially from there. That is
+rare unless the checks reject nothing — with `flexible()` and an accumulator
+that accepts every record, a wrong pass runs to the end of the chunk
+unchallenged. The result is correct either way. The surviving states then go
+to `merge` in file order, and its result is what `parse` returns.
 
-What kills a wrong pass early is validation. The declared record arity and the
-errors the accumulator returns (e.g., failed type conversions) form the oracle
-the speculation is checked against, so the more it rejects, the sooner a wrong
-pass dies. An oracle with no information — `flexible()` plus an accumulator that
-accepts every record — lets a wrong pass run to the end of the chunk, and the
-merge reparses it sequentially. The result is correct either way; the cost is
-the wasted work.
+### Chunk parsers and I/O
 
-There are two chunk parsers, and the same one handles every chunk of a parse.
+There are two chunk parsers:
 The **DFA parser** drives a state machine byte by byte; it supports every
 configuration. The **SIMD parser** finds delimiters, terminators, and quotes 64
 bytes at a time and resolves quoted regions with bit-parallel arithmetic. It
@@ -178,11 +206,6 @@ its own bounded window, for large machines or streamed input; **memory maps**
 give each thread its own private mapping and let the page cache do the work.
 `Auto` takes the first for small files and the second for large ones; mmap is
 opt-in and Unix-only.
-
-Speculative parsing, the merge phase, the vectorized parser, and the ring
-buffer were developed and evaluated in full in the
-[paper](https://db.in.tum.de/~ellmann/papers/csveee.pdf); the DFA parser, the
-dialect coverage, and the other I/O backends go beyond it.
 
 ## Correctness
 
