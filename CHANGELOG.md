@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Worker threads are now spawned as long as unclaimed chunks remain, with
+  each thread trying to claim chunks once its I/O buffer is ready. This makes
+  mid-sized inputs faster on machines with many cores.
+- Since the number of threads to be spawned is not known upfront anymore,
+  the ring buffer no longer depends on the thread count; it defaults to
+  16 KiB now, except on Apple platforms, which keep 256 KiB.
+
 ## 0.2.1 - 2026-10-09
 
 ### Fixed

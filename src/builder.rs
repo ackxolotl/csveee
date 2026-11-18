@@ -267,6 +267,7 @@ impl<Mode, Encoding: ?Sized> ParserBuilder<Mode, Encoding> {
     /// Upper bound on worker threads (default: auto).
     ///
     /// `0` means auto-detect from available parallelism at parse time.
+    /// Threads are started while unclaimed chunks remain.
     ///
     /// On targets without threads, such as `wasm32-unknown-unknown`, a parse
     /// that would use more than one thread fails with an

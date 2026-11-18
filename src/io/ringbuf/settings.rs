@@ -21,7 +21,7 @@ impl RingBufSettings {
     /// syscall asks for.
     ///
     /// `0` (the default) is the auto sentinel and will get resolved by the
-    /// scheduler from the platform and thread count.
+    /// scheduler from the platform.
     pub fn buffer_size(mut self, size: usize) -> Self {
         self.buffer_size = size;
         self

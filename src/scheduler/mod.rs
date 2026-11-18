@@ -24,7 +24,7 @@ use crate::parser::{Assumption, ChunkParser, FindRecordStart, Output, assumption
 ///
 /// It implements the speculative parsing strategy:
 /// 1. Split the file into chunks.
-/// 2. Assign chunks to threads (work-stealing via atomic counter).
+/// 2. Spawn threads while unclaimed chunks remain; each claims chunks from an atomic counter.
 /// 3. Each thread parses its chunk under each assumption until one succeeds.
 /// 4. Merge phase: resolve the correct assumption per chunk by aligning
 ///    record boundaries, then call the user's merge function.
@@ -289,11 +289,20 @@ impl Scheduler {
         let results: Vec<WriteOnceSlot<ChunkOutput<S>>> =
             (0..chunk_count).map(|_| WriteOnceSlot::new()).collect();
 
-        let work_loop = |initial_chunk: usize, next_chunk: &AtomicUsize| -> crate::Result<()> {
+        let next_chunk = AtomicUsize::new(0);
+
+        let work_loop = || -> crate::Result<()> {
+            if next_chunk.load(Ordering::Relaxed) >= chunk_count {
+                return Ok(());
+            }
             let mut ctx = make_ctx().map_err(crate::Error::IO)?;
 
-            let mut idx = initial_chunk;
+            // Claim only after setup, so that running threads can take chunks first.
             loop {
+                let idx = next_chunk.fetch_add(1, Ordering::Relaxed);
+                if idx >= chunk_count {
+                    return Ok(());
+                }
                 let output = self.process_chunk::<S, I, A, _, _, O>(
                     resolved,
                     idx,
@@ -305,34 +314,23 @@ impl Scheduler {
                     &acc,
                 );
                 unsafe { results[idx].set(output) };
-
-                idx = next_chunk.fetch_add(1, Ordering::Relaxed);
-                if idx >= chunk_count {
-                    break;
-                }
             }
-            Ok(())
         };
 
-        let next_chunk = AtomicUsize::new(thread_count);
-
         if thread_count == 1 {
-            work_loop(0, &next_chunk)?;
+            work_loop()?;
         } else {
-            let next_chunk = &next_chunk;
             let errors: Vec<crate::Error> = std::thread::scope(|scope| {
                 let mut errors = Vec::new();
                 let mut handles = Vec::with_capacity(thread_count - 1);
                 for t in 1..thread_count {
-                    let spawned = std::thread::Builder::new()
-                        .spawn_scoped(scope, move || work_loop(t, next_chunk));
-                    match spawned {
+                    if next_chunk.load(Ordering::Relaxed) >= chunk_count {
+                        break;
+                    }
+                    match std::thread::Builder::new().spawn_scoped(scope, work_loop) {
                         Ok(handle) => handles.push(handle),
                         Err(e) => {
-                            // The target has no threads (e.g. wasm), or the OS
-                            // refused one. Chunk `t` would never be parsed, so
-                            // the run fails: stop the running workers after
-                            // their current chunk.
+                            // No threads on this target (e.g. wasm), or the OS refused one.
                             next_chunk.store(chunk_count, Ordering::Relaxed);
                             errors.push(crate::Error::IO(std::io::Error::new(
                                 e.kind(),
@@ -342,10 +340,11 @@ impl Scheduler {
                         }
                     }
                 }
+                crate::trace::debug!(threads = handles.len() + 1, thread_count, "spawning done");
 
                 let mut panic_payload = None;
                 if errors.is_empty()
-                    && let Err(e) = work_loop(0, next_chunk)
+                    && let Err(e) = work_loop()
                 {
                     errors.push(e);
                 }

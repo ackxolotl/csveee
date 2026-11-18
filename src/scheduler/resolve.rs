@@ -32,7 +32,7 @@ impl ResolvedConfig {
         let io_buffer_limit = resolve_io_buffer_limit(config);
         let thread_count = resolve_thread_count(config, chunk_count, io_buffer_limit);
         let share = per_thread_share(io_buffer_limit, thread_count);
-        let io_backend = resolve_io_backend(config, file_size, share, thread_count);
+        let io_backend = resolve_io_backend(config, file_size, share);
 
         let mut config = config.clone();
         config.chunk_size = chunk_size;
@@ -63,7 +63,7 @@ impl ResolvedConfig {
         Ok(ResolvedConfig {
             config,
             parser_backend,
-            io_backend: IoBackend::RingBuf(unbacked_ring_settings(share, thread_count)),
+            io_backend: IoBackend::RingBuf(unbacked_ring_settings(share)),
             thread_count,
             chunk_count,
             file_size: len,
@@ -87,21 +87,15 @@ impl ResolvedConfig {
 /// Size below which `Auto` prefers the in-memory backend over the ring-buffer.
 const IN_MEMORY_FILE_SIZE_THRESHOLD: usize = 1024 * 1024;
 
-/// Ring-buffer size `Auto` picks below [`MANY_THREADS`].
-const RING_BUFFER_SIZE: usize = 64 * 1024;
+/// Ring-buffer size `Auto` picks.
+const RING_BUFFER_SIZE: usize = 16 * 1024;
 
-/// Ring-buffer size `Auto` picks from [`MANY_THREADS`] up.
-const MANY_THREADS_RING_BUFFER_SIZE: usize = 16 * 1024;
-
-/// Worker count from which `Auto` shrinks the ring buffer.
-const MANY_THREADS: usize = 64;
-
-/// Ring-buffer size `Auto` picks on Apple platforms, whatever the thread
-/// count: the XNU kernel serves only several hundred thousand `read` calls
-/// per second across all threads, so we keep the buffer large.
+/// Ring-buffer size `Auto` picks on Apple platforms: the XNU kernel serves
+/// only several hundred thousand `read` calls per second across all
+/// threads, so we keep the buffer large.
 const APPLE_RING_BUFFER_SIZE: usize = 256 * 1024;
 
-/// Determine the number of threads to use.
+/// Determine the maximum number of threads to use.
 fn resolve_thread_count(
     config: &Config,
     chunk_count: usize,
@@ -113,10 +107,8 @@ fn resolve_thread_count(
     } else {
         config.concurrency
     };
-    let c = chunk_count;
-    let sqrt_c = (c as f64).sqrt().ceil() as usize;
     let b = affordable_thread_count(io_buffer_limit);
-    h.min(c).min(6 * sqrt_c).min(b)
+    h.min(chunk_count).min(b)
 }
 
 /// How many workers the I/O buffer budget can pay for.
@@ -133,12 +125,7 @@ fn min_thread_buffer() -> usize {
 }
 
 /// Select the I/O backend, resolving `Auto` from file size.
-fn resolve_io_backend(
-    config: &Config,
-    file_size: usize,
-    share: Option<usize>,
-    thread_count: usize,
-) -> IoBackend {
+fn resolve_io_backend(config: &Config, file_size: usize, share: Option<usize>) -> IoBackend {
     let selected = match config.io_backend {
         IoBackend::Auto => {
             if file_size <= IN_MEMORY_FILE_SIZE_THRESHOLD {
@@ -150,36 +137,28 @@ fn resolve_io_backend(
         other => other,
     };
     match selected {
-        IoBackend::RingBuf(ring) => {
-            IoBackend::RingBuf(resolve_ringbuf_settings(ring, share, thread_count))
-        }
+        IoBackend::RingBuf(ring) => IoBackend::RingBuf(resolve_ringbuf_settings(ring, share)),
         other => other,
     }
 }
 
 /// Turn caller-stated [`RingBufSettings`] into the concrete values the
 /// ring buffer is built from.
-fn resolve_ringbuf_settings(
-    ring: RingBufSettings,
-    share: Option<usize>,
-    thread_count: usize,
-) -> RingBufSettings {
+fn resolve_ringbuf_settings(ring: RingBufSettings, share: Option<usize>) -> RingBufSettings {
     let buffer_limit = resolve_buffer_limit(ring.buffer_limit, share);
     RingBufSettings {
-        buffer_size: resolve_buffer_size(ring.buffer_size, thread_count, buffer_limit),
+        buffer_size: resolve_buffer_size(ring.buffer_size, buffer_limit),
         buffer_limit,
     }
 }
 
 /// The working size one worker's buffer starts at and reads by.
-fn resolve_buffer_size(own: usize, thread_count: usize, limit: Option<usize>) -> usize {
+fn resolve_buffer_size(own: usize, limit: Option<usize>) -> usize {
     if own != 0 {
         return own;
     }
     let size = if cfg!(target_vendor = "apple") {
         APPLE_RING_BUFFER_SIZE
-    } else if thread_count >= MANY_THREADS {
-        MANY_THREADS_RING_BUFFER_SIZE
     } else {
         RING_BUFFER_SIZE
     };
@@ -202,8 +181,8 @@ fn resolve_buffer_limit(own: Option<usize>, share: Option<usize>) -> Option<usiz
 
 /// Ring-buffer settings for the paths that buffer through a ring buffer
 /// without selecting a backend: `parse_slice` and `parse_stream`.
-fn unbacked_ring_settings(share: Option<usize>, thread_count: usize) -> RingBufSettings {
-    resolve_ringbuf_settings(RingBufSettings::default(), share, thread_count)
+fn unbacked_ring_settings(share: Option<usize>) -> RingBufSettings {
+    resolve_ringbuf_settings(RingBufSettings::default(), share)
 }
 
 /// Resolve the chunk size, honoring the auto-detect sentinel.
@@ -230,7 +209,7 @@ fn resolve_io_buffer_limit(config: &Config) -> Option<usize> {
 pub(super) fn stream_ring_settings(config: &Config) -> RingBufSettings {
     let io_buffer_limit = resolve_io_buffer_limit(config);
     let share = per_thread_share(io_buffer_limit, 1);
-    unbacked_ring_settings(share, 1)
+    unbacked_ring_settings(share)
 }
 
 /// Divide the total limit into one worker's share.
@@ -374,14 +353,10 @@ mod tests {
     fn auto_backend_by_file_size() {
         let config = Config::default();
         let threshold = IN_MEMORY_FILE_SIZE_THRESHOLD;
-        let backend = |fsize| resolve_io_backend(&config, fsize, None, 8);
+        let backend = |fsize| resolve_io_backend(&config, fsize, None);
         // Resolution consumes the `Some(0)` sentinel: no parser limit to
         // share out leaves the ring buffer unbounded.
-        let ring = IoBackend::RingBuf(resolve_ringbuf_settings(
-            RingBufSettings::default(),
-            None,
-            8,
-        ));
+        let ring = IoBackend::RingBuf(resolve_ringbuf_settings(RingBufSettings::default(), None));
 
         // Small files → InMemory.
         assert_eq!(backend(1), IoBackend::InMemory);
@@ -401,7 +376,7 @@ mod tests {
         let config = Config::default();
         let tiny = Some(16 * 1024);
         assert_eq!(
-            resolve_io_backend(&config, 64 * 1024, tiny, 8),
+            resolve_io_backend(&config, 64 * 1024, tiny),
             IoBackend::InMemory
         );
     }
@@ -432,7 +407,7 @@ mod tests {
         let stated = RingBufSettings::default().buffer_size(4096);
         assert_eq!(stated.buffer_limit, Some(0), "default is the sentinel");
 
-        let resolved = resolve_ringbuf_settings(stated, Some(1024), 8);
+        let resolved = resolve_ringbuf_settings(stated, Some(1024));
         assert_eq!(resolved.buffer_size, 4096, "working size passes through");
         assert_eq!(resolved.buffer_limit, Some(1024));
     }
@@ -443,8 +418,7 @@ mod tests {
         // backend carrying an effective per-thread cap, not a total that
         // something downstream has to remember to divide.
         let config = Config::default();
-        let resolved =
-            resolve_io_backend(&config, IN_MEMORY_FILE_SIZE_THRESHOLD + 1, Some(4096), 8);
+        let resolved = resolve_io_backend(&config, IN_MEMORY_FILE_SIZE_THRESHOLD + 1, Some(4096));
         assert_eq!(
             resolved,
             IoBackend::RingBuf(
@@ -457,7 +431,7 @@ mod tests {
         // A caller's own per-thread bound composes with it as a min.
         let mut config = Config::default();
         config.io_backend = IoBackend::RingBuf(RingBufSettings::default().buffer_limit(Some(1024)));
-        let resolved = resolve_io_backend(&config, 1, Some(4096), 8);
+        let resolved = resolve_io_backend(&config, 1, Some(4096));
         assert_eq!(
             resolved,
             IoBackend::RingBuf(
