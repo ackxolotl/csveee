@@ -10,6 +10,7 @@
 - Since the number of threads to be spawned is not known upfront anymore,
   the ring buffer no longer depends on the thread count; it defaults to
   16 KiB now, except on Apple platforms, which keep 256 KiB.
+- The `trace` example now buffers its writes to reduce tracing overhead.
 
 ## 0.2.1 - 2026-10-09
 
